@@ -55,7 +55,7 @@ void dae::GameTime::Start()
 	if(m_IsPaused)
 	{
 		m_StartTime = std::chrono::high_resolution_clock::now();
-		m_PausedTime = (std::chrono::duration_cast<std::chrono::nanoseconds>(m_StartTime - m_StopTime)).count();
+		m_PausedTime = static_cast<float>(std::chrono::duration_cast<std::chrono::nanoseconds>(m_StartTime - m_StopTime).count());
 		m_IsPaused = false;
 	}
 }

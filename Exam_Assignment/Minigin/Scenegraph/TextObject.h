@@ -1,6 +1,6 @@
 #pragma once
 #include "SceneObject.h"
-#include "Components\Transform.h"
+#include "Components\TransformComponent.h"
 
 namespace dae
 {
@@ -11,7 +11,7 @@ namespace dae
 	{
 	public:
 		void Update() override;
-		void Render() const override;
+		void Draw() const override;
 
 		void SetText(const std::string& text);
 		void SetPosition(float x, float y);
@@ -28,7 +28,7 @@ namespace dae
 
 		bool mNeedsUpdate;
 		std::string mText;
-		Transform mTransform;
+		TransformComponent* m_pTransform;
 		std::shared_ptr<Font> mFont;
 		std::shared_ptr<Texture2D> mTexture;
 	};

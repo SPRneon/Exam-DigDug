@@ -1,12 +1,25 @@
+#include "MiniginPCH.h"
 #include "BaseComponent.h"
 
 
 
-BaseComponent::BaseComponent()
+dae::BaseComponent::BaseComponent(void):
+	m_IsInitialized(false),
+	m_pGameObject(nullptr)
 {
 }
 
-
-BaseComponent::~BaseComponent()
+dae::BaseComponent::~BaseComponent(void)
 {
 }
+
+void dae::BaseComponent::Update()
+{
+	return;
+}
+
+void dae::BaseComponent::Draw() const
+{
+	return;
+}
+

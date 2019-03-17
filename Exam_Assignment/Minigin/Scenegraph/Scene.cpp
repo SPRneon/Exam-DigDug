@@ -25,7 +25,7 @@ void dae::Scene::Render() const
 {
 	for (const auto gameObject : mObjects)
 	{
-		gameObject->Render();
+		gameObject->Draw();
 	}
 }
 

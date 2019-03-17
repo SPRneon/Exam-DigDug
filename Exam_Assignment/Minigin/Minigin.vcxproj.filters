@@ -51,9 +51,6 @@
     <ClInclude Include="Content\ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Components\Transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Base\InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -67,6 +64,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Base\GameTime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\FPSScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\TransformComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\Math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\TextRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\TextComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -101,9 +113,6 @@
     <ClCompile Include="Content\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Components\Transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Base\InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -117,6 +126,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Base\GameTime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\FPSScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\TransformComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\TextRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\TextComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

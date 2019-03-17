@@ -196,12 +196,14 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Components\BaseComponent.h" />
     <ClInclude Include="Base\InputManager.h" />
     <ClInclude Include="Base\SceneManager.h" />
-    <ClInclude Include="Components\Transform.h" />
+    <ClInclude Include="Components\TransformComponent.h" />
     <ClInclude Include="Content\ResourceManager.h" />
     <ClInclude Include="Debug\Log.h" />
     <ClInclude Include="Base\GameTime.h" />
+    <ClInclude Include="Game\FPSScene.h" />
     <ClInclude Include="Graphics\Font.h" />
     <ClInclude Include="Graphics\Renderer.h" />
+    <ClInclude Include="Helpers\Math.h" />
     <ClInclude Include="Helpers\Singleton.h" />
     <ClInclude Include="Helpers\targetver.h" />
     <ClInclude Include="Minigin.h" />
@@ -211,15 +213,18 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Scenegraph\SceneObject.h" />
     <ClInclude Include="Scenegraph\TextObject.h" />
     <ClInclude Include="Scenegraph\Texture2D.h" />
+    <ClInclude Include="Graphics\TextRenderer.h" />
+    <ClInclude Include="Components\TextComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\BaseComponent.cpp" />
     <ClCompile Include="Base\InputManager.cpp" />
     <ClCompile Include="Base\SceneManager.cpp" />
-    <ClCompile Include="Components\Transform.cpp" />
+    <ClCompile Include="Components\TransformComponent.cpp" />
     <ClCompile Include="Content\ResourceManager.cpp" />
     <ClCompile Include="Debug\Log.cpp" />
     <ClCompile Include="Base\GameTime.cpp" />
+    <ClCompile Include="Game\FPSScene.cpp" />
     <ClCompile Include="Graphics\Font.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -229,6 +234,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="Scenegraph\Scene.cpp" />
     <ClCompile Include="Scenegraph\TextObject.cpp" />
     <ClCompile Include="Scenegraph\Texture2D.cpp" />
+    <ClCompile Include="Graphics\TextRenderer.cpp" />
+    <ClCompile Include="Components\TextComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
