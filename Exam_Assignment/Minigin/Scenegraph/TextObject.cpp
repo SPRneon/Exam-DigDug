@@ -3,8 +3,8 @@
 #include <SDL_ttf.h>
 
 #include "TextObject.h"
-#include "Renderer.h"
-#include "Font.h"
+#include "Graphics\Renderer.h"
+#include "Graphics\Font.h"
 #include "Texture2D.h"
 
 dae::TextObject::TextObject(const std::string& text, std::shared_ptr<Font> font) 

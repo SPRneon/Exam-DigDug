@@ -1,6 +1,6 @@
 #pragma once
 #include "SceneObject.h"
-#include "Transform.h"
+#include "Components\Transform.h"
 
 namespace dae
 {

@@ -1,6 +1,6 @@
 #include "MiniginPCH.h"
 #include "SceneManager.h"
-#include "Scene.h"
+#include "Scenegraph\Scene.h"
 
 
 void dae::SceneManager::Update()

@@ -27,8 +27,9 @@ namespace dae
 	};
 
 #ifdef _DEBUG
+	//TODO: Ask prof why error LNK 2005
 #ifdef _MSC_VER
-	Cout2VisualStudioDebugOutput c2v;
+	//Cout2VisualStudioDebugOutput c2v;
 #endif
 #endif
 }

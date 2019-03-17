@@ -1,5 +1,5 @@
 #pragma once
-#include "Singleton.h"
+#include "Helpers\Singleton.h"
 
 namespace dae
 {

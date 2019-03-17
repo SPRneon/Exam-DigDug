@@ -1,0 +1,29 @@
+﻿  InputManager.cpp
+  SceneManager.cpp
+  Transform.cpp
+  ResourceManager.cpp
+  Log.cpp
+  Font.cpp
+  Renderer.cpp
+  Main.cpp
+  Minigin.cpp
+  MiniginPCH.cpp
+  GameObject.cpp
+  Scene.cpp
+  TextObject.cpp
+  Texture2D.cpp
+SceneManager.obj : error LNK2005: "class dae::Cout2VisualStudioDebugOutput dae::c2v" (?c2v@dae@@3VCout2VisualStudioDebugOutput@1@A) already defined in InputManager.obj
+Transform.obj : error LNK2005: "class dae::Cout2VisualStudioDebugOutput dae::c2v" (?c2v@dae@@3VCout2VisualStudioDebugOutput@1@A) already defined in InputManager.obj
+ResourceManager.obj : error LNK2005: "class dae::Cout2VisualStudioDebugOutput dae::c2v" (?c2v@dae@@3VCout2VisualStudioDebugOutput@1@A) already defined in InputManager.obj
+Log.obj : error LNK2005: "class dae::Cout2VisualStudioDebugOutput dae::c2v" (?c2v@dae@@3VCout2VisualStudioDebugOutput@1@A) already defined in InputManager.obj
+Font.obj : error LNK2005: "class dae::Cout2VisualStudioDebugOutput dae::c2v" (?c2v@dae@@3VCout2VisualStudioDebugOutput@1@A) already defined in InputManager.obj
+Renderer.obj : error LNK2005: "class dae::Cout2VisualStudioDebugOutput dae::c2v" (?c2v@dae@@3VCout2VisualStudioDebugOutput@1@A) already defined in InputManager.obj
+Main.obj : error LNK2005: "class dae::Cout2VisualStudioDebugOutput dae::c2v" (?c2v@dae@@3VCout2VisualStudioDebugOutput@1@A) already defined in InputManager.obj
+Minigin.obj : error LNK2005: "class dae::Cout2VisualStudioDebugOutput dae::c2v" (?c2v@dae@@3VCout2VisualStudioDebugOutput@1@A) already defined in InputManager.obj
+MiniginPCH.obj : error LNK2005: "class dae::Cout2VisualStudioDebugOutput dae::c2v" (?c2v@dae@@3VCout2VisualStudioDebugOutput@1@A) already defined in InputManager.obj
+GameObject.obj : error LNK2005: "class dae::Cout2VisualStudioDebugOutput dae::c2v" (?c2v@dae@@3VCout2VisualStudioDebugOutput@1@A) already defined in InputManager.obj
+Scene.obj : error LNK2005: "class dae::Cout2VisualStudioDebugOutput dae::c2v" (?c2v@dae@@3VCout2VisualStudioDebugOutput@1@A) already defined in InputManager.obj
+TextObject.obj : error LNK2005: "class dae::Cout2VisualStudioDebugOutput dae::c2v" (?c2v@dae@@3VCout2VisualStudioDebugOutput@1@A) already defined in InputManager.obj
+Texture2D.obj : error LNK2005: "class dae::Cout2VisualStudioDebugOutput dae::c2v" (?c2v@dae@@3VCout2VisualStudioDebugOutput@1@A) already defined in InputManager.obj
+     Creating library C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.lib and object C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exp
+C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exe : fatal error LNK1169: one or more multiply defined symbols found

@@ -1,7 +1,7 @@
 #include "MiniginPCH.h"
 #include "GameObject.h"
-#include "ResourceManager.h"
-#include "Renderer.h"
+#include "Content\ResourceManager.h"
+#include "Graphics\Renderer.h"
 
 dae::GameObject::~GameObject() = default;
 

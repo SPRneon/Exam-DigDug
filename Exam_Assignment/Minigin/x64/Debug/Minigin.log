@@ -1,17 +1,17 @@
-﻿  MiniginPCH.cpp
-  Font.cpp
-  GameObject.cpp
-  InputManager.cpp
+﻿  InputManager.cpp
+  SceneManager.cpp
+  Transform.cpp
+  ResourceManager.cpp
   Log.cpp
+  Font.cpp
+  Renderer.cpp
   Main.cpp
   Minigin.cpp
-  Renderer.cpp
-  ResourceManager.cpp
+  MiniginPCH.cpp
+  GameObject.cpp
   Scene.cpp
-  SceneManager.cpp
   TextObject.cpp
   Texture2D.cpp
-  Transform.cpp
   Generating Code...
      Creating library C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\x64\Debug\Minigin.lib and object C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\x64\Debug\Minigin.exp
   Minigin.vcxproj -> C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\x64\Debug\Minigin.exe

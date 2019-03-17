@@ -4,9 +4,9 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-#include "Renderer.h"
-#include "Texture2D.h"
-#include "Font.h"
+#include "Graphics\Renderer.h"
+#include "Scenegraph\Texture2D.h"
+#include "Graphics\Font.h"
 
 void dae::ResourceManager::Init(std::string&& dataPath)
 {

@@ -2,14 +2,14 @@
 #include "Minigin.h"
 #include <chrono>
 #include <thread>
-#include "InputManager.h"
-#include "SceneManager.h"
-#include "Renderer.h"
-#include "ResourceManager.h"
+#include "Base/InputManager.h"
+#include "Base/SceneManager.h"
+#include "Graphics/Renderer.h"
+#include "Content/ResourceManager.h"
 #include <SDL.h>
-#include "TextObject.h"
-#include "GameObject.h"
-#include "Scene.h"
+#include "Scenegraph/TextObject.h"
+#include "Scenegraph/GameObject.h"
+#include "Scenegraph/Scene.h"
 
 
 void dae::Minigin::Initialize()
