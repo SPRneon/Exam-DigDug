@@ -6,6 +6,7 @@
 #include "Base/SceneManager.h"
 #include "Graphics/Renderer.h"
 #include "Content/ResourceManager.h"
+#include "Base/GameTime.h"
 #include <SDL.h>
 #include "Scenegraph/TextObject.h"
 #include "Scenegraph/GameObject.h"
@@ -75,7 +76,9 @@ void dae::Minigin::Run()
 	LoadGame();
 
 	{
+		
 		auto t = std::chrono::high_resolution_clock::now();
+		auto& gameTime = GameTime::GetInstance();
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();

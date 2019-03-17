@@ -1,4 +1,5 @@
-﻿  InputManager.cpp
+﻿  BaseComponent.cpp
+  InputManager.cpp
   SceneManager.cpp
   Transform.cpp
   ResourceManager.cpp
