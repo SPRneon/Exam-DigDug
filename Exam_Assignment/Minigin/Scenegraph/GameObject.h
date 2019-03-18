@@ -19,9 +19,11 @@ namespace dae
 	public:
 		void Update() override;
 		void Draw() const override;
+		void Initialize() override;
 
 		TransformComponent* GetTransform(){return m_pTransform;}
-		
+		void AddComponent(std::shared_ptr<BaseComponent> component);
+		void RemoveComponent(std::shared_ptr<BaseComponent> component);
 
 		GameObject() = default;
 		virtual ~GameObject();
@@ -30,9 +32,24 @@ namespace dae
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
+		template <class T>
+		std::shared_ptr<T> GetComponent()
+		{
+			const type_info& ti = typeid(T);
+
+			for (auto component : m_pComponents)
+			{
+			if (component && typeid(*component) == ti)
+				return std::dynamic_pointer_cast<T>(component);
+			}
+
+			return nullptr;
+		}
+
+
 	private:
 		TransformComponent* m_pTransform;
-		std::vector<BaseComponent*> m_pComponents;
+		std::vector<std::shared_ptr<BaseComponent>> m_pComponents;
 		std::shared_ptr<Texture2D> mTexture;
 	};
 }

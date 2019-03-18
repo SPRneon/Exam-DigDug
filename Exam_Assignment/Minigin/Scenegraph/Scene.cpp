@@ -13,19 +13,37 @@ void dae::Scene::Add(const std::shared_ptr<SceneObject>& object)
 	mObjects.push_back(object);
 }
 
-void dae::Scene::Update()
+
+void dae::Scene::RootInitialize()
 {
+	Initialize();
+
+	for(auto gameObject : mObjects)
+	{
+		gameObject->Initialize();
+	}
+}
+
+
+void dae::Scene::RootUpdate()
+{
+	Update();
+
 	for(auto gameObject : mObjects)
 	{
 		gameObject->Update();
 	}
+
 }
 
-void dae::Scene::Render() const
+void dae::Scene::RootDraw()
 {
+	Draw();
+
 	for (const auto gameObject : mObjects)
 	{
 		gameObject->Draw();
 	}
 }
+
 

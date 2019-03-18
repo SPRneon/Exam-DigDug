@@ -1,9 +1,4 @@
-﻿  TransformComponent.cpp
-  Minigin.cpp
-  GameObject.cpp
-  TextObject.cpp
-  TextComponent.cpp
-  Generating Code...
+﻿  FPSScene.cpp
   Minigin.vcxproj -> C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\x64\Debug\Minigin.exe
   C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2\lib\x64\SDL2.dll
   1 File(s) copied

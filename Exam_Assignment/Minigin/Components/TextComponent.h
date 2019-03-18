@@ -15,6 +15,7 @@ namespace dae{
 public:
 		void Update() override;
 		void Draw() const override;
+		void Initialize() override;
 
 		void SetText(const std::string& text);
 		void SetPosition(float x, float y);

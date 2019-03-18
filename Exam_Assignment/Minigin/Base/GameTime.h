@@ -36,6 +36,8 @@ namespace dae
 		std::chrono::time_point<std::chrono::steady_clock> m_StopTime;
 
 		int m_FPS;
+		float m_FpsTimer;
+		int m_FpsCount;
 
 		bool m_IsPaused;
 	};

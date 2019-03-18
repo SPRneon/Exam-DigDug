@@ -35,7 +35,7 @@ void dae::TextObject::Draw() const
 {
 	if (mTexture != nullptr)
 	{
-		const auto pos = m_pTransform->GetPosition();
+		const auto pos = glm::vec3(80,20,0); /*m_pTransform->GetPosition();*/
 		Renderer::GetInstance().RenderTexture(*mTexture, pos.x, pos.y);
 	}
 }

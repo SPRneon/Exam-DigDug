@@ -7,6 +7,17 @@
 
 dae::GameObject::~GameObject() = default;
 
+
+void dae::GameObject::Initialize()
+{
+	for(int i = 0; i < m_pComponents.size(); ++i)
+	{
+		if(!m_pComponents[i]->IsInitialized())
+			m_pComponents[i]->Initialize();
+	}
+}
+
+
 void dae::GameObject::Update()
 {
 	for(int i = 0; i < m_pComponents.size(); ++i)
@@ -24,16 +35,32 @@ void dae::GameObject::Draw() const
 		if(m_pComponents[i]->IsInitialized())
 			m_pComponents[i]->Draw();
 	}
-	/*const auto pos = m_pTransform->GetPosition();
-	Renderer::GetInstance().RenderTexture(*mTexture, pos.x, pos.y);*/
 }
 
-//void dae::GameObject::SetTexture(const std::string& filename)
-//{
-//	mTexture = ResourceManager::GetInstance().LoadTexture(filename);
-//}
+void dae::GameObject::AddComponent(std::shared_ptr<BaseComponent> component)
+{
+	//First check if user isnt trying to add transformcomponent
+	if(typeid(*component) == typeid(TransformComponent) && (m_pTransform))
+		return;
+	
+	//Add to vector of components
+	m_pComponents.push_back(component);
+	component->m_pGameObject = this;
+}
 
-//void dae::GameObject::SetPosition(float x, float y)
-//{
-//	mTransform.SetPosition(x, y, 0.0f);
-//}
+void dae::GameObject::RemoveComponent(std::shared_ptr<BaseComponent> component)
+{
+	//First check if user isnt trying to remove transformcomponent
+	if(typeid(*component) == typeid(TransformComponent))
+		return;
+
+	auto comp = std::find(m_pComponents.begin(), m_pComponents.end(), component);
+	
+	//return if component wasnt found
+	if(comp == m_pComponents.end())
+		return;
+
+	//erase if found
+	m_pComponents.erase(comp);
+	component->m_pGameObject = nullptr;
+}

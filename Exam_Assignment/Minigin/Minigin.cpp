@@ -11,6 +11,8 @@
 #include "Scenegraph/TextObject.h"
 #include "Scenegraph/GameObject.h"
 #include "Scenegraph/Scene.h"
+#include "Components/TextComponent.h"
+#include "Game/FPSScene.h"
 
 
 void dae::Minigin::Initialize()
@@ -41,21 +43,7 @@ void dae::Minigin::Initialize()
  */
 void dae::Minigin::LoadGame() const
 {
-	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
-
-	auto go = std::make_shared<GameObject>();
-	//go->SetTexture("background.jpg");
-	scene.Add(go);
-
-	go = std::make_shared<GameObject>();
-	//go->SetTexture("logo.png");
-	//go->SetPosition(216, 180);
-	scene.Add(go);
-
-	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
-	to->SetPosition(80, 20);
-	scene.Add(to);
+	SceneManager::GetInstance().CreateScene<FPSScene>("Demo");
 }
 
 void dae::Minigin::Cleanup()

@@ -6,6 +6,7 @@ namespace dae
 	public:
 		virtual void Update() = 0;
 		virtual void Draw() const = 0;
+		virtual void Initialize() = 0;
 
 		SceneObject() = default;
 		virtual ~SceneObject() = default;

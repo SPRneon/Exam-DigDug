@@ -5,12 +5,23 @@
 
 namespace dae
 {
-	class FPSScene :public Scene
+	class FPSScene final :public Scene
 	{
+	public:
+		explicit  FPSScene(const std::string& name);
+		~FPSScene() = default;
 
+		FPSScene(const FPSScene& other) = delete;
+		FPSScene(FPSScene&& other) = delete;
+		FPSScene& operator=(const FPSScene& other) = delete;
+		FPSScene& operator=(FPSScene&& other) = delete;
+	protected:
+		void Initialize() override;
+		void Update() override;
+		void Draw() const override;
 
 	private:
-		GameObject* m_FPSCounter;
+		std::shared_ptr<GameObject> m_FPSCounter = nullptr;
 	};
 }
 

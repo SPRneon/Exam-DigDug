@@ -10,7 +10,10 @@ namespace dae
 	class TransformComponent final : public BaseComponent
 	{
 		
-	public:		
+	public:
+		TransformComponent() = default;
+		~TransformComponent() = default;
+
 		const glm::vec3& GetPosition() const { return m_Position; }
 		void SetPosition(float x, float y, float z);
 		void SetScale(float xScale, float yScale, float zScale);

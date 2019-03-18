@@ -47,6 +47,16 @@ void dae::GameTime::Update()
 		m_ElapsedGameTime = 0;
 
 	m_TotalGameTime = std::chrono::duration_cast<std::chrono::nanoseconds>(m_CurrTime - m_BeginTime).count() - m_PausedTime;
+
+	//FPS LOGIC
+	m_FpsTimer += m_ElapsedGameTime;
+	++m_FpsCount;
+	if(m_FpsTimer >= 1.0f)
+	{
+		m_FPS = m_FpsCount;
+		m_FpsCount = 0;
+		m_FpsTimer -= 1.0f;
+	}
 }
 
 
