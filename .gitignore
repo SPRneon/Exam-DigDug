@@ -2,4 +2,8 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/Exam_Assignment/.vs/Minigin/v15/ipch
+/Exam_Assignment/.vs/
+/Exam_Assignment/3rdParty/
+/Exam_Assignment/Data/
+/Exam_Assignment/DigDug/
+/Exam_Assignment/2DAE06_Programming4_05_Watteeuw_Zeno

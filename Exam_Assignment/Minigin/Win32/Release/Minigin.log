@@ -1,0 +1,31 @@
+﻿  Audio.cpp
+  BaseCommand.cpp
+  BaseComponent.cpp
+  InputManager.cpp
+  Locator.cpp
+  SceneManager.cpp
+  TransformComponent.cpp
+  ResourceManager.cpp
+  Log.cpp
+  GameTime.cpp
+  FPSScene.cpp
+  Font.cpp
+  Renderer.cpp
+  Main.cpp
+  Minigin.cpp
+  MiniginPCH.cpp
+  GameObject.cpp
+  Scene.cpp
+  TextObject.cpp
+  Texture2D.cpp
+  TextRenderer.cpp
+  TextComponent.cpp
+  TextureComponent.cpp
+LINK : error C2220: warning treated as error - no 'executable' file generated
+LINK : warning C4727: PCH named c:\users\zeno watteeuw\documents\school\prog4\master\exam_assignment\minigin\win32\release\.pch with same timestamp found in c:\users\zeno watteeuw\documents\school\prog4\master\exam_assignment\minigin\win32\release\gametime.obj and c:\users\zeno watteeuw\documents\school\prog4\master\exam_assignment\minigin\win32\release\log.obj.  Using first PCH.
+LINK : warning C4727: PCH named c:\users\zeno watteeuw\documents\school\prog4\master\exam_assignment\minigin\win32\release\.pch with same timestamp found in c:\users\zeno watteeuw\documents\school\prog4\master\exam_assignment\minigin\win32\release\texturecomponent.obj and c:\users\zeno watteeuw\documents\school\prog4\master\exam_assignment\minigin\win32\release\textcomponent.obj.  Using first PCH.
+     Creating library C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Release\Minigin.lib and object C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Release\Minigin.exp
+  Generating code
+c:\users\zeno watteeuw\documents\school\prog4\master\exam_assignment\minigin\main.cpp(17): warning C4702: unreachable code
+  All 912 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+LINK : fatal error LNK1257: code generation failed

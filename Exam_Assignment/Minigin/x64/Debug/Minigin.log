@@ -1,14 +1,11 @@
-﻿  FPSScene.cpp
-  Minigin.vcxproj -> C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\x64\Debug\Minigin.exe
-  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2\lib\x64\SDL2.dll
-  1 File(s) copied
-  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_image\lib\x64\libjpeg-9.dll
-  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_image\lib\x64\libpng16-16.dll
-  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_image\lib\x64\libtiff-5.dll
-  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_image\lib\x64\libwebp-7.dll
-  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_image\lib\x64\SDL2_image.dll
-  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_image\lib\x64\zlib1.dll
-  6 File(s) copied
-  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_ttf\lib\x64\libfreetype-6.dll
-  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_ttf\lib\x64\SDL2_ttf.dll
-  2 File(s) copied
+﻿     Creating library C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\x64\Debug\Minigin.lib and object C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\x64\Debug\Minigin.exp
+Audio.obj : error LNK2019: unresolved external symbol FMOD_System_Create referenced in function "enum FMOD_RESULT __cdecl FMOD::System_Create(class FMOD::System * *)" (?System_Create@FMOD@@YA?AW4FMOD_RESULT@@PEAPEAVSystem@1@@Z)
+Audio.obj : error LNK2019: unresolved external symbol "public: enum FMOD_RESULT __cdecl FMOD::System::setOutput(enum FMOD_OUTPUTTYPE)" (?setOutput@System@FMOD@@QEAA?AW4FMOD_RESULT@@W4FMOD_OUTPUTTYPE@@@Z) referenced in function "public: void __cdecl Audio::init(void)" (?init@Audio@@QEAAXXZ)
+Audio.obj : error LNK2019: unresolved external symbol "public: enum FMOD_RESULT __cdecl FMOD::System::getNumDrivers(int *)" (?getNumDrivers@System@FMOD@@QEAA?AW4FMOD_RESULT@@PEAH@Z) referenced in function "public: void __cdecl Audio::init(void)" (?init@Audio@@QEAAXXZ)
+Audio.obj : error LNK2019: unresolved external symbol "public: enum FMOD_RESULT __cdecl FMOD::System::init(int,unsigned int,void *)" (?init@System@FMOD@@QEAA?AW4FMOD_RESULT@@HIPEAX@Z) referenced in function "public: void __cdecl Audio::init(void)" (?init@Audio@@QEAAXXZ)
+Audio.obj : error LNK2019: unresolved external symbol "public: enum FMOD_RESULT __cdecl FMOD::System::getVersion(unsigned int *)" (?getVersion@System@FMOD@@QEAA?AW4FMOD_RESULT@@PEAI@Z) referenced in function "public: void __cdecl Audio::init(void)" (?init@Audio@@QEAAXXZ)
+Audio.obj : error LNK2019: unresolved external symbol "public: enum FMOD_RESULT __cdecl FMOD::System::createSound(char const *,unsigned int,struct FMOD_CREATESOUNDEXINFO *,class FMOD::Sound * *)" (?createSound@System@FMOD@@QEAA?AW4FMOD_RESULT@@PEBDIPEAUFMOD_CREATESOUNDEXINFO@@PEAPEAVSound@2@@Z) referenced in function "public: virtual void __cdecl ConsoleAudio::addSound(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?addSound@ConsoleAudio@@UEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0@Z)
+Audio.obj : error LNK2019: unresolved external symbol "public: enum FMOD_RESULT __cdecl FMOD::System::playSound(class FMOD::Sound *,class FMOD::ChannelGroup *,bool,class FMOD::Channel * *)" (?playSound@System@FMOD@@QEAA?AW4FMOD_RESULT@@PEAVSound@2@PEAVChannelGroup@2@_NPEAPEAVChannel@2@@Z) referenced in function "public: virtual void __cdecl ConsoleAudio::playSound(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?playSound@ConsoleAudio@@UEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\Fmod\lib\fmod_vc.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\Fmod\lib\fmodL_vc.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\x64\Debug\Minigin.exe : fatal error LNK1120: 7 unresolved externals

@@ -2,17 +2,18 @@
 #include "Minigin.h"
 #include <chrono>
 #include <thread>
-#include "Base/InputManager.h"
-#include "Base/SceneManager.h"
-#include "Graphics/Renderer.h"
-#include "Content/ResourceManager.h"
-#include "Base/GameTime.h"
+#include "InputManager.h"
+#include "SceneManager.h"
+#include "Renderer.h"
+#include "ResourceManager.h"
+#include "GameTime.h"
 #include <SDL.h>
-#include "Scenegraph/TextObject.h"
-#include "Scenegraph/GameObject.h"
-#include "Scenegraph/Scene.h"
-#include "Components/TextComponent.h"
-#include "Game/FPSScene.h"
+#include "TextObject.h"
+#include "GameObject.h"
+#include "Scene.h"
+#include "TextComponent.h"
+#include "FPSScene.h"
+
 
 
 void dae::Minigin::Initialize()
@@ -44,6 +45,7 @@ void dae::Minigin::Initialize()
 void dae::Minigin::LoadGame() const
 {
 	SceneManager::GetInstance().CreateScene<FPSScene>("Demo");
+	
 }
 
 void dae::Minigin::Cleanup()
@@ -60,28 +62,27 @@ void dae::Minigin::Run()
 
 	// tell the resource manager where he can find the game data
 	ResourceManager::GetInstance().Init("../Data/");
-
+	InputManager::GetInstance().Init();
 	LoadGame();
-
 	{
-		
-		auto t = std::chrono::high_resolution_clock::now();
 		auto& gameTime = GameTime::GetInstance();
+		gameTime.Reset();
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
+		Locator::initialize();
 
 		bool doContinue = true;
 		while (doContinue)
 		{
-			doContinue = input.ProcessInput();
-
+			//Get time in order
 			gameTime.Update();
+			//Handle Input
+			input.ProcessInput();
+			//Update scenes 
 			sceneManager.Update();
+			//Draw
 			renderer.Render();
-
-			t += std::chrono::milliseconds(msPerFrame);
-			std::this_thread::sleep_until(t);
 		}
 	}
 
