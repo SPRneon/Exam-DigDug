@@ -127,6 +127,9 @@
     <ClInclude Include="LevelGrid.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="LevelScene.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -205,6 +208,9 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="LevelGrid.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelScene.cpp">
       <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>

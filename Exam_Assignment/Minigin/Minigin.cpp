@@ -13,7 +13,7 @@
 #include "Scene.h"
 #include "TextComponent.h"
 #include "FPSScene.h"
-
+#include "LevelScene.h"
 
 
 void dae::Minigin::Initialize()
@@ -44,7 +44,7 @@ void dae::Minigin::Initialize()
  */
 void dae::Minigin::LoadGame() const
 {
-	SceneManager::GetInstance().CreateScene<FPSScene>("Demo");
+	SceneManager::GetInstance().CreateScene<LevelScene>("Demo");
 	
 }
 

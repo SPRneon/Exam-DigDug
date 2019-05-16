@@ -7,6 +7,8 @@
 #include "TextureComponent.h"
 #include "InputManager.h"
 #include "CommandComponent.h"
+#include "Renderer.h"
+#include "MathHelper.h"
 
 
 dae::FPSScene::FPSScene(const std::string& name) : Scene(name){}
@@ -77,5 +79,11 @@ void dae::FPSScene::Draw() const
 {
 	
 }
+
+void dae::FPSScene::PostDraw() const
+{
+	
+}
+
 
 

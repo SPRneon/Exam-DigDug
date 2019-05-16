@@ -207,6 +207,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClInclude Include="CommandComponent.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="LevelGrid.h" />
+    <ClInclude Include="LevelScene.h" />
     <ClInclude Include="Locator.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneManager.h" />
@@ -238,6 +239,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClCompile Include="CommandComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LevelGrid.cpp" />
+    <ClCompile Include="LevelScene.cpp" />
     <ClCompile Include="Locator.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneManager.cpp" />

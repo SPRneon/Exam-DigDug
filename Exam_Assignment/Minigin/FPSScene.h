@@ -18,7 +18,9 @@ namespace dae
 	protected:
 		void Initialize() override;
 		void Update() override;
+		void PostUpdate() override{}
 		void Draw() const override;
+		void PostDraw() const override;
 
 	private:
 		std::shared_ptr<GameObject> m_FPSCounter = nullptr;

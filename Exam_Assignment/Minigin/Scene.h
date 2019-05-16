@@ -18,7 +18,9 @@ namespace dae
 
 	protected:
 		virtual void Update() = 0;
+		virtual void PostUpdate() =0;
 		virtual void Draw() const = 0;
+		virtual void PostDraw() const = 0;
 		virtual void Initialize() = 0;
 
 		explicit Scene(const std::string& name);

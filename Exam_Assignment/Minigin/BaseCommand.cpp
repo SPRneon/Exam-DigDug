@@ -59,7 +59,8 @@ void dae::FartCommand::execute()
 
 void dae::ExitCommand::execute()
 {
-	*m_pExitBool = false;
+	//TODO:
+	//Try to cleanly exit the APP
 }
 
  

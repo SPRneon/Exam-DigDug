@@ -34,6 +34,8 @@ void dae::Scene::RootUpdate()
 		gameObject->Update();
 	}
 
+	PostUpdate();
+
 }
 
 void dae::Scene::RootDraw()
@@ -44,6 +46,8 @@ void dae::Scene::RootDraw()
 	{
 		gameObject->Draw();
 	}
+
+	PostDraw();
 }
 
 
