@@ -23,7 +23,7 @@ protected:
 		void PostDraw() const override;
 private:
 	LevelGrid* m_pGrid;
-	GameObject* m_pPlayer;
+	std::shared_ptr<GameObject> m_pPlayer;
 };
 }
 

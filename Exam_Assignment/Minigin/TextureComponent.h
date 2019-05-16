@@ -1,11 +1,14 @@
 #pragma once
 #include "BaseComponent.h"
-
+#pragma warning(push)
+#pragma warning (disable:4201)
+#include <glm/vec3.hpp>
+#pragma warning(pop)
 
 namespace dae{
 
 
-	class Texture2D;
+class Texture2D;
 class TextureComponent final : public BaseComponent
 {
 public:

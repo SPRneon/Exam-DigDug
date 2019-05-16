@@ -4,6 +4,7 @@
 #include "TransformComponent.h"
 #include "CommandComponent.h"
 #include "Minigin.h"
+#include "GameTime.h"
 
 void dae::BaseCommand::AddToCommandStream()
 {
@@ -62,5 +63,13 @@ void dae::ExitCommand::execute()
 	//TODO:
 	//Try to cleanly exit the APP
 }
+
+void dae::MoveCommand::execute()
+{
+	auto pos = m_pGameObject->GetTransform()->GetPosition();
+	//auto deltaVel = m_MoveVel * GameTime::GetInstance().GetElapsed();
+	m_pGameObject->GetTransform()->Translate(m_MoveVel.x,m_MoveVel.y,0);
+}
+
 
  

@@ -17,6 +17,13 @@ namespace dae
 	class GameObject final : public SceneObject
 	{
 	public:
+		GameObject();
+		virtual ~GameObject();
+		GameObject(const GameObject& other) = delete;
+		GameObject(GameObject&& other) = delete;
+		GameObject& operator=(const GameObject& other) = delete;
+		GameObject& operator=(GameObject&& other) = delete;
+
 		void Update() override;
 		void Draw() const override;
 		void Initialize() override;
@@ -24,13 +31,6 @@ namespace dae
 		std::shared_ptr<TransformComponent> GetTransform(){return m_pTransform;}
 		void AddComponent(std::shared_ptr<BaseComponent> component);
 		void RemoveComponent(std::shared_ptr<BaseComponent> component);
-
-		GameObject() = default;
-		virtual ~GameObject();
-		GameObject(const GameObject& other) = delete;
-		GameObject(GameObject&& other) = delete;
-		GameObject& operator=(const GameObject& other) = delete;
-		GameObject& operator=(GameObject&& other) = delete;
 
 		template <class T>
 		std::shared_ptr<T> GetComponent()

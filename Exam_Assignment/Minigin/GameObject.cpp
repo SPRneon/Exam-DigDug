@@ -5,13 +5,18 @@
 #include "BaseComponent.h"
 #include "TransformComponent.h"
 
+dae::GameObject::GameObject()
+{
+	m_pTransform = std::make_shared<TransformComponent>();
+	AddComponent(m_pTransform);
+}
+
+
 dae::GameObject::~GameObject() = default;
 
 
 void dae::GameObject::Initialize()
 {
-	m_pTransform = std::make_shared<TransformComponent>();
-	AddComponent(m_pTransform);
 
 	for(UINT i = 0; i < m_pComponents.size(); ++i)
 	{

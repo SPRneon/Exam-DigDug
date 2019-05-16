@@ -1,6 +1,10 @@
 #pragma once
 #include <iostream>
 #include "Locator.h"
+#pragma warning(push)
+#pragma warning (disable:4201)
+#include <glm/vec2.hpp>
+#pragma warning(pop)
 
 namespace dae {
 	class GameObject;
@@ -63,5 +67,16 @@ public:
 	 std::string GetCommandName() const override{ return name;}
 private:
 	const std::string name = "Exit Command";
+};
+
+class MoveCommand final : public BaseCommand
+{
+public:
+	MoveCommand(std::shared_ptr<GameObject> pGameObject, glm::vec2 linVel):BaseCommand(pGameObject), m_MoveVel(linVel){}
+	 void execute() override;
+	 std::string GetCommandName() const override{ return name;}
+private:
+	const std::string name = "Exit Command";
+	glm::vec2 m_MoveVel;
 };
 }

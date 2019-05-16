@@ -8,9 +8,10 @@ namespace dae
 {
 	struct Color
 	{
-		Color(UINT8 r, UINT8 g, UINT8 b, UINT8 a = 255):r(r),g(g),b(b),a(a){};
+		Color(UINT8 r, UINT8 g, UINT8 b, UINT8 a = 255):r(r),g(g),b(b),a(a)
+		{rgb[0] = r; rgb[1] = g, rgb[2] = b;}
 		UINT8 r,g,b,a;
-
+		UINT8 rgb[3];
 	
 	};
 }
@@ -26,4 +27,8 @@ namespace  Colors
 	const dae::Color magenta(0,255,255);
 	const dae::Color white(255,255,255);
 	const dae::Color black(0,0,0);
+	const dae::Color LightSand(255,184,0);
+	const dae::Color DarkSand(229,114,5);
+	const dae::Color LightClay(187,35,5);
+	const dae::Color DarkClay(158,2,5);
 }

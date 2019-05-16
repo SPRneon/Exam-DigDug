@@ -4,13 +4,16 @@
 #include <glm/vec2.hpp>
 #pragma warning(pop)
 #include <array>
+#include "MathHelper.h"
 
 
 namespace dae{
 	class GameObject;
 	struct Cell
 	{
-		Cell(int row, int column, bool visited,glm::vec2 pos, glm::vec2 scale):row(row),column(column),visited(visited), scale(scale)
+		Cell(int row, int column, bool visited,glm::vec2 pos, glm::vec2 scale, Color color)
+		:row(row),column(column),visited(visited),
+		scale(scale), color(color)
 		{
 			position.x = scale.x * column + pos.x;
 			position.y = scale.y * row + pos.y;
@@ -19,6 +22,7 @@ namespace dae{
 		bool visited = false;
 		glm::vec2 position;
 		glm::vec2 scale;
+		dae::Color color;
 	};
 
 	typedef std::vector<std::vector<Cell>> CellGrid;
@@ -41,7 +45,7 @@ private:
 	int m_Rows;
 	int m_Columns;
 	int m_NrCells;
-
+	Color m_GroundColors[4] = { Colors::LightSand, Colors::DarkSand, Colors::LightClay, Colors::DarkClay};
 
 	CellGrid m_GridCells;
 

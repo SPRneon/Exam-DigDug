@@ -8,7 +8,21 @@ dae::LevelGrid::LevelGrid(int rows, int columns, glm::vec2 pos, glm::vec2 scale)
 	m_Columns(columns),
 	m_NrCells(rows * columns)
 {
-	SetRowsAndCollums(m_Rows,m_Columns, pos, scale);
+	auto rowEdge = static_cast<int>(rows / 4);
+
+
+	for(int i = 0; i < rows;++i)
+	{
+		std::vector<Cell> colVector;
+		for(int j = 0; j < columns;++j)
+		{
+			colVector.push_back(Cell(i,j,false, pos,scale, m_GroundColors[static_cast<int>(i/rowEdge)]));
+		}
+		m_GridCells.push_back(colVector);
+	}
+		
+	m_Rows = rows;
+	m_Columns = columns;
 	
 }
 
@@ -29,12 +43,14 @@ void dae::LevelGrid::SetRowsAndCollums(const int rows, const int columns, glm::v
 		row.clear();
 	//Clear all the rows
 	m_GridCells.clear();
+
+	auto rowEdge = static_cast<int>(rows / 4);
 	for(int i = 0; i < rows;++i)
 	{
 		std::vector<Cell> colVector;
 		for(int j = 0; j < columns;++j)
 		{
-			colVector.push_back(Cell(i,j,false, pos,scale));
+			colVector.push_back(Cell(i,j,false, pos,scale,m_GroundColors[i/rowEdge]));
 		}
 		m_GridCells.push_back(colVector);
 	}

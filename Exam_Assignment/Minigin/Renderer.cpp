@@ -66,5 +66,7 @@ void dae::Renderer::RenderSquare( const float x, const float y, const float widt
 	dst.h = static_cast<int>(height);
 	SDL_SetRenderDrawColor(GetSDLRenderer(),color);
 	SDL_RenderFillRect(GetSDLRenderer(),&dst);
+	SDL_SetRenderDrawColor(GetSDLRenderer(),Colors::black);
+	//SDL_RenderClear(GetSDLRenderer());
 	
 }
