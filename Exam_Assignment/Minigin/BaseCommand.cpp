@@ -2,6 +2,13 @@
 #include "BaseCommand.h"
 #include "GameObject.h"
 #include "TransformComponent.h"
+#include "CommandComponent.h"
+#include "Minigin.h"
+
+void dae::BaseCommand::AddToCommandStream()
+{
+	m_pGameObject->GetComponent<CommandComponent>()->AddToCommandStream(shared_from_this());
+}
 
 
 void dae::JumpCommand::execute()
@@ -48,6 +55,11 @@ void dae::FartCommand::execute()
 	}
 	else
 		throw std::exception("Logger::GetAudio() -> Audio was not yet initialized");
+}
+
+void dae::ExitCommand::execute()
+{
+	*m_pExitBool = false;
 }
 
  

@@ -6,7 +6,7 @@ namespace dae {
 	class GameObject;
 
 
-class BaseCommand
+class BaseCommand : public std::enable_shared_from_this<BaseCommand>
 {
 public:
 	BaseCommand(std::shared_ptr<GameObject> pGameObject):m_pGameObject(pGameObject){}
@@ -54,5 +54,14 @@ public:
 	 std::string GetCommandName() const override{ return name;}
 private:
 	const std::string name = "Fart Command";
+};
+
+class ExitCommand final : public BaseCommand
+{
+public:	
+	 void execute() override;
+	 std::string GetCommandName() const override{ return name;}
+private:
+	const std::string name = "Exit Command";
 };
 }

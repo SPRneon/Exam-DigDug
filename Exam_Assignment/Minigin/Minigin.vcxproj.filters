@@ -124,6 +124,9 @@
     <ClInclude Include="CommandComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="LevelGrid.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -200,6 +203,9 @@
     </ClCompile>
     <ClCompile Include="CommandComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelGrid.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

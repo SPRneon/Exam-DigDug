@@ -10,6 +10,7 @@
 //*******************//
 dae::InputManager::InputManager()
 {
+	
 }
 
 void dae::InputManager::Init()
@@ -17,6 +18,7 @@ void dae::InputManager::Init()
 	if(m_IsInitialized)
 		throw std::exception("InputManager::Init() > The inputmanager has already been initalized");
 	//Init keyboard and mouse
+
 	m_UseKeyboard = true;
 
 	KBcurrentState.fill(false);
@@ -159,12 +161,15 @@ void dae::InputManager::HandleInput()
 
 
 		if(currAction->IsTriggered)
-		{		
+		{	
 			for(auto command : m_pCommands[currAction->ActionId])
 			{
+				if(currAction->ActionId == 69)
+					command->execute();
 				command->AddToCommandStream();
 				
 			}
+			
 		}
 	}
 

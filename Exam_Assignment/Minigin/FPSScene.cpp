@@ -6,6 +6,7 @@
 #include "GameTime.h"
 #include "TextureComponent.h"
 #include "InputManager.h"
+#include "CommandComponent.h"
 
 
 dae::FPSScene::FPSScene(const std::string& name) : Scene(name){}
@@ -24,6 +25,7 @@ void dae::FPSScene::Initialize()
 	m_FPSCounter->AddComponent(background);
 	m_FPSCounter->AddComponent(logo);
 	m_FPSCounter->AddComponent(text);
+	m_FPSCounter->AddComponent(std::make_shared<CommandComponent>());
 	this->Add(m_FPSCounter);
 	
 	m_TimeCounter = std::make_shared<GameObject>();
@@ -36,6 +38,7 @@ void dae::FPSScene::Initialize()
 	auto elaText = std::make_shared<TextComponent>("Test",font);
 	elaText->SetPosition(5,80);
 	m_ElapsedCounter->AddComponent(elaText);
+	m_ElapsedCounter->AddComponent(std::make_shared<CommandComponent>());
 	this->Add(m_ElapsedCounter);
 
 
@@ -44,6 +47,11 @@ void dae::FPSScene::Initialize()
 	auto ia = InputAction(0,KeyState::JustPressed,'A',-1,XINPUT_GAMEPAD_A,0);
 	auto command = std::make_shared<JumpCommand>(m_FPSCounter,5.f);
 	if(input->AddInput(ia,command))
+		std::cout << "Command was added" << std::endl;
+
+	auto ia2 = InputAction(1,KeyState::Released,'S',-1,XINPUT_GAMEPAD_B,0);
+	auto command2 = std::make_shared<JumpCommand>(m_ElapsedCounter,-5.f);
+	if(input->AddInput(ia2,command2))
 		std::cout << "Command was added" << std::endl;
 	
 }

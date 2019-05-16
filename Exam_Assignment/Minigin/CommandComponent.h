@@ -17,8 +17,11 @@ public:
 
 	void AddToCommandStream(std::shared_ptr<BaseCommand> pCommand);
 	void PerformAllCommands();
-	void PerformCommands(int nrOfCommands = 1);
-	void UndoCommand(int nrOfUndos = 1);
+
+
+	void Update() override;
+	void Initialize() override{m_IsInitialized = true;}
+	void Draw() const override{}
 
 	CommandComponent(const CommandComponent& other) = delete;
 	CommandComponent(CommandComponent&& other) noexcept = delete;

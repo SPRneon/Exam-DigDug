@@ -5,6 +5,7 @@
 
 dae::CommandComponent::CommandComponent()
 {
+	
 }
 
 
@@ -14,7 +15,7 @@ dae::CommandComponent::~CommandComponent()
 
 void dae::CommandComponent::AddToCommandStream(std::shared_ptr<BaseCommand> pCommand)
 {
-	m_pCommandStream.push(m_pCommandStream.front);
+	m_pCommandStream.push(pCommand);
 }
 
 void dae::CommandComponent::PerformAllCommands()
@@ -25,4 +26,10 @@ void dae::CommandComponent::PerformAllCommands()
 		m_pCommandStream.pop();
 	}
 }
+
+void dae::CommandComponent::Update()
+{
+	PerformAllCommands();
+}
+
 

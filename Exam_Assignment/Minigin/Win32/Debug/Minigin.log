@@ -1,5 +1,17 @@
-﻿  CommandComponent.cpp
+﻿  BaseCommand.cpp
+  CommandComponent.cpp
+  FPSScene.cpp
   InputManager.cpp
+  Main.cpp
+  Minigin.cpp
+  Player.cpp
      Creating library C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.lib and object C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exp
-InputManager.obj : error LNK2019: unresolved external symbol "public: void __thiscall dae::BaseCommand::AddToCommandStream(void)" (?AddToCommandStream@BaseCommand@dae@@QAEXXZ) referenced in function "public: void __thiscall dae::InputManager::HandleInput(void)" (?HandleInput@InputManager@dae@@QAEXXZ)
-C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exe : fatal error LNK1120: 1 unresolved externals
+  Minigin.vcxproj -> C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exe
+  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\Fmod\bin\fmod.dll
+  1 File(s) copied
+  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2\lib\x86\SDL2.dll
+  1 File(s) copied
+  File not found - x86*.dll
+  0 File(s) copied
+  File not found - x86*.dll
+  0 File(s) copied

@@ -70,8 +70,9 @@ void dae::Minigin::Run()
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
-		Locator::initialize();
 
+		Locator::initialize();
+		
 		bool doContinue = true;
 		while (doContinue)
 		{
