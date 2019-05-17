@@ -5,7 +5,7 @@
 #include "Texture2D.h"
 #include "TransformComponent.h"
 
-dae::TextComponent::TextComponent(const std::string & text, std::shared_ptr<Font> font, glm::vec3 color)
+dae::TextComponent::TextComponent(const std::string & text, std::shared_ptr<Font> font, Color color)
 	: m_NeedsUpdate(true), m_Text(text), m_pFont(font), m_pTexture(nullptr), m_TextColor(color)
 {
 }
@@ -14,7 +14,7 @@ void dae::TextComponent::Update()
 {
 	if (m_NeedsUpdate)
 	{
-		const SDL_Color color = {static_cast<Uint8>(m_TextColor.r),static_cast<Uint8>(m_TextColor.g), static_cast<Uint8>(m_TextColor.b)}; 
+		const SDL_Color color = {m_TextColor.r,m_TextColor.g,m_TextColor.b}; 
 		const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), m_Text.c_str(), color);
 		if (surf == nullptr) 
 		{
@@ -73,13 +73,13 @@ void dae::TextComponent::SetPosition(float x, float y)
 
 void dae::TextComponent::SetColor(float r, float g, float b)
 {
-	m_TextColor.r = r;
-	m_TextColor.g = g;
-	m_TextColor.b = b;
+	m_TextColor.r = static_cast<UINT8>(r);
+	m_TextColor.g = static_cast<UINT8>(g);
+	m_TextColor.b = static_cast<UINT8>(b);
 
 }
 
-void dae::TextComponent::SetColor(glm::vec3 color)
+void dae::TextComponent::SetColor(Color color)
 {
 	m_TextColor = color;
 }

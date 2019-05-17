@@ -1,10 +1,11 @@
 #pragma once
 #pragma warning(push)
 #pragma warning (disable:4201)
-#include <glm/vec3.hpp>
+#include <glm/vec2.hpp>
 #pragma warning(pop)
 
 #include "BaseComponent.h"
+#include "MathHelper.h"
 
 namespace dae{
 	class TextObject;
@@ -20,8 +21,8 @@ public:
 		void SetText(const std::string& text);
 		void SetPosition(float x, float y);
 		void SetColor(float r, float g, float b);
-		void SetColor(glm::vec3 color);
-		explicit TextComponent(const std::string& text, std::shared_ptr<Font> font, glm::vec3 color =  {255.f,255.f,255.f});
+		void SetColor(Color color);
+		explicit TextComponent(const std::string& text, std::shared_ptr<Font> font, Color color =  Colors::white);
 		virtual ~TextComponent() = default;
 
 		//disabling default and copy
@@ -33,8 +34,8 @@ public:
 private:
 	bool m_IsWorldSpace = false;
 	bool m_IsScreenSpace = true;
-	glm::vec3 m_ScreenPos = glm::vec3(0.f,0.f,0.f);
-	glm::vec3 m_TextColor = glm::vec3(255.f,255.f,255.f);
+	glm::vec2 m_ScreenPos = glm::vec2(0.f,0.f);
+	Color m_TextColor = Colors::white;
 	bool m_NeedsUpdate;
 	std::shared_ptr<Font> m_pFont;
 	std::shared_ptr<Texture2D> m_pTexture;

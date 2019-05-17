@@ -18,7 +18,7 @@ void dae::FPSScene::Initialize()
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 
 	m_FPSCounter = std::make_shared<GameObject>();
-	auto text = std::make_shared<TextComponent>("Test",font, glm::vec3(255,255,0));
+	auto text = std::make_shared<TextComponent>("Test",font, Colors::yellow);
 	text->SetPosition(5,20);
 	auto logo = std::make_shared<TextureComponent>("logo.png");
 	logo->SetPosition(216, 180);

@@ -8,7 +8,7 @@ dae::LevelGrid::LevelGrid(int rows, int columns, glm::vec2 pos, glm::vec2 scale)
 	m_Columns(columns),
 	m_NrCells(rows * columns)
 {
-	auto rowEdge = static_cast<int>(rows / 4);
+	auto rowEdge = static_cast<int>(rows / 3);
 
 
 	for(int i = 0; i < rows;++i)

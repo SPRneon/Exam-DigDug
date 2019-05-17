@@ -204,6 +204,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClInclude Include="Audio.h" />
     <ClInclude Include="BaseCommand.h" />
     <ClInclude Include="BaseComponent.h" />
+    <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="CommandComponent.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="LevelGrid.h" />
@@ -236,6 +237,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="BaseCommand.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
+    <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="CommandComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LevelGrid.cpp" />

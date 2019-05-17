@@ -10,6 +10,7 @@
 #include "BaseCommand.h"
 #include "TextureComponent.h"
 #include "TransformComponent.h"
+#include "ColliderComponent.h"
 
 
 dae::LevelScene::LevelScene(const std::string & name)
@@ -26,9 +27,12 @@ void dae::LevelScene::Initialize()
 	//Player
 	m_pPlayer = std::make_shared<GameObject>();
 	m_pPlayer->AddComponent(std::make_shared<CommandComponent>());
-	m_pPlayer->AddComponent(std::make_shared<TextureComponent>("player.png"));
-	m_pPlayer->GetTransform()->SetPosition(100,100,0);
+	m_pPlayer->AddComponent(std::make_shared<TextureComponent>("player.png"));	
+	m_pPlayer->AddComponent(std::make_shared<ColliderComponent>());
+	m_pPlayer->GetTransform()->SetPosition(100,100);
 	this->Add(m_pPlayer);
+
+
 
 
 	//INPUT
@@ -48,22 +52,23 @@ void dae::LevelScene::Initialize()
 
 void dae::LevelScene::Update()
 {
+	
 }
 
 void dae::LevelScene::Draw() const
 {
-	
+	for(auto row : m_pGrid->GetCells())
+	{
+		for(auto col : row)
+		{
+			if(!col.visited)
+				Renderer::GetInstance().RenderSquare(col.position.x,col.position.y,col.scale.x,col.scale.y,col.color, false);
+		}
+	}
 	
 }
 
 void dae::LevelScene::PostDraw() const
 {
-	/*for(auto row : m_pGrid->GetCells())
-	{
-		for(auto col : row)
-		{
-			if(!col.visited)
-				Renderer::GetInstance().RenderSquare(col.position.x,col.position.y,col.scale.x,col.scale.y,col.color);
-		}
-	}*/
+	
 }

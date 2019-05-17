@@ -56,7 +56,7 @@ inline int SDL_SetRenderDrawColor(SDL_Renderer* renderer, dae::Color color)
 	return SDL_SetRenderDrawColor(renderer, color.r,color.g,color.b,color.a);
 }
 
-void dae::Renderer::RenderSquare( const float x, const float y, const float width, const float height, dae::Color color) const
+void dae::Renderer::RenderSquare( const float x, const float y, const float width, const float height, dae::Color color, bool fillRect) const
 {
 	UNREFERENCED_PARAMETER(color);
 	SDL_Rect dst;
@@ -65,7 +65,10 @@ void dae::Renderer::RenderSquare( const float x, const float y, const float widt
 	dst.w = static_cast<int>(width);
 	dst.h = static_cast<int>(height);
 	SDL_SetRenderDrawColor(GetSDLRenderer(),color);
-	SDL_RenderFillRect(GetSDLRenderer(),&dst);
+	if(fillRect)
+		SDL_RenderFillRect(GetSDLRenderer(),&dst);
+	else
+		SDL_RenderDrawRects(GetSDLRenderer(),&dst,1);
 	SDL_SetRenderDrawColor(GetSDLRenderer(),Colors::black);
 	//SDL_RenderClear(GetSDLRenderer());
 	
