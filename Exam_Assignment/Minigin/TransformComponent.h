@@ -25,11 +25,14 @@ namespace dae
 
 		const glm::vec2& GetPosition() const { return m_Position; }
 		void SetPosition(float x, float y);
+		void SetPosition(glm::vec2 xy);
 		void SetScale(float xScale, float yScale);
+		void SetScale(glm::vec2 xy);
 		void SetScale(float scale);
 		void SetRotation(float x, float y,  bool euler = true);
-
+		void SetRotation(glm::vec2 xy,  bool euler = true);
 		void Translate(float x, float y);
+		void Translate(int x, int y);
 		void Rotate(float x, float y, bool euler = true);
 
 	private:

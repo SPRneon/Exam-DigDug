@@ -22,7 +22,7 @@ void dae::JumpCommand::execute()
 	//else
 		//throw std::exception("Logger::GetAudio() -> Audio was not yet initialized");
 	auto pos = m_pGameObject->GetTransform()->GetPosition();
-	m_pGameObject->GetTransform()->Translate(0,-m_JumpVel);
+	m_pGameObject->GetTransform()->Translate(0.f,-m_JumpVel);
 }
 
 void dae::FireCommand::execute()
@@ -65,11 +65,20 @@ void dae::ExitCommand::execute()
 }
 
 void dae::MoveCommand::execute()
-{
-	auto pos = m_pGameObject->GetTransform()->GetPosition();
-	//auto deltaVel = m_MoveVel * GameTime::GetInstance().GetElapsed();
+{//TODO: Incorporate LEVELGRid
+	
+	
+	if(m_pGameObject->GetComponent<ColliderComponent>() && m_pGameObject->GetComponent<ColliderComponent>()->WillCollide(m_MoveVel))
+		return;
 	m_pGameObject->GetTransform()->Translate(m_MoveVel.x,m_MoveVel.y);
+	
 }
+
+void dae::MoveCommand::undo()
+{
+	m_pGameObject->GetTransform()->Translate(-m_MoveVel.x * 2,-m_MoveVel.y * 2);
+}
+
 
 
  

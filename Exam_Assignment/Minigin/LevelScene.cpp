@@ -23,13 +23,24 @@ void dae::LevelScene::Initialize()
 {
 	//Grid
 	m_pGrid = new LevelGrid(15,17,{0,100},{450/15,480/16});
+	///Cells
+	for(auto row : m_pGrid->GetCells())
+	{
+		for(auto coll : row)
+			Add(coll.GetGameObject());
+	}
+	///PILLARS
+	for(auto pillar : m_pGrid->GetPillars())
+		Add(pillar.GetGameObject());
 
 	//Player
 	m_pPlayer = std::make_shared<GameObject>();
 	m_pPlayer->AddComponent(std::make_shared<CommandComponent>());
-	m_pPlayer->AddComponent(std::make_shared<TextureComponent>("player.png"));	
-	m_pPlayer->AddComponent(std::make_shared<ColliderComponent>());
-	m_pPlayer->GetTransform()->SetPosition(100,100);
+	m_pPlayer->AddComponent(std::make_shared<TextureComponent>("player.png"));
+	SDL_Rect rect{0,0,20,20};
+	m_pPlayer->AddComponent(std::make_shared<ColliderComponent>(rect,PLAYER));
+	m_pPlayer->GetComponent<ColliderComponent>()->AddIgnoreGroup(TERRAIN);
+	m_pPlayer->GetTransform()->SetPosition(100,10);
 	this->Add(m_pPlayer);
 
 
@@ -52,7 +63,7 @@ void dae::LevelScene::Initialize()
 
 void dae::LevelScene::Update()
 {
-	
+	m_pGrid->Update();
 }
 
 void dae::LevelScene::Draw() const
@@ -61,11 +72,12 @@ void dae::LevelScene::Draw() const
 	{
 		for(auto col : row)
 		{
-			if(!col.visited)
-				Renderer::GetInstance().RenderSquare(col.position.x,col.position.y,col.scale.x,col.scale.y,col.color, false);
+			if(!col.IsVisited())
+				Renderer::GetInstance().RenderSquare(col.GetPosition().x,col.GetPosition().y,col.GetScale().x,col.GetScale().y,col.GetColor(), true);
 		}
 	}
-	
+	auto rect = *m_pPlayer->GetComponent<ColliderComponent>()->GetShape();
+	Renderer::GetInstance().RenderSquare(rect,Colors::green, false);
 }
 
 void dae::LevelScene::PostDraw() const

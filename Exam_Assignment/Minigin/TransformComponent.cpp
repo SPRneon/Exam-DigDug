@@ -24,10 +24,20 @@ void dae::TransformComponent::SetPosition(const float x, const float y)
 	m_Position.y = y;
 }
 
+void dae::TransformComponent::SetPosition(glm::vec2 xy)
+{
+	SetPosition(xy.x,xy.y);
+}
+
 void dae::TransformComponent::SetScale(float xScale, float yScale)
 {
 	m_Scale.x = xScale;
 	m_Scale.y = yScale;
+}
+
+void dae::TransformComponent::SetScale(glm::vec2 xy)
+{
+	SetScale(xy.x,xy.y);
 }
 
 void dae::TransformComponent::SetScale(float scale)
@@ -52,11 +62,21 @@ void dae::TransformComponent::SetRotation(float x, float y, bool euler)
 	}
 }
 
+void dae::TransformComponent::SetRotation(glm::vec2 xy, bool euler)
+{
+	Rotate(xy.x,xy.y, euler);
+}
+
 void dae::TransformComponent::Translate(float x, float y )
 {
 	m_Position.x += x;
 	m_Position.y += y;
 
+}
+
+void dae::TransformComponent::Translate(int x, int y)
+{
+	Translate(static_cast<float>(x), static_cast<float>(y));
 }
 
 void dae::TransformComponent::Rotate(float x, float y,  bool euler)

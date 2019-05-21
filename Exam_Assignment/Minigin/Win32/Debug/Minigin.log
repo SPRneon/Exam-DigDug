@@ -1,32 +1,11 @@
-﻿  Audio.cpp
-  BaseCommand.cpp
-  BaseComponent.cpp
+﻿  BaseCommand.cpp
   ColliderComponent.cpp
   CommandComponent.cpp
   InputManager.cpp
   LevelGrid.cpp
   LevelScene.cpp
-  Locator.cpp
-  Player.cpp
-  SceneManager.cpp
-  TransformComponent.cpp
-  ResourceManager.cpp
-  Log.cpp
-  GameTime.cpp
   FPSScene.cpp
-  Font.cpp
-  Renderer.cpp
-  Main.cpp
   Minigin.cpp
-  MiniginPCH.cpp
-  GameObject.cpp
-  Scene.cpp
-  TextObject.cpp
-  Texture2D.cpp
-  TextRenderer.cpp
-  TextComponent.cpp
-  TextureComponent.cpp
-     Creating library C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.lib and object C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exp
   Minigin.vcxproj -> C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exe
   C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\Fmod\bin\fmod.dll
   1 File(s) copied

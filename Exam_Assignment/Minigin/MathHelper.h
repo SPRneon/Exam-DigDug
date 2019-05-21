@@ -1,5 +1,8 @@
 #pragma once
-
+#pragma warning(push)
+#pragma warning (disable:4201)
+#include <glm/vec2.hpp>
+#pragma warning(pop)
 
 #ifndef M_PI
 	#define M_PI   3.14159265358979323846264338327950288f
@@ -14,6 +17,12 @@ namespace dae
 		UINT8 rgb[3];
 	
 	};
+}
+
+inline std::ostream& operator<<(std::ostream& os, const glm::vec2& vec)
+{
+    os << '[' << vec.x << ',' << vec.y << ']';
+    return os;
 }
 
 namespace  Colors

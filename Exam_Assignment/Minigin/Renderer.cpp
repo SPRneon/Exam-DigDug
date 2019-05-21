@@ -64,12 +64,16 @@ void dae::Renderer::RenderSquare( const float x, const float y, const float widt
 	dst.y = static_cast<int>(y);
 	dst.w = static_cast<int>(width);
 	dst.h = static_cast<int>(height);
+	RenderSquare(dst,color,fillRect);
+}
+
+void dae::Renderer::RenderSquare(SDL_Rect rect, Color color, bool fillRect) const
+{
 	SDL_SetRenderDrawColor(GetSDLRenderer(),color);
 	if(fillRect)
-		SDL_RenderFillRect(GetSDLRenderer(),&dst);
+		SDL_RenderFillRect(GetSDLRenderer(),&rect);
 	else
-		SDL_RenderDrawRects(GetSDLRenderer(),&dst,1);
+		SDL_RenderDrawRects(GetSDLRenderer(),&rect,1);
 	SDL_SetRenderDrawColor(GetSDLRenderer(),Colors::black);
-	//SDL_RenderClear(GetSDLRenderer());
-	
 }
+
