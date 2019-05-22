@@ -1,15 +1,17 @@
 #include "MiniginPCH.h"
 #include "SceneManager.h"
 #include "Scene.h"
-
+#include "GameTime.h"
 
 
 void dae::SceneManager::Update()
 {
+	
 	for(auto scene : mScenes)
 	{
 		scene->RootUpdate();
 	}
+	
 }
 
 void dae::SceneManager::Draw()

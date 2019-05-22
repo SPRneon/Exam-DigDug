@@ -22,4 +22,17 @@ const std::string descriptor =  "ScoreEvent";
 
 	int m_Score;
 };
+
+class LivesEvent final : public Event
+{
+public:
+	LivesEvent(){};
+	const std::string descriptor =  "LivesEvent";
+	virtual std::string type() const
+	{
+		 return descriptor;
+	}
+
+
+};
 }

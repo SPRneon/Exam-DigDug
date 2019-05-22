@@ -4,16 +4,33 @@
 #include "ResourceManager.h"
 #include "TextComponent.h"
 #include "TransformComponent.h"
+#include "TextureComponent.h"
 
 
 dae::UIDisplay::UIDisplay()
 {
-	m_pGameObject = std::make_shared<GameObject>();
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
+
+	//Score
+	auto scoreDisplay = std::make_shared<GameObject>();
 	auto text = std::make_shared<TextComponent>("Score: ",font, Colors::white);
 	text->SetText("Score: " + std::to_string(m_score));
-	m_pGameObject->AddComponent(text);
-	m_pGameObject->GetTransform()->SetPosition(0.f,50.f);
+	scoreDisplay->AddComponent(text);
+	scoreDisplay->GetTransform()->SetPosition(0.f,50.f);
+	m_pDisplayMap.insert_or_assign("ScoreDisplay",scoreDisplay);
+
+	//Lives
+	auto livesDisplay = std::make_shared<GameObject>();
+	text = std::make_shared<TextComponent>("Lives: ",font, Colors::white);
+	livesDisplay->AddComponent(text);
+	for(int i = 0; i < m_Lives; ++i){
+	auto image = std::make_shared<TextureComponent>("Lives.png");
+		image->SetPosition(60.f + 20.f * i,10.f);
+		livesDisplay->AddComponent(image);
+		m_pLiveTextures.push_back(image);
+	}
+	livesDisplay->GetTransform()->SetPosition(300.f,50.f);
+	m_pDisplayMap.insert_or_assign("LivesDisplay",livesDisplay);
 }
 
 dae::UIDisplay::~UIDisplay()
@@ -29,7 +46,18 @@ void dae::UIDisplay::OnNotify(Event* event)
 	{
 		auto score = dynamic_cast<ScoreEvent*>(event)->m_Score;
 		m_score += score;
-		m_pGameObject->GetComponent<TextComponent>()->SetText("Score: " + std::to_string(m_score));
+		m_pDisplayMap.at("ScoreDisplay")->GetComponent<TextComponent>()->SetText("Score: " + std::to_string(m_score));
 	}
+	if(str == "LivesEvent")
+	{
+		if(m_Lives > 0){
+			auto liveTC = m_pLiveTextures.back();
+			m_pLiveTextures.pop_back();
+			m_pDisplayMap.at("LivesDisplay")->RemoveComponent(liveTC);
+			m_Lives--;	
+		}
+	}
+	
+
 }
 

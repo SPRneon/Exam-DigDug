@@ -18,6 +18,7 @@ public:
 	void AddToCommandStream(std::shared_ptr<BaseCommand> pCommand);
 	void PerformAllCommands();
 
+	void SetControllable(bool controllable){m_IsControllable = controllable;}
 
 	void Update() override;
 	void Initialize() override{m_IsInitialized = true;}
@@ -30,7 +31,7 @@ public:
 
 private:
 	std::queue<std::shared_ptr<BaseCommand>> m_pCommandStream;
-
+	bool m_IsControllable = true;
 };
 }
 

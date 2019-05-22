@@ -48,6 +48,7 @@ dae::Pillar::Pillar(glm::vec2 pos, glm::vec2 scale)
 	m_pGameObject = std::make_shared<GameObject>();
 	m_pGameObject->GetTransform()->SetPosition(m_Position);
 	m_pGameObject->GetTransform()->SetScale(m_Scale);
+	//TODO DEBUGGING
 	auto collider = std::make_shared<ColliderComponent>(
 				SDL_Rect{static_cast<int>(m_Position.x),
 					static_cast<int>(m_Position.y),
@@ -204,8 +205,12 @@ glm::vec2 dae::LevelGrid::GetPathForDir(Direction dir, glm::vec2 pos)
 			tarCol++;
 	break;
 	}
+
+	if(tarRow == currCell.GetRow() && tarCol == currCell.m_Column)
+		return GetPathForDir(IncrementDirectionCW(dir),pos);
 	
 	auto targetCell = GetCell(tarRow,tarCol);
+	
 
 	//dist target-player + player-currcell
 	auto dist1 = glm::distance(targetCell.m_Center, pos)+glm::distance(pos,currCell.m_Center);

@@ -15,7 +15,8 @@ dae::CommandComponent::~CommandComponent()
 
 void dae::CommandComponent::AddToCommandStream(std::shared_ptr<BaseCommand> pCommand)
 {
-	m_pCommandStream.push(pCommand);
+	if(m_IsControllable)
+		m_pCommandStream.push(pCommand);
 }
 
 void dae::CommandComponent::PerformAllCommands()

@@ -30,6 +30,8 @@ namespace dae{
 		int GetRow()const { return m_Row;}
 		int GetCol()const { return m_Column;}
 		Color GetColor() const {return m_Color;}
+
+		
 	private:
 		int m_Row = -1, m_Column =-1;
 		bool m_Visited = false;
@@ -72,17 +74,22 @@ public:
 	void Update();
 
 	void SetRowsAndCollums(const int rows, const int columns, glm::vec2 pos, glm::vec2 scale);
+
 	Cell GetCell(int row, int column){ return m_GridCells[row][column];}
 	Cell GetCell(glm::vec2 pos);
 	std::shared_ptr<Cell> GetCellPtr(glm::vec2 pos);
+
 	Grid GetCells() const {return m_GridCells;}
 	std::vector<Pillar> GetPillars() const {return m_GridPillars;}
+
 	int GetNrCells() const {return m_NrCells;}
 	int GetRows() const {return m_Rows;}
 	int GetColumns() const {return m_Columns;}
+
 	void SetCellInactive(int row, int column);
 	glm::vec2 GetPathForDir(Direction dir, glm::vec2 pos);
 	std::vector<std::pair<dae::Cell,dae::Direction>> GetNeighbourCells(std::array<Direction,4> directionOrder, Cell currCell);
+
 	void SetSubject(std::shared_ptr<Subject> obs){m_pSubject = obs;}
 	std::shared_ptr<Subject> GetSubject(){return m_pSubject;}
 

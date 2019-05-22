@@ -211,6 +211,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClInclude Include="Fygar.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="LevelGrid.h" />
+    <ClInclude Include="LevelObserver.h" />
     <ClInclude Include="LevelScene.h" />
     <ClInclude Include="Locator.h" />
     <ClInclude Include="Observer.h" />

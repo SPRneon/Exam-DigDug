@@ -11,13 +11,13 @@
 #include "TransformComponent.h"
 #include "GameTime.h"
 
-dae::TextureComponent::TextureComponent(const std::string & path, int nrOfSprites, float animSpeed)
+dae::TextureComponent::TextureComponent(const std::string & path, int nrOfSprites, float animSpeed, bool autoPlay)
 	: m_TexturePos(0.f,0.f),
 	m_NrOfSprites(nrOfSprites),
-	m_AnimSpeed(animSpeed)
+	m_AnimSpeed(animSpeed),
+	m_Play(autoPlay)
 {
 	assert(m_NrOfSprites >= 1);
-	m_pTexture = ResourceManager::GetInstance().LoadTexture(path);
 	m_pTexture  = ResourceManager::GetInstance().LoadTexture(path);
 	m_ClipWH.x = static_cast<float>((m_pTexture->getWidth() / m_NrOfSprites));
 	m_ClipWH.y = static_cast<float>(m_pTexture->getHeight());
@@ -25,7 +25,7 @@ dae::TextureComponent::TextureComponent(const std::string & path, int nrOfSprite
 
 void dae::TextureComponent::Update()
 {
-	if(m_NrOfSprites > 1)
+	if(m_Play && m_NrOfSprites > 1 )
 	{
 		if(m_DeltaTime < m_AnimSpeed)
 			m_DeltaTime += GameTime::GetInstance().GetElapsed();

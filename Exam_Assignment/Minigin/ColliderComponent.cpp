@@ -13,8 +13,7 @@ dae::ColliderComponent::ColliderComponent(SDL_Rect rect, ColliderGroups collisio
 	m_HasCollided(false),
 	m_IsStatic(isStatic),
 	m_IsSleeping(isSleeping),
-	m_Pivot(0.f,0.f),
-	m_Offset(rect.x,rect.y)
+	m_Pivot(0.f,0.f)
 {
 	
 		
@@ -94,8 +93,8 @@ void dae::ColliderComponent::Update()
 	if(!m_IsStatic)
 	{
 		auto pos = GetTransform()->GetPosition();
-		m_Shape.x = static_cast<int>(pos.x + (m_Shape.w * m_Pivot.x));
-		m_Shape.y = static_cast<int>(pos.y+ (m_Shape.h * m_Pivot.y));
+		m_Shape.x = static_cast<int>(pos.x + (m_Shape.w * m_Pivot.x) + m_Offset.x);
+		m_Shape.y = static_cast<int>(pos.y+ (m_Shape.h * m_Pivot.y) + m_Offset.y);
 	}
 	if(CheckCollisions())
 		m_HasCollided = true;
@@ -119,8 +118,8 @@ void dae::ColliderComponent::Initialize()
 	m_GroupsToIgnore.push_back(m_CollisionGroup);
 
 	auto pos = GetTransform()->GetPosition();
-		m_Shape.x = static_cast<int>(pos.x + (m_Shape.w * m_Pivot.x));
-		m_Shape.y = static_cast<int>(pos.y+ (m_Shape.h * m_Pivot.y));
+		m_Shape.x = static_cast<int>(pos.x + (m_Shape.w * m_Pivot.x) + m_Offset.x);
+		m_Shape.y = static_cast<int>(pos.y+ (m_Shape.h * m_Pivot.y) + m_Offset.y);
 
 	m_IsInitialized = true;
 }
@@ -129,3 +128,13 @@ void dae::ColliderComponent::Draw() const
 {
 	Renderer::GetInstance().RenderSquare(m_Shape,Colors::red,false);
 }
+
+void dae::ColliderComponent::SetRect(SDL_Rect rect)
+{
+	auto pos = GetTransform()->GetPosition();
+	m_Shape.x = static_cast<int>(pos.x + (m_Shape.w * m_Pivot.x) + m_Offset.x);
+	m_Shape.y = static_cast<int>(pos.y+ (m_Shape.h * m_Pivot.y) + m_Offset.y);
+	m_Shape.w = rect.w;
+	m_Shape.h = rect.h;
+}
+

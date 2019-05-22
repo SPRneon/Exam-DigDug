@@ -5,11 +5,12 @@
 namespace dae
 {
 	class GameObject;
-	class Scene  
+	class Scene  : public std::enable_shared_from_this<Scene>
 	{
 		friend class SceneManager;
 	public:
 		void Add(const std::shared_ptr<GameObject>& object);
+		void Remove(const std::shared_ptr<GameObject>& object);
 		virtual ~Scene() = default;
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;

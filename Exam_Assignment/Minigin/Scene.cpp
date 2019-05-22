@@ -10,8 +10,18 @@ dae::Scene::Scene(const std::string& name) : mName(name) {}
 void dae::Scene::Add(const std::shared_ptr<GameObject>& object)
 {
 	mObjects.push_back(object);
-	
+	object->SetScene(shared_from_this());
 }
+
+void dae::Scene::Remove(const std::shared_ptr<GameObject>& object)
+{
+	auto it = std::find(mObjects.begin(), mObjects.end(),object);
+	if(it != mObjects.end())
+	{
+		mObjects.erase(it);
+	}
+}
+
 
 
 void dae::Scene::RootInitialize()

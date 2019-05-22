@@ -15,6 +15,8 @@
 #include "UIDisplay.h"
 #include "Player.h"
 #include "Fygar.h"
+#include "LevelObserver.h"
+#include "GameTime.h"
 
 
 dae::LevelScene::LevelScene(const std::string & name)
@@ -69,26 +71,34 @@ void dae::LevelScene::Initialize()
 	this->Add(m_pFygar->GetGameObject());
 	//UI
 	auto ui = std::make_shared<UIDisplay>();
-	Add(ui->GetGameObject());
+	for(auto it = ui->GetMap()->begin(); it != ui->GetMap()->end();++it)
+	{
+		Add(it->second);
+	}
 
 	auto scoreSubject = std::make_shared<Subject>();
 	scoreSubject->AddObserver(ui);
 	levelGrid.SetSubject(scoreSubject);
+	auto livesSubject = std::make_shared<Subject>();
+	livesSubject->AddObserver(ui);
+	m_pObserver = std::make_shared<LevelObserver>(this);
+	livesSubject->AddObserver(m_pObserver);
+	m_pPlayer->SetSubject(livesSubject);
 	//ui->SetSubject()
 
 
 	//INPUT
 	InputAction ia = {0,KeyState::Pressed,'A',-1,XINPUT_GAMEPAD_DPAD_LEFT,0};
-	auto cmdLeft = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),LEFT,1.f);
+	auto cmdLeft = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),LEFT,50.f);
 	InputManager::GetInstance().AddInput(ia,cmdLeft);
 	ia = {1,KeyState::Pressed,'W',-1,XINPUT_GAMEPAD_DPAD_UP,0};
-	auto cmdUp = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),UP,1.f);
+	auto cmdUp = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),UP,50.f);
 	InputManager::GetInstance().AddInput(ia,cmdUp);
 	ia = {2,KeyState::Pressed,'D',-1,XINPUT_GAMEPAD_DPAD_RIGHT,0};
-	auto cmdRight = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),RIGHT,1.f);
+	auto cmdRight = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),RIGHT,50.f);
 	InputManager::GetInstance().AddInput(ia,cmdRight);
 	ia = {3,KeyState::Pressed,'S',-1,XINPUT_GAMEPAD_DPAD_DOWN,0};
-	auto cmdDown = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),DOWN,1.f);
+	auto cmdDown = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),DOWN,50.f);
 	InputManager::GetInstance().AddInput(ia,cmdDown);
 }
 
@@ -96,6 +106,7 @@ void dae::LevelScene::Update()
 {
 	LevelGrid::GetInstance().Update();
 	m_pFygar->Update();
+	m_pPlayer->Update();
 }
 
 void dae::LevelScene::Draw() const
@@ -117,3 +128,11 @@ void dae::LevelScene::PostDraw() const
 {
 	
 }
+
+void dae::LevelScene::ResetLevel() const
+{
+	std::cout << "Should reset level" << std::endl;
+	GameTime::GetInstance().Stop();
+
+}
+

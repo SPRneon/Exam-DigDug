@@ -7,6 +7,8 @@
 #include "CommandComponent.h"
 #include "TextureComponent.h"
 #include "ColliderComponent.h"
+#include "Subject.h"
+#include "Event.h"
 
 dae::Player::Player(int playerID) : m_PlayerIndex(playerID)
 {
@@ -16,6 +18,19 @@ dae::Player::Player(int playerID) : m_PlayerIndex(playerID)
 	SDL_Rect rect{0,0,20,20};
 	m_pGameObject->AddComponent(std::make_shared<ColliderComponent>(rect,PLAYER));
 	m_pGameObject->GetComponent<ColliderComponent>()->AddIgnoreGroup(TERRAIN);
+}
+
+
+void dae::Player::Update()
+{
+	if(m_pGameObject->GetComponent<ColliderComponent>()->HasCollided())
+	{
+		std::cout << "Has Collided" << std::endl;
+		m_pSubject->notify(new LivesEvent());
+		m_pGameObject->GetComponent<ColliderComponent>()->PutToSleep();
+		m_pGameObject->GetComponent<CommandComponent>()->SetControllable(false);
+		
+	}
 }
 
 
