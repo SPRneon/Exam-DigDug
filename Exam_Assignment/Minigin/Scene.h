@@ -10,7 +10,7 @@ namespace dae
 		friend class SceneManager;
 	public:
 		void Add(const std::shared_ptr<SceneObject>& object);
-		virtual ~Scene();
+		virtual ~Scene() = default;
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;
 		Scene& operator=(const Scene& other) = delete;

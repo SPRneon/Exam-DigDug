@@ -12,7 +12,8 @@ dae::ColliderComponent::ColliderComponent(SDL_Rect rect, ColliderGroups collisio
 	m_CollisionGroup(collisionGroup),
 	m_HasCollided(false),
 	m_IsStatic(isStatic),
-	m_IsSleeping(isSleeping)
+	m_IsSleeping(isSleeping),
+	m_Pivot(0.f,0.f)
 {
 	
 		
@@ -39,7 +40,8 @@ SDL_Rect* dae::ColliderComponent::CheckCollisions() const
 		//CHeck if there is any intersection
 		for(auto collider : it->second)
 		{
-			
+			if(collider->IsSleeping())
+				continue;
 			auto result = SDL_IntersectRect(&m_Shape, collider->GetShape(), temp);
 			if(result == SDL_TRUE)
 			{			
@@ -48,6 +50,7 @@ SDL_Rect* dae::ColliderComponent::CheckCollisions() const
 		}
 	}
 	//No intersetion detected thus no overlap
+	delete temp;
 	return nullptr;
 
 }
@@ -68,7 +71,8 @@ SDL_Rect* dae::ColliderComponent::WillCollide(glm::vec2 movement)
 		//CHeck if there is any intersection
 		for(auto collider : it->second)
 		{
-			
+			if(collider->IsSleeping())
+				continue;
 			auto result = SDL_IntersectRect(&testShape, collider->GetShape(), temp);
 			if(result == SDL_TRUE)
 			{			
@@ -89,8 +93,8 @@ void dae::ColliderComponent::Update()
 	if(!m_IsStatic)
 	{
 		auto pos = GetTransform()->GetPosition();
-		m_Shape.x = static_cast<int>(pos.x);
-		m_Shape.y = static_cast<int>(pos.y);
+		m_Shape.x = static_cast<int>(pos.x + (m_Shape.w * m_Pivot.x));
+		m_Shape.y = static_cast<int>(pos.y+ (m_Shape.h * m_Pivot.y));
 	}
 	if(CheckCollisions())
 		m_HasCollided = true;
@@ -112,6 +116,11 @@ void dae::ColliderComponent::Initialize()
 		m_pColliderMap.insert_or_assign(m_CollisionGroup,vec);
 	}
 	m_GroupsToIgnore.push_back(m_CollisionGroup);
+
+	auto pos = GetTransform()->GetPosition();
+		m_Shape.x = static_cast<int>(pos.x + (m_Shape.w * m_Pivot.x));
+		m_Shape.y = static_cast<int>(pos.y+ (m_Shape.h * m_Pivot.y));
+
 	m_IsInitialized = true;
 }
 

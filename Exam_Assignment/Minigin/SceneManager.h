@@ -40,6 +40,7 @@ namespace dae
 
 		void Update();
 		void Draw();
+		void CleanUp();
 
 	private:
 		std::vector<std::shared_ptr<Scene>> mScenes;

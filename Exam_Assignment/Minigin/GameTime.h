@@ -14,7 +14,7 @@ namespace dae
 		void Reset();
 		void Update();
 
-		const float GetElapsed(){return m_ElapsedGameTime;}
+		const float GetElapsed(){return m_ElapsedGameTime / 1000000.f;}
 		const float GetTotal() { return m_TotalGameTime;}
 		const int GetFps(){return m_FPS;}
 

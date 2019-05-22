@@ -7,6 +7,7 @@
 #pragma warning(pop)
 #include <SDL.h>
 #include <map>
+#include <algorithm>
 
 namespace dae{
 	enum ColliderGroups
@@ -29,10 +30,12 @@ public:
 	
 	SDL_Rect* CheckCollisions() const;
 	const SDL_Rect* GetShape() const {return &m_Shape;}
+	const glm::vec2 GetShapeCenter() const {return  glm::vec2{m_Shape.x + m_Shape.w / 2.f,m_Shape.y + m_Shape.h / 2.f};}
 	const bool HasCollided() const{return m_HasCollided;}
 	SDL_Rect* WillCollide(glm::vec2 movement);
 	void SetStatic(){m_IsStatic = true;}
 	void SetDynamic(){m_IsStatic = false;}
+	void SetPivot(glm::vec2 pivot){m_Pivot = pivot;}
 	void AddIgnoreGroup(ColliderGroups ignoreGroup){m_GroupsToIgnore.push_back(ignoreGroup);}
 
 	const bool IsSleeping() const {return m_IsSleeping;}
@@ -57,6 +60,7 @@ private:
 	bool m_IsStatic = false;
 	bool m_IsSleeping= false;
 	std::vector<ColliderGroups> m_GroupsToIgnore;
+	glm::vec2 m_Pivot;
 
 	static std::map<int,std::vector<ColliderComponent*>> m_pColliderMap;
 };

@@ -38,6 +38,12 @@
     <Filter Include="Game\Prefabs">
       <UniqueIdentifier>{e54b550d-5f4b-40f9-9bd0-565a7069091d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{a8e5f324-260a-4fbd-8abc-cc09fc92a745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObserveSystem">
+      <UniqueIdentifier>{209eac1b-fcb4-4eae-9616-302ceded8fce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneManager.h">
@@ -133,6 +139,30 @@
     <ClInclude Include="ColliderComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="FiniteStateMachine.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="States.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>ObserveSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>ObserveSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>ObserveSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="UIDisplay.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Fygar.h">
+      <Filter>Game\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Transition.h">
+      <Filter>AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -218,6 +248,21 @@
     </ClCompile>
     <ClCompile Include="TextObject.cpp">
       <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="FiniteStateMachine.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="States.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDisplay.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Fygar.cpp">
+      <Filter>Game\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Transition.cpp">
+      <Filter>AI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

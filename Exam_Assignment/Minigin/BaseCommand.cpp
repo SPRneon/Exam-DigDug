@@ -5,6 +5,15 @@
 #include "CommandComponent.h"
 #include "Minigin.h"
 #include "GameTime.h"
+#include "ColliderComponent.h"
+#include "LevelGrid.h"
+#include "Singleton.h"
+#pragma warning(push)
+#pragma warning (disable:4201)
+#include "glm/geometric.hpp"
+#pragma warning(pop)
+
+
 
 void dae::BaseCommand::AddToCommandStream()
 {
@@ -36,47 +45,84 @@ if(typeid(Locator::getAudio()) != typeid(NullAudio)){
 		throw std::exception("Logger::GetAudio() -> Audio was not yet initialized");
 }
 
-void dae::DuckCommand::execute()
- {
-	std::cout <<  "Duck by player("  << ")" << std::endl;
-	if(typeid(Locator::getAudio()) != typeid(NullAudio)){
-	Locator::getAudio().stopAllSounds(); 
-	Locator::getAudio().playSound("../Data/Audio/Duck.wav");
-	}
-	else
-		throw std::exception("Logger::GetAudio() -> Audio was not yet initialized");
- }
-
-void dae::FartCommand::execute()
-{
-	std::cout <<  "Fart by player("  << ")" << std::endl;
-	if(typeid(Locator::getAudio()) != typeid(NullAudio)){
-	Locator::getAudio().stopAllSounds();
-	Locator::getAudio().playSound("../Data/Audio/Fart.wav");
-	}
-	else
-		throw std::exception("Logger::GetAudio() -> Audio was not yet initialized");
-}
 
 void dae::ExitCommand::execute()
 {
-	//TODO:
-	//Try to cleanly exit the APP
+	Minigin::Continue = false;
 }
 
 void dae::MoveCommand::execute()
-{//TODO: Incorporate LEVELGRid
-	
-	
-	if(m_pGameObject->GetComponent<ColliderComponent>() && m_pGameObject->GetComponent<ColliderComponent>()->WillCollide(m_MoveVel))
-		return;
-	m_pGameObject->GetTransform()->Translate(m_MoveVel.x,m_MoveVel.y);
+{
+	/*if(m_pGameObject->GetComponent<ColliderComponent>()->HasCollided())
+			return;*/
+
+	auto shape = m_pGameObject->GetComponent<ColliderComponent>()->GetShape();
+	glm::vec2 center = {shape->x + shape->w / 2.f,shape->y + shape->h / 2.f};
+	auto target = LevelGrid::GetInstance().GetPathForDir(m_Dir,center);
+	{
+		auto targetV = NormalizeAssert(target - center);
+		targetV *= glm::vec2{m_LinVel,m_LinVel};
+
+		
+		m_pGameObject->GetTransform()->Translate(targetV.x,targetV.y);
+	}
+}
+
+void dae::PhaseMoveCommand::execute()
+{
+	auto center = m_pGameObject->GetComponent<ColliderComponent>()->GetShapeCenter();
+	auto targetV = NormalizeAssert(m_Target - center);
+	targetV *= glm::vec2{m_LinVel,m_LinVel};
+	m_pGameObject->GetTransform()->Translate(targetV.x,targetV.y);
 	
 }
 
-void dae::MoveCommand::undo()
+
+void dae::ChaseCommand::execute()
 {
-	m_pGameObject->GetTransform()->Translate(-m_MoveVel.x * 2,-m_MoveVel.y * 2);
+	//glm::vec2 deltaPos = m_pTarget->GetTransform()->GetPosition() - m_pGameObject->GetTransform()->GetPosition();
+	//auto currCell = LevelGrid::GetInstance().GetCell(m_pGameObject->GetTransform()->GetPosition());
+	//auto tarrCell = LevelGrid::GetInstance().GetCell(m_pTarget->GetTransform()->GetPosition());
+
+	//if(currCell.GetRow() == tarrCell.GetRow() && currCell.GetCol() == currCell.GetCol())
+	//{
+	//	//In same cell, go directly to targetpos
+
+	//}
+	//else
+	//{
+	//	//Find poath through free 
+
+
+	//}
+
+	//int dirRow = tarrCell.GetRow() - currCell.GetRow();
+	//int dirCol = tarrCell.GetCol() - currCell.GetCol();
+	//
+	//if(std::abs(dirRow) > std::abs(dirCol))
+	//{
+	//	auto dir = GetIntBetweenRange(dirRow,-1,1);
+	//	tarrCell = LevelGrid::GetInstance().GetCell(currCell.GetRow()+ dir,currCell.GetCol());
+	//}
+	//else
+	//{
+	//	auto dir = GetIntBetweenRange(dirCol,-1,1);
+	//	tarrCell = LevelGrid::GetInstance().GetCell(currCell.GetRow(),currCell.GetCol() +dir);
+	//}
+
+	////TODO Make Chase shit
+	//auto dist1 = glm::distance(tarrCell.GetCenter(), m_pGameObject->GetTransform()->GetPosition())+glm::distance(m_pGameObject->GetTransform()->GetPosition(),currCell.GetCenter());
+	////dist target-currcell
+	//auto dist2 = glm::distance(tarrCell.GetCenter(),currCell.GetCenter());
+	////IF PLAYER is laready on the straightline between the cells
+	//glm::vec2 targetV;
+	//
+	//targetV = NormalizeAssert( center-tarrCell.GetCenter());
+	//
+	//	
+
+	//targetV *= glm::vec2{m_LinVel,m_LinVel};	
+	//m_pGameObject->GetTransform()->Translate(targetV.x,targetV.y);
 }
 
 

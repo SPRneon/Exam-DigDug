@@ -4,11 +4,18 @@
 #include "BaseCommand.h"
 #include <memory>
 #include "vector"
+#include "CommandComponent.h"
+#include "TextureComponent.h"
+#include "ColliderComponent.h"
 
-dae::Player::Player()
-	:m_pGameObject(nullptr)
+dae::Player::Player(int playerID) : m_PlayerIndex(playerID)
 {
-	m_pGameObject = new GameObject();
+	m_pGameObject = std::make_shared<GameObject>();
+	m_pGameObject->AddComponent(std::make_shared<CommandComponent>());
+	m_pGameObject->AddComponent(std::make_shared<TextureComponent>("player.png",2,0.5f));
+	SDL_Rect rect{0,0,20,20};
+	m_pGameObject->AddComponent(std::make_shared<ColliderComponent>(rect,PLAYER));
+	m_pGameObject->GetComponent<ColliderComponent>()->AddIgnoreGroup(TERRAIN);
 }
 
 
@@ -16,19 +23,4 @@ dae::Player::~Player()
 {
 }
 
-void dae::Player::PerformAllCommands()
-{
-	for(auto command : m_pCommandStream)
-		command->execute();
-}
-
-void dae::Player::PerformCommands(int nrOfCommands)
-{
-	UNREFERENCED_PARAMETER(nrOfCommands);
-}
-
-void dae::Player::UndoCommand(int nrOfUndos)
-{
-	UNREFERENCED_PARAMETER(nrOfUndos);
-}
 

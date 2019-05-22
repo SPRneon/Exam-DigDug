@@ -14,6 +14,6 @@ namespace dae
 		void Cleanup();
 		void Run();
 
-
+		static bool Continue;
 	};
 }

@@ -7,6 +7,8 @@ namespace dae
 	{
 	public:
 		SDL_Texture* GetSDLTexture() const;
+		int getWidth()const;
+		int getHeight()const;
 		explicit Texture2D(SDL_Texture* texture);
 		~Texture2D();
 

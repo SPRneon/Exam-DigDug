@@ -57,8 +57,8 @@ void dae::TransformComponent::SetRotation(float x, float y, bool euler)
 	}
 	else
 	{
-		m_Rotation.x = x * (180.f / M_PI);
-		m_Rotation.y = y * (180.f / M_PI);
+		m_Rotation.x = x * (180.f / static_cast<float>(M_PI));
+		m_Rotation.y = y * (180.f / static_cast<float>(M_PI));
 	}
 }
 
@@ -89,7 +89,7 @@ void dae::TransformComponent::Rotate(float x, float y,  bool euler)
 	}
 	else
 	{
-		m_Rotation.x += x * (180.f / M_PI);
-		m_Rotation.y += y * (180.f / M_PI);
+		m_Rotation.x += x * (180.f / static_cast<float>(M_PI));
+		m_Rotation.y += y * (180.f / static_cast<float>(M_PI));
 	}
 }

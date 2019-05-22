@@ -16,6 +16,8 @@
 #include "LevelScene.h"
 
 
+bool dae::Minigin::Continue = true;
+
 void dae::Minigin::Initialize()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) 
@@ -45,12 +47,14 @@ void dae::Minigin::Initialize()
 void dae::Minigin::LoadGame() const
 {
 	SceneManager::GetInstance().CreateScene<LevelScene>("Demo");
-	
+	InputAction ia{69,KeyState::Released,VK_ESCAPE,-41,XINPUT_GAMEPAD_BACK};
+	InputManager::GetInstance().AddInput(ia,std::make_shared<ExitCommand>());
 }
 
 void dae::Minigin::Cleanup()
 {
 	Renderer::GetInstance().Destroy();
+	InputManager::GetInstance().CleanUp();
 	SDL_DestroyWindow(window);
 	window = nullptr;
 	SDL_Quit();
@@ -73,8 +77,7 @@ void dae::Minigin::Run()
 
 		Locator::initialize();
 		
-		bool doContinue = true;
-		while (doContinue)
+		while (Continue)
 		{
 			//Get time in order
 			gameTime.Update();

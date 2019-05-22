@@ -101,6 +101,7 @@ namespace dae
 	{
 	public:
 		InputManager();
+		void CleanUp();
 		void Init();
 		bool InitGamepads();
 		void ProcessInput();

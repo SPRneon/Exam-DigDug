@@ -8,9 +8,12 @@
 #include "GameObject.h"
 #include "ColliderComponent.h"
 #include "TransformComponent.h"
+#include "Singleton.h"
 
 
 namespace dae{
+
+	
 	class Cell
 	{
 	public:
@@ -22,12 +25,16 @@ namespace dae{
 		bool IsVisited() const {return m_Visited;}
 		void SetVisited(bool visited){m_Visited = visited;}
 		glm::vec2 GetPosition() const { return m_Position;}
+		glm::vec2 GetCenter() const { return m_Center;}
 		glm::vec2 GetScale() const { return m_Scale;}
+		int GetRow()const { return m_Row;}
+		int GetCol()const { return m_Column;}
 		Color GetColor() const {return m_Color;}
 	private:
 		int m_Row = -1, m_Column =-1;
 		bool m_Visited = false;
 		glm::vec2 m_Position;
+		glm::vec2 m_Center;
 		glm::vec2 m_Scale;
 		dae::Color m_Color;
 		std::shared_ptr<GameObject> m_pGameObject;
@@ -52,33 +59,45 @@ namespace dae{
 	//TODO: Clean this up 
 	typedef std::vector<std::vector<Cell>> Grid;
 
+	class Subject;
 
-
-class LevelGrid 
+class LevelGrid : public Singleton<LevelGrid>
 	{
 public:
-	LevelGrid(int rows, int columns, glm::vec2 pos, glm::vec2 scale );
+	LevelGrid();
 	~LevelGrid();
+
+	void Initialize(int rows, int columns, glm::vec2 pos, glm::vec2 scale );
 
 	void Update();
 
 	void SetRowsAndCollums(const int rows, const int columns, glm::vec2 pos, glm::vec2 scale);
 	Cell GetCell(int row, int column){ return m_GridCells[row][column];}
+	Cell GetCell(glm::vec2 pos);
+	std::shared_ptr<Cell> GetCellPtr(glm::vec2 pos);
 	Grid GetCells() const {return m_GridCells;}
 	std::vector<Pillar> GetPillars() const {return m_GridPillars;}
 	int GetNrCells() const {return m_NrCells;}
 	int GetRows() const {return m_Rows;}
 	int GetColumns() const {return m_Columns;}
+	void SetCellInactive(int row, int column);
+	glm::vec2 GetPathForDir(Direction dir, glm::vec2 pos);
+	std::vector<std::pair<dae::Cell,dae::Direction>> GetNeighbourCells(std::array<Direction,4> directionOrder, Cell currCell);
+	void SetSubject(std::shared_ptr<Subject> obs){m_pSubject = obs;}
+	std::shared_ptr<Subject> GetSubject(){return m_pSubject;}
 
 private:
-	int m_Rows;
-	int m_Columns;
-	int m_NrCells;
+	int m_Rows = -1;
+	int m_Columns = -1;
+	int m_NrCells = -1;
+	glm::vec2 m_Pos = {0.f,0.f};
+	glm::vec2 m_Scale= {0.f,0.f};
 	Color m_GroundColors[4] = { Colors::LightSand, Colors::DarkSand, Colors::LightClay, Colors::DarkClay};
 
 	Grid m_GridCells;
 	std::vector<Pillar> m_GridPillars;
 
+	std::shared_ptr<Subject> m_pSubject;
 };
 }
 

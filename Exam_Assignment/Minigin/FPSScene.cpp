@@ -13,6 +13,7 @@
 
 dae::FPSScene::FPSScene(const std::string& name) : Scene(name){}
 
+
 void dae::FPSScene::Initialize()
 {
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);

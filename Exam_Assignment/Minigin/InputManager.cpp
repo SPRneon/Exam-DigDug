@@ -13,6 +13,16 @@ dae::InputManager::InputManager()
 	
 }
 
+void dae::InputManager::CleanUp()
+{
+	m_pGamePads.clear();
+	delete m_pCurrentGamePad;
+	m_pCurrentGamePad = nullptr;
+	m_InputActions.clear();
+	m_pCommands.clear();
+}
+
+
 void dae::InputManager::Init()
 {
 	if(m_IsInitialized)
@@ -166,6 +176,7 @@ void dae::InputManager::HandleInput()
 			{
 				if(currAction->ActionId == 69)
 					command->execute();
+				else
 				command->AddToCommandStream();
 				
 			}

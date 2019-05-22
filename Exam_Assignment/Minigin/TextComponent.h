@@ -22,6 +22,7 @@ public:
 		void SetPosition(float x, float y);
 		void SetColor(float r, float g, float b);
 		void SetColor(Color color);
+		void SetNeedsUpdate(bool needsUpdate){m_NeedsUpdate = needsUpdate;}
 		explicit TextComponent(const std::string& text, std::shared_ptr<Font> font, Color color =  Colors::white);
 		virtual ~TextComponent() = default;
 

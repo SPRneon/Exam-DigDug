@@ -206,12 +206,18 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="CommandComponent.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="FiniteStateMachine.h" />
+    <ClInclude Include="Fygar.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="LevelGrid.h" />
     <ClInclude Include="LevelScene.h" />
     <ClInclude Include="Locator.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="States.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Log.h" />
@@ -232,6 +238,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="TextureComponent.h" />
+    <ClInclude Include="Transition.h" />
+    <ClInclude Include="UIDisplay.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
@@ -239,12 +247,15 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="CommandComponent.cpp" />
+    <ClCompile Include="FiniteStateMachine.cpp" />
+    <ClCompile Include="Fygar.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LevelGrid.cpp" />
     <ClCompile Include="LevelScene.cpp" />
     <ClCompile Include="Locator.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="States.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Log.cpp" />
@@ -262,6 +273,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="TextureComponent.cpp" />
+    <ClCompile Include="Transition.cpp" />
+    <ClCompile Include="UIDisplay.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

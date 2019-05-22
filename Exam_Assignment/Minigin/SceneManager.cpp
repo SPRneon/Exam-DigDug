@@ -20,4 +20,11 @@ void dae::SceneManager::Draw()
 	}
 }
 
+void dae::SceneManager::CleanUp()
+{
+	/*for(auto scene : mScenes)
+		delete &scene;*/
+}
+
+
 

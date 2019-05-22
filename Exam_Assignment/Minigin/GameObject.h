@@ -13,6 +13,7 @@ namespace dae
 {
 	class TransformComponent;
 	class BaseComponent;
+	class Scene;
 
 	class GameObject final : public SceneObject
 	{
@@ -51,5 +52,6 @@ namespace dae
 		std::shared_ptr<TransformComponent> m_pTransform = nullptr;
 		std::vector<std::shared_ptr<BaseComponent>> m_pComponents;
 		std::shared_ptr<Texture2D> mTexture;
+		std::shared_ptr<Scene> m_pScene;
 	};
 }

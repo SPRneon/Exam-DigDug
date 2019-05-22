@@ -1,5 +1,4 @@
 #pragma once
-#define COMMAND_STREAM_MAX_COUNT 25
 
 namespace dae{
 
@@ -9,19 +8,12 @@ namespace dae{
 class Player
 {
 public:
-	Player();
+	Player(int playerID = -1);
 	~Player();
-
-
-	GameObject* GetGameObject() const { return m_pGameObject;}
-	void PerformAllCommands();
-	void PerformCommands(int nrOfCommands = 1);
-	void UndoCommand(int nrOfUndos = 1);
+	std::shared_ptr<GameObject> GetGameObject() const { return m_pGameObject;}
 private:
-	GameObject* m_pGameObject;
-
-	//Commands
-	std::vector<std::shared_ptr<BaseCommand>> m_pCommandStream;
-};
+	std::shared_ptr<GameObject> m_pGameObject;
+	int m_PlayerIndex;
+	};
 }
 
