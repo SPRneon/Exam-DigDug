@@ -22,7 +22,7 @@ namespace dae
 
 		void RenderTexture(const Texture2D& texture, float x, float y) const;
 		void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const;
-		void RenderTexturePart(const Texture2D& texture, SDL_Rect src, SDL_Rect dst) const;
+		void RenderTexturePart(const Texture2D& texture, SDL_Rect src, SDL_Rect dst, SDL_RendererFlip flip = SDL_FLIP_NONE ) const;
 		void RenderSquare(SDL_Rect rect, Color color = Colors::white, bool fillRect = true) const;
 		void RenderSquare(float x, float y, float width, float height, Color color = Colors::white, bool fillRect = true) const;
 		SDL_Renderer* GetSDLRenderer() const { return mRenderer; }

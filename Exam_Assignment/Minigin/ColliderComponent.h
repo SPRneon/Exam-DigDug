@@ -30,6 +30,7 @@ public:
 	
 	SDL_Rect* CheckCollisions() const;
 	const SDL_Rect* GetShape() const {return &m_Shape;}
+	void SetRect(SDL_Rect rect);
 	const glm::vec2 GetShapeCenter() const {return  glm::vec2{m_Shape.x + m_Shape.w / 2.f,m_Shape.y + m_Shape.h / 2.f};}
 	const bool HasCollided() const{return m_HasCollided;}
 	SDL_Rect* WillCollide(glm::vec2 movement);
@@ -61,7 +62,7 @@ private:
 	bool m_IsSleeping= false;
 	std::vector<ColliderGroups> m_GroupsToIgnore;
 	glm::vec2 m_Pivot;
-
+	glm::vec2 m_Offset;
 	static std::map<int,std::vector<ColliderComponent*>> m_pColliderMap;
 };
 }

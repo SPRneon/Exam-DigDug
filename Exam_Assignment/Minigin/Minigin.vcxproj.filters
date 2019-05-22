@@ -94,9 +94,6 @@
     <ClInclude Include="Scene.h">
       <Filter>Scenegraph</Filter>
     </ClInclude>
-    <ClInclude Include="SceneObject.h">
-      <Filter>Scenegraph</Filter>
-    </ClInclude>
     <ClInclude Include="Texture2D.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -132,9 +129,6 @@
     </ClInclude>
     <ClInclude Include="LevelScene.h">
       <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="TextObject.h">
-      <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="ColliderComponent.h">
       <Filter>Components</Filter>
@@ -245,9 +239,6 @@
     </ClCompile>
     <ClCompile Include="ColliderComponent.cpp">
       <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="TextObject.cpp">
-      <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="FiniteStateMachine.cpp">
       <Filter>AI</Filter>

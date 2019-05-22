@@ -8,7 +8,7 @@
 #include "MathHelper.h"
 
 namespace dae{
-	class TextObject;
+
 
 	class Font;
 	class TextComponent final : public BaseComponent

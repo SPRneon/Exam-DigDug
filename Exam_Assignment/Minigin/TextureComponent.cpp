@@ -61,7 +61,7 @@ void dae::TextureComponent::Draw() const
 			src.y = 0;
 			src.w = static_cast<int>(m_ClipWH.x);
 			src.h =  static_cast<int>(m_ClipWH.y);
-			Renderer::GetInstance().RenderTexturePart(*m_pTexture, src,dst);
+			Renderer::GetInstance().RenderTexturePart(*m_pTexture, src,dst,m_Flip);
 
 		}
 	}
@@ -96,6 +96,8 @@ void dae::TextureComponent::SetPosition(float x, float y)
 	m_TexturePos.x = x;
 	m_TexturePos.y = y;
 }
+
+
 
 
 

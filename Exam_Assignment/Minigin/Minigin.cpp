@@ -8,11 +8,7 @@
 #include "ResourceManager.h"
 #include "GameTime.h"
 #include <SDL.h>
-#include "TextObject.h"
-#include "GameObject.h"
-#include "Scene.h"
-#include "TextComponent.h"
-#include "FPSScene.h"
+
 #include "LevelScene.h"
 
 

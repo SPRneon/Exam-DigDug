@@ -23,6 +23,10 @@ void dae::FygarWanderState::Update()
 			m_WanderDir = IncrementDirectionCCW(m_WanderDir);
 	}
 	auto command = std::make_shared<MoveCommand>(m_pContext->GetActor(),m_WanderDir,0.75f);
+	if(m_WanderDir == LEFT)
+		m_pContext->GetActor()->GetComponent<TextureComponent>()->SetFlip(SDL_FLIP_HORIZONTAL);
+	else
+		m_pContext->GetActor()->GetComponent<TextureComponent>()->SetFlip(SDL_FLIP_NONE);
 	m_pContext->GetActor()->GetComponent<CommandComponent>()->AddToCommandStream(command);
 
 	//CONDITION TO GO TO CHASE
@@ -144,12 +148,25 @@ void dae::FygarPhaseState::OnExit()
 //****FYGAR FIRE****//
 void dae::FygarFireState::OnEnter()
 {
-	
+	m_pFire = std::make_shared<GameObject>();
+	m_pFire->AddComponent(std::make_shared<TextureComponent>("FygarFire.png",3,0.33f,false));
+	SDL_Rect rect {0,0,28,28};
+	m_pFire->AddComponent(std::make_shared<ColliderComponent>(rect,ENEMIES));
 }
 
 void dae::FygarFireState::Update()
 {
-	
+	if(m_deltaTime < m_FireTime)
+	{
+		m_deltaTime += GameTime::GetInstance().GetElapsed();
+	}
+	else
+	{
+		m_deltaTime -= m_FireTime;
+		m_FireStage++;
+		m_pFire->GetComponent<ColliderComponent>().gets
+		m_pFire->GetComponent<TextureComponent>()->NextFrame();
+	}
 }
 
 void dae::FygarFireState::OnExit()

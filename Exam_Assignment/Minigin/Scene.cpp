@@ -7,10 +7,10 @@ unsigned int dae::Scene::idCounter = 0;
 dae::Scene::Scene(const std::string& name) : mName(name) {}
 
 
-void dae::Scene::Add(const std::shared_ptr<SceneObject>& object)
+void dae::Scene::Add(const std::shared_ptr<GameObject>& object)
 {
 	mObjects.push_back(object);
-	o
+	
 }
 
 

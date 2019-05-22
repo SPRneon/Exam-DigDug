@@ -13,7 +13,8 @@ dae::ColliderComponent::ColliderComponent(SDL_Rect rect, ColliderGroups collisio
 	m_HasCollided(false),
 	m_IsStatic(isStatic),
 	m_IsSleeping(isSleeping),
-	m_Pivot(0.f,0.f)
+	m_Pivot(0.f,0.f),
+	m_Offset(rect.x,rect.y)
 {
 	
 		

@@ -4,12 +4,12 @@
 
 namespace dae
 {
-	class SceneObject;
-	class Scene
+	class GameObject;
+	class Scene  
 	{
 		friend class SceneManager;
 	public:
-		void Add(const std::shared_ptr<SceneObject>& object);
+		void Add(const std::shared_ptr<GameObject>& object);
 		virtual ~Scene() = default;
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;
@@ -34,7 +34,7 @@ private:
 		void RootInitialize();
 
 		
-		std::vector < std::shared_ptr<SceneObject>> mObjects{};
+		std::vector < std::shared_ptr<GameObject>> mObjects{};
 
 		static unsigned int idCounter; 
 	};

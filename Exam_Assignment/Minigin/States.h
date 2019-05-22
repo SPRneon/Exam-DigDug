@@ -70,7 +70,10 @@ namespace dae
 		virtual void Update() override;
 		virtual void OnExit() override;
 	private:
-		
+		std::shared_ptr<GameObject> m_pFire = nullptr;
+		float m_deltaTime = 0.f;
+		float m_FireTime = 0.33f;
+		int m_FireStage = 0;
 	};
 
 

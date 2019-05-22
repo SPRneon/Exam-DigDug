@@ -23,6 +23,9 @@ void dae::GameObject::Initialize()
 		if(!m_pComponents[i]->IsInitialized())
 			m_pComponents[i]->Initialize();
 	}
+
+	for(auto gameObject : m_pChildren)
+		gameObject->Initialize();
 }
 
 
@@ -33,6 +36,9 @@ void dae::GameObject::Update()
 		if(m_pComponents[i]->IsInitialized())
 			m_pComponents[i]->Update();
 	}
+
+	for(auto gameObject : m_pChildren)
+		gameObject->Update();
 }
 
 void dae::GameObject::Draw() const
@@ -43,6 +49,9 @@ void dae::GameObject::Draw() const
 		if(m_pComponents[i]->IsInitialized())
 			m_pComponents[i]->Draw();
 	}
+
+	for(auto gameObject : m_pChildren)
+		gameObject->Draw();
 }
 
 void dae::GameObject::AddComponent(std::shared_ptr<BaseComponent> component)
