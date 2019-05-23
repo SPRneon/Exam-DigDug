@@ -41,11 +41,11 @@ void dae::FygarWanderState::Update()
 		m_deltaTime -= m_PhaseTime;
 		m_pContext->GoToState(std::make_shared<FygarPhaseState>(m_pContext));
 	}
-	else if(m_deltaTime >= m_FireTime && (m_WanderDir == LEFT || m_WanderDir == RIGHT))
+	/*else if(m_deltaTime >= m_FireTime && (m_WanderDir == LEFT || m_WanderDir == RIGHT))
 	{
 		m_deltaTime -= m_FireTime;
-		m_pContext->GoToState(std::make_shared<FygarFireState>(m_pContext, m_WanderDir));
-	}
+		m_pContext->GoToState(std::make_shared<FygarChargeState>(m_pContext, m_WanderDir));
+	}*/
 
 
 }
@@ -135,12 +135,12 @@ void dae::FygarPhaseState::Update()
 {
 	
 	
-	auto command = std::make_shared<PhaseMoveCommand>(m_pContext->GetActor(),m_pTargetCell->GetCenter(),40.f);
+	auto command = std::make_shared<PhaseMoveCommand>(m_pContext->GetActor(),m_pTargetCell->GetPosition(),40.f);
 	m_pContext->GetActor()->GetComponent<CommandComponent>()->AddToCommandStream(command);
-
-	glm::vec2 deltaPos = m_pTargetCell->GetCenter() - m_pContext->GetActor()->GetTransform()->GetPosition();
+	glm::vec2 deltaPos = m_pTargetCell->GetPosition() - m_pContext->GetActor()->GetTransform()->GetPosition();
 	//CONDITION TO GO TO WANDER STATE
-	if(Magnitude(deltaPos) < 20.f)
+	std::cout << Magnitude(deltaPos) << std::endl;
+	if(Magnitude(deltaPos) < 5.f)
 	{
 		m_pContext->GoToState(std::make_shared<FygarWanderState>(m_pContext));
 		return;
@@ -154,6 +154,39 @@ void dae::FygarPhaseState::OnExit()
 	//Setting collider on
 	m_pContext->GetActor()->GetComponent<ColliderComponent>()->Awake();
 }
+
+//****FYGAR CHARGE****//
+void dae::FygarChargeState::OnEnter()
+{
+	//Setting texture
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("FygarCharge.png",2);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetAnimSpeed(0.25f);
+	if(m_WanderDir == LEFT)
+		m_pContext->GetActor()->GetComponent<TextureComponent>()->SetFlip(SDL_FLIP_HORIZONTAL);
+	
+
+}
+
+void dae::FygarChargeState::Update()
+{
+	if(m_deltaTime < m_ChargeTime)
+	{
+		m_deltaTime += GameTime::GetInstance().GetElapsed();
+	}
+	else
+	{
+		m_pContext->GoToState(std::make_shared<FygarFireState>(m_pContext, m_WanderDir));
+		return;
+	}
+}
+
+void dae::FygarChargeState::OnExit()
+{
+	//Setting texture
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("Fygar.png",2);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetAnimSpeed(0.4f);
+}
+
 
 //****FYGAR FIRE****//
 void dae::FygarFireState::OnEnter()

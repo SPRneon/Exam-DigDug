@@ -70,7 +70,7 @@ void dae::MoveCommand::execute()
 
 void dae::PhaseMoveCommand::execute()
 {
-	auto center = m_pGameObject->GetComponent<ColliderComponent>()->GetShapeCenter();
+	auto center = m_pGameObject->GetTransform()->GetPosition();
 	auto targetV = NormalizeAssert(m_Target - center);
 	targetV *= glm::vec2{m_LinVel* GameTime::GetInstance().GetElapsed(),m_LinVel* GameTime::GetInstance().GetElapsed()};
 	m_pGameObject->GetTransform()->Translate(targetV.x,targetV.y);

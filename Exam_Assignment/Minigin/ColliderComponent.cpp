@@ -81,6 +81,7 @@ SDL_Rect* dae::ColliderComponent::WillCollide(glm::vec2 movement)
 		}
 	}
 	//No intersetion detected thus no overlap
+	delete temp;
 	return nullptr;
 }
 

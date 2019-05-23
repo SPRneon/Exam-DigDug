@@ -11,7 +11,7 @@ class Observer
 {
 public:
 
-  virtual  ~Observer()= default;
+  virtual  ~Observer(){m_Subjects.clear();};
 	void AddSubject(Subject* observer)
     {
 	    m_Subjects.push_back(observer);		

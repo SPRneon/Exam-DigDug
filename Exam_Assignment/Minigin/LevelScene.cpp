@@ -29,6 +29,7 @@ dae::LevelScene::LevelScene(const std::string & name)
 dae::LevelScene::~LevelScene()
 {
 	delete m_pGrid;
+	
 }
 
 

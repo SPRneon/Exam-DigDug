@@ -23,6 +23,7 @@ public:
 	void SetTexture(std::shared_ptr<Texture2D> pTexture, int nrOfSprites = 1);
 	void SetTexture(const std::string & path, int nrOfSprites = 1);
 	void SetPosition(float x, float y);
+	void SetAnimSpeed(float animSpeed){m_AnimSpeed = animSpeed;}
 	void Translate(float x, float y){m_TexturePos.x += x; m_TexturePos.y += y;}
 	void SetFlip(SDL_RendererFlip flip){m_Flip = flip;};
 	void Pause(){m_Play = false;}
