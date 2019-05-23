@@ -58,6 +58,7 @@ private:
 	SDL_Rect m_Shape;
 	SDL_Rect* m_pIntersect;
 	ColliderGroups m_CollisionGroup;
+	ColliderGroups m_FirstCollision;
 	bool m_HasCollided;
 	bool m_IsStatic = false;
 	bool m_IsSleeping= false;

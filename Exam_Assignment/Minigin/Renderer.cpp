@@ -54,6 +54,7 @@ void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const
 
 void dae::Renderer::RenderTexturePart(const Texture2D& texture, SDL_Rect src, SDL_Rect dst, SDL_RendererFlip flip) const
 {
+	
 	if(flip == SDL_FLIP_NONE)
 		SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst);
 	else

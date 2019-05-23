@@ -41,10 +41,10 @@ void dae::FygarWanderState::Update()
 		m_deltaTime -= m_PhaseTime;
 		m_pContext->GoToState(std::make_shared<FygarPhaseState>(m_pContext));
 	}
-	else if(m_deltaTime >= m_FireTime)
+	else if(m_deltaTime >= m_FireTime && (m_WanderDir == LEFT || m_WanderDir == RIGHT))
 	{
 		m_deltaTime -= m_FireTime;
-		m_pContext->GoToState(std::make_shared<FygarFireState>(m_pContext));
+		m_pContext->GoToState(std::make_shared<FygarFireState>(m_pContext, m_WanderDir));
 	}
 
 
@@ -159,18 +159,36 @@ void dae::FygarPhaseState::OnExit()
 void dae::FygarFireState::OnEnter()
 {
 	m_pFire = std::make_shared<GameObject>();
+	//Texture
 	m_pFire->AddComponent(std::make_shared<TextureComponent>("FygarFire.png",3,0.33f,false));
-	SDL_Rect rect {0,0,28,28};
+	if(m_CurrentDir < 0)
+		m_pFire->GetComponent<TextureComponent>()->SetFlip(SDL_FLIP_HORIZONTAL);
+	
+	SDL_Rect rect {0,0,28,14};
 	m_pFire->AddComponent(std::make_shared<ColliderComponent>(rect,ENEMIES));
+	m_pFire->GetComponent<ColliderComponent>()->SetIgnoreFlags(ENEMIES);
+	m_pFire->GetComponent<ColliderComponent>()->SetOffset({-14.f + 14.f * m_CurrentDir,7});
+	//Position
 	auto pos = m_pContext->GetActor()->GetTransform()->GetPosition();
 	m_pFire->GetTransform()->SetPosition(pos);
-	m_pFire->GetTransform()->Translate(28,0);
+	
 	m_pFire->Initialize();
 	m_pContext->GetActor()->GetScene()->Add(m_pFire);
+	if(m_CurrentDir == 1)
+		m_pFire->GetTransform()->Translate(28 * m_CurrentDir,0);
+	else
+		m_pFire->GetComponent<TextureComponent>()->SetPosition(-84.f,0.f);
+
 }
 
 void dae::FygarFireState::Update()
 {
+	if(m_pFire->GetComponent<ColliderComponent>()->HasCollided())
+	{
+			m_pContext->GoToState(std::make_shared<FygarWanderState>(m_pContext, m_WanderDir));
+			return;
+	}
+
 	if(m_deltaTime < m_FireTime)
 	{
 		m_deltaTime += GameTime::GetInstance().GetElapsed();
@@ -179,13 +197,19 @@ void dae::FygarFireState::Update()
 	{
 		m_deltaTime -= m_FireTime;
 		m_FireStage++;
-		m_pFire->GetComponent<ColliderComponent>()->SetRect({0,0,28*m_FireStage,28});
+		m_pFire->GetComponent<ColliderComponent>()->SetRect({0,0,28*m_FireStage,14});
+		if(m_CurrentDir == -1)
+			m_pFire->GetComponent<ColliderComponent>()->SetOffset({28 * m_CurrentDir * m_FireStage,7});
+		
+		
+		
+		
 		m_pFire->GetComponent<TextureComponent>()->NextFrame();
 	}
 
-	if(m_FireStage > 2)
+	if(m_FireStage > 3)
 	{
-		m_pContext->GoToState(std::make_shared<FygarWanderState>(m_pContext));
+		m_pContext->GoToState(std::make_shared<FygarWanderState>(m_pContext, m_WanderDir));
 		return;
 	}
 

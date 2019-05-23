@@ -14,7 +14,7 @@ dae::Fygar::Fygar(std::shared_ptr<GameObject> player) : m_pPlayer(player)
 	m_pGameObject->AddComponent(std::make_shared<TextureComponent>("Fygar.png",2,0.4f));
 	SDL_Rect rect{0,0,24,24};
 	m_pGameObject->AddComponent(std::make_shared<ColliderComponent>(rect,ENEMIES));
-
+	m_pGameObject->GetComponent<ColliderComponent>()->SetIgnoreFlags(ENEMIES);
 	
 	m_pActionStateMachine = std::make_shared<FiniteStateMachine>();
 	auto initState =std::make_shared<FygarWanderState>(m_pActionStateMachine);

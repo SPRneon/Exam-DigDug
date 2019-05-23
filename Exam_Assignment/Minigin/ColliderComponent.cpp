@@ -87,6 +87,7 @@ SDL_Rect* dae::ColliderComponent::WillCollide(glm::vec2 movement)
 
 void dae::ColliderComponent::Update()
 {
+	m_HasCollided = false;
 	if(m_IsSleeping)
 		return;
 
