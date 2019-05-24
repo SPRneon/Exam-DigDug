@@ -25,8 +25,7 @@ dae::Player::Player(std::string name,int playerID) :Entity(name) ,m_PlayerIndex(
 void dae::Player::Update()
 {
 	
-
-	if(m_pGameObject->GetComponent<ColliderComponent>()->HasCollidedWith(ENEMIES) || m_pGameObject->GetComponent<ColliderComponent>()->HasCollidedWith(FIRE))
+	if(m_pGameObject->GetComponent<ColliderComponent>()->HasCollidedWith(ENEMIES) || m_pGameObject->GetComponent<ColliderComponent>()->HasCollidedWith(FIRE) )
 	{
 		std::cout << "Has Collided" << std::endl;
 		m_pSubject->notify(std::make_shared<LivesEvent>());
@@ -34,8 +33,27 @@ void dae::Player::Update()
 		m_pGameObject->GetComponent<CommandComponent>()->SetControllable(false);
 	}
 
+	if(m_KilledByRock)
+	{
+		std::cout << "Hit by rock" << std::endl;
+		m_pSubject->notify(std::make_shared<LivesEvent>());
+		m_pGameObject->GetComponent<ColliderComponent>()->PutToSleep();
+		m_pGameObject->GetComponent<CommandComponent>()->SetControllable(false);
+	}
 	
 }
+
+void dae::Player::Reset()
+{
+	m_KilledByRock = false;
+	GetGameObject()->GetTransform()->SetScale(1.f,1.f);
+	GetGameObject()->GetComponent<CommandComponent>()->SetControllable(true);
+	GetGameObject()->GetComponent<TextureComponent>()->Play();
+	SDL_Rect rect{0,0,20,20};
+	GetGameObject()->GetComponent<ColliderComponent>()->SetRect(rect);
+	GetGameObject()->GetComponent<ColliderComponent>()->Awake();
+}
+
 
 void dae::Player::Place(int row, int column)
 {

@@ -17,7 +17,7 @@ public:
 		std::string str = event->type();
 		if(str == "LivesEvent")
 		{
-			m_pLevel->ResetLevel();
+			m_pLevel->MarkForReset();
 
 		}
 		if(str == "GameOverEvent")

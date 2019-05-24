@@ -37,11 +37,19 @@ void dae::Scene::RootInitialize()
 
 void dae::Scene::RootUpdate()
 {
+	if(m_MarkedForReset)
+	{
+		ResetScene();
+		return;
+	}
 	Update();
 
 	for(auto gameObject : mObjects)
 	{
-		gameObject->Update();
+		if(!gameObject->IsMarkedForDestroy())
+			gameObject->Update();
+		else
+			Remove(gameObject);
 	}
 
 	PostUpdate();

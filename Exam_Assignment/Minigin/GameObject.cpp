@@ -35,6 +35,7 @@ void dae::GameObject::Initialize()
 
 void dae::GameObject::Update()
 {
+	
 	for(UINT i = 0; i < m_pComponents.size(); ++i)
 	{
 		if(m_pComponents[i]->IsInitialized())

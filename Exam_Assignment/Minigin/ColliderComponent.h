@@ -49,6 +49,7 @@ public:
 	void SetRect(SDL_Rect rect);
 	const glm::vec2 GetShapeCenter() const {return  glm::vec2{m_Shape.x + m_Shape.w / 2.f,m_Shape.y + m_Shape.h / 2.f};}
 	
+
 	//SET VARS
 	void SetStatic(){m_IsStatic = true;}
 	void SetDynamic(){m_IsStatic = false;}

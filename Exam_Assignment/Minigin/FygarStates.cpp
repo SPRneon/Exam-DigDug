@@ -10,6 +10,7 @@
 #include "GameTime.h"
 #include "TextureComponent.h"
 #include "Scene.h"
+#include "Player.h"
 
 //****FYGAR WANDER****//
 void dae::FygarWanderState::Update()
@@ -31,7 +32,7 @@ void dae::FygarWanderState::Update()
 	m_pContext->GetActor()->GetComponent<CommandComponent>()->AddToCommandStream(command);
 
 	//CONDITION TO GO TO CHASE
-	glm::vec2 deltaPos = m_pContext->GetTarget()->GetComponent<ColliderComponent>()->GetShapeCenter() - m_pContext->GetActor()->GetComponent<ColliderComponent>()->GetShapeCenter();
+	glm::vec2 deltaPos = m_pContext->GetTarget()->GetGameObject()->GetComponent<ColliderComponent>()->GetShapeCenter() - m_pContext->GetActor()->GetComponent<ColliderComponent>()->GetShapeCenter();
 	if(Magnitude(deltaPos) < 60.f)
 	{
 		m_pContext->GoToState(std::make_shared<FygarChaseState>(m_pContext));
@@ -41,11 +42,11 @@ void dae::FygarWanderState::Update()
 		m_deltaTime -= m_PhaseTime;
 		m_pContext->GoToState(std::make_shared<FygarPhaseState>(m_pContext));
 	}
-	/*else if(m_deltaTime >= m_FireTime && (m_WanderDir == LEFT || m_WanderDir == RIGHT))
+	else if(m_deltaTime >= m_FireTime && (m_WanderDir == LEFT || m_WanderDir == RIGHT))
 	{
 		m_deltaTime -= m_FireTime;
 		m_pContext->GoToState(std::make_shared<FygarChargeState>(m_pContext, m_WanderDir));
-	}*/
+	}
 
 
 }
@@ -54,7 +55,7 @@ void dae::FygarWanderState::Update()
 //****FYGAR CHASE****//
 void dae::FygarChaseState::Update()
 {
-	glm::vec2 deltaPos = m_pContext->GetTarget()->GetComponent<ColliderComponent>()->GetShapeCenter() - m_pContext->GetActor()->GetComponent<ColliderComponent>()->GetShapeCenter();
+	glm::vec2 deltaPos = m_pContext->GetTarget()->GetGameObject()->GetComponent<ColliderComponent>()->GetShapeCenter() - m_pContext->GetActor()->GetComponent<ColliderComponent>()->GetShapeCenter();
 	//CONDITION TO GO TO WANDER STATE
 	if(Magnitude(deltaPos) > 120.f)
 	{
@@ -64,7 +65,7 @@ void dae::FygarChaseState::Update()
 	
 	
 	auto currCell = LevelGrid::GetInstance()->GetCell(m_pContext->GetActor()->GetComponent<ColliderComponent>()->GetShapeCenter());
-	auto tarrCell = LevelGrid::GetInstance()->GetCell( m_pContext->GetTarget()->GetComponent<ColliderComponent>()->GetShapeCenter());
+	auto tarrCell = LevelGrid::GetInstance()->GetCell( m_pContext->GetTarget()->GetGameObject()->GetComponent<ColliderComponent>()->GetShapeCenter());
 
 	
 	std::array<Direction,4> dirUrgency = {UP,UP,UP,UP};
@@ -128,7 +129,7 @@ void dae::FygarPhaseState::OnEnter()
 	//Setting collider off
 	m_pContext->GetActor()->GetComponent<ColliderComponent>()->PutToSleep();
 	//Setting targetCell
-	m_pTargetCell = LevelGrid::GetInstance()->GetCell(m_pContext->GetTarget()->GetTransform()->GetPosition());
+	m_pTargetCell = LevelGrid::GetInstance()->GetCell(m_pContext->GetTarget()->GetGameObject()->GetTransform()->GetPosition());
 }
 
 void dae::FygarPhaseState::Update()

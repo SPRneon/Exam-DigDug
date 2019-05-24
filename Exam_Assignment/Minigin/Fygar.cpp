@@ -8,7 +8,7 @@
 #include "LevelGrid.h"
 
 
-dae::Fygar::Fygar(std::string name, std::shared_ptr<GameObject> player) : m_pPlayer(player), Entity(name)
+dae::Fygar::Fygar(std::string name, std::shared_ptr<Player> player) : m_pPlayer(player), Entity(name)
 {
 	m_pGameObject->AddComponent(std::make_shared<CommandComponent>());
 	m_pGameObject->AddComponent(std::make_shared<TextureComponent>("Fygar.png",2,0.4f));
@@ -27,8 +27,17 @@ dae::Fygar::Fygar(std::string name, std::shared_ptr<GameObject> player) : m_pPla
 
 void dae::Fygar::Update()
 {
+	
 	m_pActionStateMachine->Update();
 }
+
+void dae::Fygar::Reset()
+{
+	auto initState =std::make_shared<FygarWanderState>(m_pActionStateMachine);
+	m_pActionStateMachine->Initialize(initState,m_pGameObject,m_pPlayer);
+	GetGameObject()->GetComponent<CommandComponent>()->SetControllable(true);
+}
+
 
 void dae::Fygar::Place(int row, int column)
 {

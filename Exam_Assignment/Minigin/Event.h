@@ -35,4 +35,16 @@ public:
 
 
 };
+
+class GameOverEvent final : public Event
+{
+public:
+	GameOverEvent(){};
+	const std::string descriptor =  "GameOverEvent";
+	virtual std::string type() const
+	{
+		 return descriptor;
+	}
+
+};
 }

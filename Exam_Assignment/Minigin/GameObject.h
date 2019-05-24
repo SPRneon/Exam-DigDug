@@ -30,8 +30,9 @@ namespace dae
 		std::shared_ptr<TransformComponent> GetTransform(){return m_pTransform;}
 		void AddComponent(std::shared_ptr<BaseComponent> component);
 		void RemoveComponent(std::shared_ptr<BaseComponent> component);
-
+		const bool IsMarkedForDestroy() const{return m_MarkedForDestroy;}
 		void MarkForDestroy(){m_MarkedForDestroy = true;}
+		std::string GetName() const {return m_Name;}
 
 		void SetScene(std::shared_ptr<Scene> scene) {m_pScene = scene;}
 		std::shared_ptr<Scene> GetScene() const {return m_pScene;}

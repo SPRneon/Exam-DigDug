@@ -1,11 +1,12 @@
 #pragma once
 #include "Singleton.h"
+#include "States.h"
 
 namespace dae{
 
 	class GameObject;
 	class State;
-	
+	class Player;
 
 	
 
@@ -15,14 +16,14 @@ namespace dae{
 	{
 	public:
 		FiniteStateMachine() = default;
-		void Initialize(std::shared_ptr<State> initState, std::shared_ptr<GameObject> actor, std::shared_ptr<GameObject> target)
+		void Initialize(std::shared_ptr<State> initState, std::shared_ptr<GameObject> actor, std::shared_ptr<Player> target)
 		{
 			if(m_IsInitialized)
 				return;
 			m_pState = initState;
 			m_pTarget =target;
 			m_pActor = actor;
-
+			m_pState->OnEnter();
 			m_IsInitialized = true;
 		}
 		
@@ -36,7 +37,7 @@ namespace dae{
 
 		void Update();
 		std::shared_ptr<GameObject> GetActor() const { return m_pActor; }
-		std::shared_ptr<GameObject> GetTarget() const { return m_pTarget; }
+		std::shared_ptr<Player> GetTarget() const { return m_pTarget; }
 
 		FiniteStateMachine(const FiniteStateMachine &) = delete;
 		FiniteStateMachine(FiniteStateMachine &&) = delete;
@@ -47,7 +48,7 @@ namespace dae{
 
 		std::shared_ptr<State> m_pState = nullptr;
 		std::shared_ptr<GameObject> m_pActor= nullptr;
-		std::shared_ptr<GameObject> m_pTarget= nullptr;
+		std::shared_ptr<Player> m_pTarget= nullptr;
 		float m_deltaTime = 0;
 		float m_ChargeTime = 5.f;
 	};

@@ -99,8 +99,11 @@ SDL_Rect* dae::ColliderComponent::WillCollide(glm::vec2 movement)
 
 const bool dae::ColliderComponent::HasCollidedWith(ColliderGroups groups)
 {
-	if(m_Collisions.at(groups))
+
+	auto it = m_Collisions.find(groups);
+	if(it != m_Collisions.end())
 		return m_Collisions.at(groups);
+	
 
 	return false;
 }

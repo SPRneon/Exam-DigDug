@@ -10,10 +10,20 @@
 #include "GameTime.h"
 #include "TextureComponent.h"
 #include "Scene.h"
+#include "Player.h"
+
+
+void dae::RockIdleState::OnEnter()
+{
+	auto currCell = LevelGrid::GetInstance()->GetCell(m_pContext->GetActor()->GetTransform()->GetPosition());
+	m_pStartCell = LevelGrid::GetInstance()->GetCell(currCell->GetRow() + 1,currCell->GetCol());
+}
+
+
 
 void dae::RockIdleState::Update()
 {
-	if(m_pContext->GetTarget()->GetComponent<ColliderComponent>()->IsSleeping())
+	if(m_pStartCell->GetGameObject()->GetComponent<ColliderComponent>()->IsSleeping())
 	{
 		m_pContext->GoToState(std::make_shared<RockChargeState>(m_pContext));
 		return;
@@ -38,10 +48,16 @@ void dae::RockChargeState::Update()
 
 }
 
+void dae::RockFallingState::OnEnter()
+{
+	auto currCell = LevelGrid::GetInstance()->GetCell(m_pContext->GetActor()->GetTransform()->GetPosition());
+	m_pStartCell = LevelGrid::GetInstance()->GetCell(currCell->GetRow() + 1,currCell->GetCol());
+}
+
+
 void dae::RockFallingState::Update()
 {
 	
-	std::cout << "Falling"<< std::endl;
 	auto fallCommand = std::make_shared<MoveCommand>(m_pContext->GetActor(),DOWN,50.f);
 	m_pContext->GetActor()->GetComponent<CommandComponent>()->AddToCommandStream(fallCommand);
 
@@ -75,24 +91,38 @@ void dae::RockFallingState::Update()
 	}
 
 	if(m_pContext->GetActor()->GetComponent<ColliderComponent>()->HasCollidedWith(TERRAIN) 
-		&& m_pContext->GetActor()->GetTransform()->GetPosition().y >= m_pContext->GetTarget()->GetTransform()->GetPosition().y + 5.f)
+		&& m_pContext->GetActor()->GetTransform()->GetPosition().y >= m_pStartCell->GetGameObject()->GetTransform()->GetPosition().y + 5.f)
 	{
-		m_pContext->GoToState(std::make_shared<RockLandedState>(m_pContext));
+		m_pContext->GoToState(std::make_shared<RockLandedState>(m_pContext, m_pVictims));
 		return;
 	}
 }
 
 void dae::RockFallingState::OnExit()
 {
-	for(auto victim : m_pVictims)
-	{
-		
-		victim = nullptr;
-	}
-	m_pVictims.clear();
+
+}
+
+void dae::RockLandedState::OnEnter()
+{
+	
 }
 
 void dae::RockLandedState::Update()
 {
+	if(m_DeltaTime < m_MaxTime)
+		m_DeltaTime += GameTime::GetInstance()->GetElapsed();
+	else
+	{
+		for(auto victim : m_pVictims)
+		{
+		if(victim->GetName() == "Player")
+			m_pContext->GetTarget()->HitByRock();
+		victim = nullptr;
+			
+		}
+		m_pVictims.clear();
+		//m_pContext->GetActor()->MarkForDestroy();
+	}
 }
 

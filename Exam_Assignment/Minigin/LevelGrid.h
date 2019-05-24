@@ -21,7 +21,7 @@ namespace dae{
 
 		friend class LevelGrid;
 	
-		std::shared_ptr<GameObject> GetGameObject() const {return m_pGameObject;}
+		std::shared_ptr<GameObject> GetGameObject()const {return m_pGameObject;}
 		bool IsVisited() const {return m_Visited;}
 		void SetVisited(bool visited){m_Visited = visited;}
 		glm::vec2 GetPosition() const { return m_Position;}
@@ -59,11 +59,12 @@ public:
 	void Initialize(int rows, int columns, glm::vec2 pos, glm::vec2 scale );
 
 	void Update();
+	void Draw();
 
 	void SetRowsAndCollums(const int rows, const int columns, glm::vec2 pos, glm::vec2 scale);
 
-	std::shared_ptr<Cell> GetCell(int row, int column){ return m_GridCells[row][column];}
-	std::shared_ptr<Cell> GetCell(glm::vec2 pos);
+	std::shared_ptr<Cell>& GetCell(int row, int column){ return m_GridCells[row][column];}
+	std::shared_ptr<Cell>& GetCell(glm::vec2 pos);
 
 	Grid GetCells() const {return m_GridCells;}
 

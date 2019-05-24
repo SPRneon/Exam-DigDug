@@ -9,6 +9,7 @@
 #include "ResourceManager.h"
 #include "TextComponent.h"
 #include "Subject.h"
+#include "Renderer.h"
 
 
 //*****CELLS*********//
@@ -120,6 +121,19 @@ void dae::LevelGrid::Update()
 	}
 }
 
+void dae::LevelGrid::Draw()
+{
+	for(auto row : m_GridCells)
+	{
+		for(auto col : row)
+		{
+			if(!col->IsVisited())
+				Renderer::GetInstance()->RenderSquare(col->GetPosition().x,col->GetPosition().y,col->GetScale().x,col->GetScale().y,col->GetColor(), true);
+			
+		}
+	}
+}
+
 void dae::LevelGrid::SetRowsAndCollums(const int rows, const int columns, glm::vec2 pos, glm::vec2 scale)
 {
 	//Clear all the collumns
@@ -143,10 +157,15 @@ void dae::LevelGrid::SetRowsAndCollums(const int rows, const int columns, glm::v
 	m_Columns = columns;
 }
 
-std::shared_ptr<dae::Cell> dae::LevelGrid::GetCell(glm::vec2 pos)
+std::shared_ptr<dae::Cell>& dae::LevelGrid::GetCell(glm::vec2 pos)
 {
-	int col = static_cast<int>(((pos.x - m_Pos.x) +0.001f )/ (m_Scale.x / m_Columns));
-	int row = static_cast<int>(((pos.y - m_Pos.y) +0.001f )/ (m_Scale.y / m_Rows));
+	int col = (static_cast<int>(((pos.x - m_Pos.x) +0.001f )/ (m_Scale.x / m_Columns))) % m_Columns;
+	int row = (static_cast<int>(((pos.y - m_Pos.y) +0.001f )/ (m_Scale.y / m_Rows))) % m_Rows;
+	if(col < 0)
+		col = 0;
+	if(row < 0)
+		row = 0;
+
 	return GetCell(row,col);
 }
 

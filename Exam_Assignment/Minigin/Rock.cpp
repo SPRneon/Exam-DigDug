@@ -9,7 +9,7 @@
 #include "States.h"
 
 
-dae::Rock::Rock(std::string name) : Entity(name)
+dae::Rock::Rock(std::string name,std::shared_ptr<Player> player) : Entity(name), m_pPlayer(player)
 {
 	m_pGameObject->AddComponent(std::make_shared<TextureComponent>("Rock.png"));
 	SDL_Rect rect{0,0,24,24};
@@ -35,6 +35,14 @@ void dae::Rock::Update()
 	m_pActionStateMachine->Update();
 }
 
+void dae::Rock::Reset()
+{
+	m_FirstUpdatePassed = false;
+	auto initState =std::make_shared<RockIdleState>(m_pActionStateMachine);
+	m_pActionStateMachine->Initialize(initState,m_pGameObject,m_pPlayer);
+}
+
+
 void dae::Rock::Place(int row, int column)
 {
 	glm::vec2 pos = LevelGrid::GetInstance()->GetCell(row,column)->GetPosition();
@@ -45,6 +53,6 @@ void dae::Rock::Place(int row, int column)
 	GetGameObject()->GetTransform()->SetPosition(pos);
 	auto cell = LevelGrid::GetInstance()->GetCell(row+ 1,column);
 	auto initState =std::make_shared<RockIdleState>(m_pActionStateMachine);
-	m_pActionStateMachine->Initialize(initState,m_pGameObject,cell->GetGameObject());
+	m_pActionStateMachine->Initialize(initState,m_pGameObject,m_pPlayer);
 }
 

@@ -17,15 +17,18 @@ namespace dae
 		Scene& operator=(const Scene& other) = delete;
 		Scene& operator=(Scene&& other) = delete;
 
+		void MarkForReset(){m_MarkedForReset = true;}
+		virtual void ResetScene() = 0;
 	protected:
 		virtual void Update() = 0;
 		virtual void PostUpdate() =0;
 		virtual void Draw() const = 0;
 		virtual void PostDraw() const = 0;
 		virtual void Initialize() = 0;
+		
 
 		explicit Scene(const std::string& name);
-		
+		bool m_MarkedForReset = false;
 	
 		
 private:

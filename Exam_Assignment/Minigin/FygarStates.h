@@ -7,14 +7,14 @@ namespace dae{
 	public:
 		FygarWanderState(std::shared_ptr<FiniteStateMachine> context) : State(context){}
 		FygarWanderState(std::shared_ptr<FiniteStateMachine> context, Direction dir) : State(context), m_WanderDir(dir){}
-		virtual void OnEnter() override {std::cout << "Entered wander" << std::endl; m_PhaseTime = rand()  %5 + 12.5f; m_FireTime = rand()  %5 + 7.5f;}
+		virtual void OnEnter() override { m_PhaseTime = rand()  %5 + 5.f; m_FireTime = rand()  %5 + 5.f;}
 		virtual void Update() override;
-		virtual void OnExit() override{ std::cout << "Exited wander" << std::endl;}
+		virtual void OnExit() override{ }
 	private:
 		Direction m_WanderDir = LEFT;
 		float m_deltaTime = 0.f;
-		float m_PhaseTime = 15.f;
-		float m_FireTime = 10.f;
+		float m_PhaseTime = 7.6f;
+		float m_FireTime = 7.5f;
 	};
 
 	class FygarChaseState : public State
@@ -22,9 +22,9 @@ namespace dae{
 	public:
 		FygarChaseState(std::shared_ptr<FiniteStateMachine> context) : State(context){}
 
-		virtual void OnEnter() override{std::cout << "Entered chase" << std::endl;}
+		virtual void OnEnter() override{}
 		virtual void Update() override;
-		virtual void OnExit() override{std::cout << "Exited chase" << std::endl;}
+		virtual void OnExit() override{}
 	};
 
 	class FygarPhaseState : public State

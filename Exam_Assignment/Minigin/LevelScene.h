@@ -28,12 +28,16 @@ protected:
 		void PostDraw() const override;
 
 public:
-	void ResetLevel()const;
+	void ResetScene() override;
 
 	std::shared_ptr<Observer> GetObserver(){return m_pObserver;}
 	void SetObserver(std::shared_ptr<Observer> observer){m_pObserver = observer;}
 private:
 	std::vector<std::shared_ptr<Entity>> m_pEntities;
+	std::shared_ptr<Player> m_pPlayer = nullptr;
+	std::shared_ptr<Fygar> m_pFygar = nullptr;
+	std::shared_ptr<Rock> m_pRock = nullptr;
+
 	int m_pScore;
 	std::shared_ptr<GameObject> m_pScoreDisplay;
 
