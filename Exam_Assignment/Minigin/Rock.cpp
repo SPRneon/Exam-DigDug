@@ -14,11 +14,9 @@ dae::Rock::Rock(std::string name) : Entity(name)
 	m_pGameObject->AddComponent(std::make_shared<TextureComponent>("Rock.png"));
 	SDL_Rect rect{0,0,24,24};
 	auto collider = std::make_shared<ColliderComponent>(rect,ROCK);
-	collider->SetIgnoreFlags(PLAYER);
-	collider->SetIgnoreFlags(ENEMIES);
+
 	m_pGameObject->AddComponent(collider);
 	m_pGameObject->AddComponent(std::make_shared<CommandComponent>());
-
 	//FSM
 	m_pActionStateMachine = std::make_shared<FiniteStateMachine>();
 	

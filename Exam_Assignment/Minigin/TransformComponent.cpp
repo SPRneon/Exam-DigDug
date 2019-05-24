@@ -93,3 +93,18 @@ void dae::TransformComponent::Rotate(float x, float y,  bool euler)
 		m_Rotation.y += y * (180.f / static_cast<float>(M_PI));
 	}
 }
+
+void dae::TransformComponent::Scale(float scale)
+{
+	Scale({scale,scale});
+}
+
+void dae::TransformComponent::Scale(float xScale, float yScale)
+{
+	Scale({xScale,yScale});
+}
+
+void dae::TransformComponent::Scale(glm::vec2 xy)
+{
+	m_Scale = xy;
+}

@@ -22,7 +22,6 @@ public:
 
 	void Update() override;
 	void Initialize() override{m_IsInitialized = true;}
-	void Draw() const override{}
 
 	CommandComponent(const CommandComponent& other) = delete;
 	CommandComponent(CommandComponent&& other) noexcept = delete;

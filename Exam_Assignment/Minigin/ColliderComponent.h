@@ -37,7 +37,7 @@ public:
 	const bool HasCollided() const{return m_HasCollided;}
 	SDL_Rect* WillCollide(glm::vec2 movement);
 	const bool HasCollidedWith(ColliderGroups groups);
-	std::shared_ptr<GameObject> GetCollisionObject(ColliderGroups objectFlag);
+	GameObject* GetCollisionObject(ColliderGroups objectFlag);
 
 	//FLAGS
 	void AddIgnoreGroup(ColliderGroups ignoreGroup){m_GroupsToIgnore.push_back(ignoreGroup);}
@@ -78,6 +78,7 @@ private:
 	SDL_Rect* m_pIntersect;
 	ColliderGroups m_CollisionGroup;
 	std::map<ColliderGroups, bool> m_Collisions;
+	std::vector<GameObject*> m_CollisionObjects;
 	bool m_HasCollided;
 	bool m_IsStatic = false;
 	bool m_IsSleeping= false;

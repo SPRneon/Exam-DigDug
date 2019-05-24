@@ -11,6 +11,7 @@ dae::CommandComponent::CommandComponent()
 
 dae::CommandComponent::~CommandComponent()
 {
+	m_pGameObject = nullptr;
 }
 
 void dae::CommandComponent::AddToCommandStream(std::shared_ptr<BaseCommand> pCommand)

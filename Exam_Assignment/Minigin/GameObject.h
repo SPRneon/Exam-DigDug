@@ -31,6 +31,7 @@ namespace dae
 		void AddComponent(std::shared_ptr<BaseComponent> component);
 		void RemoveComponent(std::shared_ptr<BaseComponent> component);
 
+		void MarkForDestroy(){m_MarkedForDestroy = true;}
 
 		void SetScene(std::shared_ptr<Scene> scene) {m_pScene = scene;}
 		std::shared_ptr<Scene> GetScene() const {return m_pScene;}
@@ -56,5 +57,6 @@ namespace dae
 		std::vector<std::shared_ptr<BaseComponent>> m_pComponents;
 		std::shared_ptr<Scene> m_pScene;
 		std::string m_Name;
+		bool m_MarkedForDestroy=  false;
 	};
 }

@@ -28,6 +28,7 @@ dae::ColliderComponent::~ColliderComponent()
 	                    m_pColliderMap.at(static_cast<int>(m_CollisionGroup)).end(), this);
 	if(it != m_pColliderMap.at(static_cast<int>(m_CollisionGroup)).end())
 		m_pColliderMap.at(static_cast<int>(m_CollisionGroup)).erase(it);
+	m_pGameObject = nullptr;
 }
 
 SDL_Rect* dae::ColliderComponent::CheckCollisions()
@@ -52,6 +53,7 @@ SDL_Rect* dae::ColliderComponent::CheckCollisions()
 			auto result = SDL_IntersectRect(&m_Shape, collider->GetShape(), temp);
 			if(result == SDL_TRUE)
 			{	
+				m_CollisionObjects.push_back(collider->GetGameObject());
 				m_Collisions.at(collider->m_CollisionGroup) = true;
 				return temp;
 			}
@@ -59,6 +61,7 @@ SDL_Rect* dae::ColliderComponent::CheckCollisions()
 	}
 	//No intersetion detected thus no overlap
 	delete temp;
+	temp = nullptr;
 	return nullptr;
 
 }
@@ -102,14 +105,21 @@ const bool dae::ColliderComponent::HasCollidedWith(ColliderGroups groups)
 	return false;
 }
 
-std::shared_ptr<dae::GameObject> dae::ColliderComponent::GetCollisionObject(ColliderGroups objectFlag)
+dae::GameObject* dae::ColliderComponent::GetCollisionObject(ColliderGroups objectFlag)
 {
+	for(auto object : m_CollisionObjects)
+	{
+		if(object->GetComponent<ColliderComponent>()->m_CollisionGroup == objectFlag)
+			return object;
+	}
 	
+	return nullptr;
 }
 
 
 void dae::ColliderComponent::Update()
 {
+	m_CollisionObjects.clear();
 	m_HasCollided = false;
 	for_each(m_Collisions.begin(),m_Collisions.end(),[](auto& it)
 	{
@@ -125,10 +135,14 @@ void dae::ColliderComponent::Update()
 		m_Shape.x = static_cast<int>(pos.x + (m_Shape.w * m_Pivot.x) + m_Offset.x);
 		m_Shape.y = static_cast<int>(pos.y+ (m_Shape.h * m_Pivot.y) + m_Offset.y);
 	}
-	if(CheckCollisions())
+	auto check = CheckCollisions();
+	if(check)
 		m_HasCollided = true;
 	else
 		m_HasCollided = false;
+
+	delete check;
+	check = nullptr;
 }
 
 void dae::ColliderComponent::Initialize()

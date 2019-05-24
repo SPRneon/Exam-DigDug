@@ -24,6 +24,8 @@ dae::Player::Player(std::string name,int playerID) :Entity(name) ,m_PlayerIndex(
 
 void dae::Player::Update()
 {
+	
+
 	if(m_pGameObject->GetComponent<ColliderComponent>()->HasCollidedWith(ENEMIES) || m_pGameObject->GetComponent<ColliderComponent>()->HasCollidedWith(FIRE))
 	{
 		std::cout << "Has Collided" << std::endl;
@@ -32,14 +34,7 @@ void dae::Player::Update()
 		m_pGameObject->GetComponent<CommandComponent>()->SetControllable(false);
 	}
 
-	if(m_pGameObject->GetComponent<ColliderComponent>()->HasCollidedWith(ROCK))
-	{
-		std::cout << "Rock" << std::endl;
-		m_pSubject->notify(std::make_shared<LivesEvent>());
-		m_pGameObject->GetComponent<ColliderComponent>()->PutToSleep();
-		m_pGameObject->GetComponent<CommandComponent>()->SetControllable(false);
-		m_pGameObject->GetTransform()->SetPosition
-	}
+	
 }
 
 void dae::Player::Place(int row, int column)

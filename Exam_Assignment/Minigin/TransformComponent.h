@@ -12,7 +12,7 @@ namespace dae
 		
 	public:
 		TransformComponent();
-		~TransformComponent() override = default;
+		~TransformComponent() override{m_pGameObject = nullptr;}
 
 		TransformComponent(const TransformComponent& other) = delete;
 		TransformComponent(TransformComponent&& other) noexcept = delete;
@@ -21,9 +21,9 @@ namespace dae
 
 		void Initialize() override;
 		void Update() override{}
-		void Draw() const override{}
 
 		const glm::vec2& GetPosition() const { return m_Position; }
+		const glm::vec2& GetScale() const { return m_Scale; }
 		void SetPosition(float x, float y);
 		void SetPosition(glm::vec2 xy);
 		void SetScale(float xScale, float yScale);
@@ -34,7 +34,9 @@ namespace dae
 		void Translate(float x, float y);
 		void Translate(int x, int y);
 		void Rotate(float x, float y, bool euler = true);
-
+		void Scale(float scale);
+		void Scale(float xScale, float yScale);
+		void Scale(glm::vec2 xy);
 	private:
 		glm::vec2 m_Position = glm::vec2(0.f,0.f);
 		glm::vec2 m_Scale = glm::vec2(1.f,1.f);

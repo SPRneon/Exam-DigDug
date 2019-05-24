@@ -24,7 +24,7 @@ public:
 		void SetColor(Color color);
 		void SetNeedsUpdate(bool needsUpdate){m_NeedsUpdate = needsUpdate;}
 		explicit TextComponent(const std::string& text, std::shared_ptr<Font> font, Color color =  Colors::white);
-		virtual ~TextComponent() = default;
+		virtual ~TextComponent(){m_pGameObject = nullptr;};
 
 		//disabling default and copy
 		TextComponent(const TextComponent& other) = delete;

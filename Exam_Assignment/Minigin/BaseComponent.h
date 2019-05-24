@@ -6,7 +6,7 @@ class BaseComponent
 {
 public:
 	BaseComponent();
-	virtual ~BaseComponent() = default;
+	virtual ~BaseComponent(){m_pGameObject = nullptr;}
 
 	GameObject* GetGameObject() const { return m_pGameObject; }
 	std::shared_ptr<TransformComponent> GetTransform() const;
@@ -23,11 +23,9 @@ protected:
 
 	virtual void Initialize() = 0;
 	virtual void Update() =0;
-	virtual void Draw() const =0;
+	virtual void Draw() const {};
 	GameObject* m_pGameObject = nullptr;
 	bool m_IsInitialized = false;
-
-
 
 };
 }

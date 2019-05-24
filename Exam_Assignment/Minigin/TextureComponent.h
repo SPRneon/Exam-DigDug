@@ -13,7 +13,7 @@ class TextureComponent final : public BaseComponent
 {
 public:
 	explicit TextureComponent(const std::string& path,int nrOfSprites = 1, float animSpeed = 1.0f, bool autoPlay = true);
-	virtual ~TextureComponent() = default;
+	virtual ~TextureComponent(){m_pGameObject = nullptr;};
 
 	void Update() override;
 	void Draw() const override;

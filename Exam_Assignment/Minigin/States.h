@@ -52,7 +52,9 @@ namespace dae
 
 		virtual void OnEnter() override{}
 		virtual void Update() override;
-		virtual void OnExit() override{}
+		virtual void OnExit() override;
+	private:
+		std::vector<GameObject*> m_pVictims;
 	};
 
 	class RockLandedState : public State

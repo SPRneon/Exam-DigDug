@@ -45,18 +45,21 @@ void dae::TextureComponent::Draw() const
 		if(m_NrOfSprites == 1)
 		{
 		auto pos = m_pGameObject->GetTransform()->GetPosition();
-		Renderer::GetInstance()->RenderTexture(*m_pTexture, m_TexturePos.x + pos.x , m_TexturePos.y+ pos.y);
+		auto scale = m_pGameObject->GetTransform()->GetScale();
+		Renderer::GetInstance()->RenderTexture(*m_pTexture, m_TexturePos.x + pos.x , m_TexturePos.y+ pos.y, scale.x,scale.y);
 		}
 		else
 		{
 			auto pos = m_pGameObject->GetTransform()->GetPosition();
+			auto scale = m_pGameObject->GetTransform()->GetScale();
 			auto clipPos = currSprites * m_ClipWH.x;
 			SDL_Rect dst, src;
 			dst.x = static_cast<int>(m_TexturePos.x + pos.x);
 			dst.y = static_cast<int>(m_TexturePos.y + pos.y);
 			dst.w = static_cast<int>(m_ClipWH.x);
 			dst.h = static_cast<int>(m_ClipWH.y);
-
+			dst.w = static_cast<int>(dst.w *scale.x);
+			dst.h = static_cast<int>(dst.h * scale.y);
 			src.x = static_cast<int>(clipPos);
 			src.y = 0;
 			src.w = static_cast<int>(m_ClipWH.x);
