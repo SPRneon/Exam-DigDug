@@ -9,13 +9,14 @@
 namespace dae
 {
 	class TransformComponent;
+	class ColliderComponent;
 	class BaseComponent;
 	class Scene;
 
 	class GameObject final
 	{
 	public:
-		GameObject();
+		GameObject(std::string objectName = "GameObject");
 		virtual ~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -29,6 +30,7 @@ namespace dae
 		std::shared_ptr<TransformComponent> GetTransform(){return m_pTransform;}
 		void AddComponent(std::shared_ptr<BaseComponent> component);
 		void RemoveComponent(std::shared_ptr<BaseComponent> component);
+
 
 		void SetScene(std::shared_ptr<Scene> scene) {m_pScene = scene;}
 		std::shared_ptr<Scene> GetScene() const {return m_pScene;}
@@ -49,9 +51,10 @@ namespace dae
 
 
 	private:
-		std::vector<std::shared_ptr<GameObject>> m_pChildren;
+
 		std::shared_ptr<TransformComponent> m_pTransform = nullptr;
 		std::vector<std::shared_ptr<BaseComponent>> m_pComponents;
 		std::shared_ptr<Scene> m_pScene;
+		std::string m_Name;
 	};
 }

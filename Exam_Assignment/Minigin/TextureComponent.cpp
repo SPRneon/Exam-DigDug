@@ -18,7 +18,7 @@ dae::TextureComponent::TextureComponent(const std::string & path, int nrOfSprite
 	m_Play(autoPlay)
 {
 	assert(m_NrOfSprites >= 1);
-	m_pTexture  = ResourceManager::GetInstance().LoadTexture(path);
+	m_pTexture  = ResourceManager::GetInstance()->LoadTexture(path);
 	m_ClipWH.x = static_cast<float>((m_pTexture->getWidth() / m_NrOfSprites));
 	m_ClipWH.y = static_cast<float>(m_pTexture->getHeight());
 }
@@ -28,7 +28,7 @@ void dae::TextureComponent::Update()
 	if(m_Play && m_NrOfSprites > 1 )
 	{
 		if(m_DeltaTime < m_AnimSpeed)
-			m_DeltaTime += GameTime::GetInstance().GetElapsed();
+			m_DeltaTime += GameTime::GetInstance()->GetElapsed();
 		else
 		{
 			m_DeltaTime -= m_AnimSpeed;
@@ -45,7 +45,7 @@ void dae::TextureComponent::Draw() const
 		if(m_NrOfSprites == 1)
 		{
 		auto pos = m_pGameObject->GetTransform()->GetPosition();
-		Renderer::GetInstance().RenderTexture(*m_pTexture, m_TexturePos.x + pos.x , m_TexturePos.y+ pos.y);
+		Renderer::GetInstance()->RenderTexture(*m_pTexture, m_TexturePos.x + pos.x , m_TexturePos.y+ pos.y);
 		}
 		else
 		{
@@ -61,7 +61,7 @@ void dae::TextureComponent::Draw() const
 			src.y = 0;
 			src.w = static_cast<int>(m_ClipWH.x);
 			src.h =  static_cast<int>(m_ClipWH.y);
-			Renderer::GetInstance().RenderTexturePart(*m_pTexture, src,dst,m_Flip);
+			Renderer::GetInstance()->RenderTexturePart(*m_pTexture, src,dst,m_Flip);
 
 		}
 	}
@@ -86,7 +86,7 @@ void dae::TextureComponent::SetTexture(const std::string & path, int nrOfSprites
 {
 	m_NrOfSprites = nrOfSprites;
 	assert(m_NrOfSprites >= 1);
-	m_pTexture  = ResourceManager::GetInstance().LoadTexture(path);
+	m_pTexture  = ResourceManager::GetInstance()->LoadTexture(path);
 	m_ClipWH.x = static_cast<float>((m_pTexture->getWidth() / m_NrOfSprites));
 	m_ClipWH.y = static_cast<float>(m_pTexture->getHeight());
 }

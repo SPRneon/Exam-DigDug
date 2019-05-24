@@ -17,59 +17,45 @@
 #include "Fygar.h"
 #include "LevelObserver.h"
 #include "GameTime.h"
+#include "Rock.h"
 
 
 dae::LevelScene::LevelScene(const std::string & name)
 	:Scene(name),
-	m_pPlayer(nullptr),
 	m_pScore(0)
 {
 }
 
 dae::LevelScene::~LevelScene()
 {
-	delete m_pGrid;
-	
+	LevelGrid::GetInstance()->DestroyInstance();
 }
+
 
 
 void dae::LevelScene::Initialize()
 {
 	//Grid
-	auto& levelGrid = LevelGrid::GetInstance();
-	levelGrid.Initialize(14,16,{0,100},{450,480});
-	///Cells
-	for(auto row : levelGrid.GetCells())
+	auto levelGrid = LevelGrid::GetInstance();
+	levelGrid->Initialize(14,16,{0,100},{450,480});
+	//Cells
+	for(auto row : levelGrid->GetCells())
 	{
 		for(auto coll : row)
-			Add(coll.GetGameObject());
+			Add(coll->GetGameObject());
 	}
-	///PILLARS
-	for(auto pillar : levelGrid.GetPillars())
-		Add(pillar.GetGameObject());
 
 	//Player
-	m_pPlayer = std::make_shared<Player>();
-	m_pPlayer->GetGameObject()->GetTransform()->SetPosition(levelGrid.GetCell(6,6).GetPosition());
-	{
-		//TEMP FOR LEVEL 1
-		levelGrid.SetCellInactive(6,5);
-		levelGrid.SetCellInactive(6,6);
-		levelGrid.SetCellInactive(6,7);
-		for(int i =0; i < 6;++i)
-			levelGrid.SetCellInactive(i,6);
-	}
-	this->Add(m_pPlayer->GetGameObject());
+	auto player = std::make_shared<Player>("Player");
+	player->Place(6,6);
+	m_pEntities.push_back(player);
+	this->Add(player->GetGameObject());
 
 	//FYGAR
-	m_pFygar = std::make_shared<Fygar>(m_pPlayer->GetGameObject());
-	//TEMP FOR LEVEL 1
-	m_pFygar->GetGameObject()->GetTransform()->SetPosition(levelGrid.GetCell(8,2).GetCenter());
-	m_pFygar->GetGameObject()->GetTransform()->Translate(-10.f,-10.f);
-	levelGrid.SetCellInactive(8,1);
-	levelGrid.SetCellInactive(8,2);
-	levelGrid.SetCellInactive(8,3);
-	this->Add(m_pFygar->GetGameObject());
+	auto fygar = std::make_shared<Fygar>("Fygar1",player->GetGameObject());
+	fygar->Place(8,2);
+	m_pEntities.push_back(fygar);
+	this->Add(fygar->GetGameObject());
 	//UI
 	auto ui = std::make_shared<UIDisplay>();
 	for(auto it = ui->GetMap()->begin(); it != ui->GetMap()->end();++it)
@@ -77,52 +63,63 @@ void dae::LevelScene::Initialize()
 		Add(it->second);
 	}
 
+	//OBSERVESYSTEM
 	auto scoreSubject = std::make_shared<Subject>();
 	scoreSubject->AddObserver(ui);
-	levelGrid.SetSubject(scoreSubject);
+	levelGrid->SetSubject(scoreSubject);
 	auto livesSubject = std::make_shared<Subject>();
 	livesSubject->AddObserver(ui);
 	m_pObserver = std::make_shared<LevelObserver>(this);
 	livesSubject->AddObserver(m_pObserver);
-	m_pPlayer->SetSubject(livesSubject);
+	player->SetSubject(livesSubject);
 	//ui->SetSubject()
+
+	//ROCK
+	auto rock = std::make_shared<Rock>("Rock");
+	rock->Place(4,8);
+	m_pEntities.push_back(rock);
+	Add(rock->GetGameObject());
 
 
 	//INPUT
 	InputAction ia = {0,KeyState::Pressed,'A',-1,XINPUT_GAMEPAD_DPAD_LEFT,0};
-	auto cmdLeft = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),LEFT,50.f);
-	InputManager::GetInstance().AddInput(ia,cmdLeft);
+	auto cmdLeft = std::make_shared<MoveCommand>(player->GetGameObject(),LEFT,50.f);
+	InputManager::GetInstance()->AddInput(ia,cmdLeft);
 	ia = {1,KeyState::Pressed,'W',-1,XINPUT_GAMEPAD_DPAD_UP,0};
-	auto cmdUp = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),UP,50.f);
-	InputManager::GetInstance().AddInput(ia,cmdUp);
+	auto cmdUp = std::make_shared<MoveCommand>(player->GetGameObject(),UP,50.f);
+	InputManager::GetInstance()->AddInput(ia,cmdUp);
 	ia = {2,KeyState::Pressed,'D',-1,XINPUT_GAMEPAD_DPAD_RIGHT,0};
-	auto cmdRight = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),RIGHT,50.f);
-	InputManager::GetInstance().AddInput(ia,cmdRight);
+	auto cmdRight = std::make_shared<MoveCommand>(player->GetGameObject(),RIGHT,50.f);
+	InputManager::GetInstance()->AddInput(ia,cmdRight);
 	ia = {3,KeyState::Pressed,'S',-1,XINPUT_GAMEPAD_DPAD_DOWN,0};
-	auto cmdDown = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),DOWN,50.f);
-	InputManager::GetInstance().AddInput(ia,cmdDown);
+	auto cmdDown = std::make_shared<MoveCommand>(player->GetGameObject(),DOWN,50.f);
+	InputManager::GetInstance()->AddInput(ia,cmdDown);
+
+	//Audio
+	
 }
 
 void dae::LevelScene::Update()
 {
-	LevelGrid::GetInstance().Update();
-	m_pFygar->Update();
-	m_pPlayer->Update();
+	//Locator::getAudio().playSound("/Audio/Walk.mp3");
+	LevelGrid::GetInstance()->Update();
+	for(auto entity : m_pEntities)
+		entity->Update();
 }
 
 void dae::LevelScene::Draw() const
 {
-	for(auto row : LevelGrid::GetInstance().GetCells())
+	for(auto row : LevelGrid::GetInstance()->GetCells())
 	{
 		for(auto col : row)
 		{
-			if(!col.IsVisited())
-				Renderer::GetInstance().RenderSquare(col.GetPosition().x,col.GetPosition().y,col.GetScale().x,col.GetScale().y,col.GetColor(), true);
+			if(!col->IsVisited())
+				Renderer::GetInstance()->RenderSquare(col->GetPosition().x,col->GetPosition().y,col->GetScale().x,col->GetScale().y,col->GetColor(), true);
 			
 		}
 	}
-	auto rect = *m_pPlayer->GetGameObject()->GetComponent<ColliderComponent>()->GetShape();
-	Renderer::GetInstance().RenderSquare(rect,Colors::green, false);
+	//auto rect = *m_pPlayer->GetGameObject()->GetComponent<ColliderComponent>()->GetShape();
+	//Renderer::GetInstance()->RenderSquare(rect,Colors::green, false);
 }
 
 void dae::LevelScene::PostDraw() const
@@ -133,7 +130,7 @@ void dae::LevelScene::PostDraw() const
 void dae::LevelScene::ResetLevel() const
 {
 	std::cout << "Should reset level" << std::endl;
-	GameTime::GetInstance().Stop();
+	GameTime::GetInstance()->Stop();
 
 }
 

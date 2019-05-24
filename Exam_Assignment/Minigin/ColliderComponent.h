@@ -16,56 +16,74 @@ namespace dae{
 		WALL = 1,
 		PLAYER = 2,
 		ENEMIES = 3,
-		FIRE = 4
+		FIRE = 4,
+		ROCK = 5,
+		MIN =TERRAIN,
+		MAX = ROCK
 	};
+	//NEEDED FOR ITERATION
+	inline void operator++(ColliderGroups& eVal){eVal = ColliderGroups(eVal+1);}
+	inline void operator++(ColliderGroups& eVal, int){eVal = ColliderGroups(eVal+1);}
 
 class ColliderComponent :
-	public BaseComponent
+	public BaseComponent 
 {
 public:
-	//If the collision group is set to '0' it will check every other collider
 	explicit ColliderComponent(SDL_Rect rect,ColliderGroups collisionGroup = TERRAIN, bool isStatic = false, bool isSleeping = false);
 	virtual ~ColliderComponent() override;
 
-	
-	SDL_Rect* CheckCollisions() const;
+	//COLLISIONS
+	SDL_Rect* CheckCollisions();
+	const bool HasCollided() const{return m_HasCollided;}
+	SDL_Rect* WillCollide(glm::vec2 movement);
+	const bool HasCollidedWith(ColliderGroups groups);
+
+	//FLAGS
+	void AddIgnoreGroup(ColliderGroups ignoreGroup){m_GroupsToIgnore.push_back(ignoreGroup);}
+	void SetIgnoreFlags(ColliderGroups groupToIgnore){m_GroupsToIgnore.push_back(groupToIgnore);}
+
+	//GET VARS
 	const SDL_Rect* GetShape() const {return &m_Shape;}
 	void SetOffset(glm::vec2 offset){m_Offset = offset;}
 	void SetRect(SDL_Rect rect);
 	const glm::vec2 GetShapeCenter() const {return  glm::vec2{m_Shape.x + m_Shape.w / 2.f,m_Shape.y + m_Shape.h / 2.f};}
-	const bool HasCollided() const{return m_HasCollided;}
-	SDL_Rect* WillCollide(glm::vec2 movement);
+	
+	//SET VARS
 	void SetStatic(){m_IsStatic = true;}
 	void SetDynamic(){m_IsStatic = false;}
 	void SetPivot(glm::vec2 pivot){m_Pivot = pivot;}
-	void AddIgnoreGroup(ColliderGroups ignoreGroup){m_GroupsToIgnore.push_back(ignoreGroup);}
+	
 
+	//SLEEP/AWAKE
 	const bool IsSleeping() const {return m_IsSleeping;}
 	void Awake(){m_IsSleeping = false;}
 	void PutToSleep(){m_IsSleeping = true;}
-	void SetIgnoreFlags(ColliderGroups groupToIgnore){m_GroupsToIgnore.push_back(groupToIgnore);}
 
+	
+	//LOOP METHODS
 	void Update() override;
 	void Initialize() override;
 	void Draw() const override;
 
+	//ASSIGNMENT/COPY
 	ColliderComponent(const ColliderComponent& other) = delete;
 	ColliderComponent(ColliderComponent&& other) noexcept = delete;
 	ColliderComponent& operator=(const ColliderComponent& other) = delete;
 	ColliderComponent& operator=(ColliderComponent&& other) noexcept = delete;
 
+	static std::map<int,std::vector<ColliderComponent*>> m_pColliderMap;
 private:
 	SDL_Rect m_Shape;
 	SDL_Rect* m_pIntersect;
 	ColliderGroups m_CollisionGroup;
-	ColliderGroups m_FirstCollision;
+	std::map<ColliderGroups, bool> m_Collisions;
 	bool m_HasCollided;
 	bool m_IsStatic = false;
 	bool m_IsSleeping= false;
 	std::vector<ColliderGroups> m_GroupsToIgnore;
 	glm::vec2 m_Pivot;
 	glm::vec2 m_Offset = {0.f,0.f};
-	static std::map<int,std::vector<ColliderComponent*>> m_pColliderMap;
+	
 };
 }
 

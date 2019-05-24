@@ -17,7 +17,7 @@ public:
 	    auto it = std::find(m_Observers.begin(), m_Observers.end(), observer);
 		if (it != m_Observers.end()) { m_Observers.erase(it); }
     }
-	void notify(Event* event) const
+	void notify(std::shared_ptr<Event> event) const
 	{
 		for(auto observer : m_Observers)
 			observer->OnNotify(event);

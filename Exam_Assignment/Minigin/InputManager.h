@@ -70,6 +70,7 @@ namespace dae
 		const KeyState GetButtonState(WORD button) const;
 		bool WasPressed(WORD button) const;
 		bool IsPressed(WORD button) const;
+		void CleanUp();
 		
 
 
@@ -132,8 +133,8 @@ namespace dae
 		POINT mouseXY;
 
 		//GAMEPADS
-		std::vector<Gamepad*> m_pGamePads;
-		Gamepad* m_pCurrentGamePad;
+		std::vector<std::shared_ptr<Gamepad>> m_pGamePads;
+		std::shared_ptr<Gamepad> m_pCurrentGamePad;
 		unsigned int currentlyActivePlayer;
 		unsigned int nGamepads;						
 		unsigned int nPlayers = 1;

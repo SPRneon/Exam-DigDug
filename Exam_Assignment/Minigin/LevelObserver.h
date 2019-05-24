@@ -10,8 +10,9 @@ public:
 	m_pLevel(pLevel)
 	{
 	}
+	~LevelObserver(){delete m_pLevel; m_pLevel = nullptr;}
 
-	void OnNotify(Event* event) override
+	void OnNotify(std::shared_ptr<Event> event) override
 	{
 		std::string str = event->type();
 		if(str == "LivesEvent")

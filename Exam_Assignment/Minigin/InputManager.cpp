@@ -13,14 +13,24 @@ dae::InputManager::InputManager()
 	
 }
 
+//CLEANUP
 void dae::InputManager::CleanUp()
 {
+	for(auto& gamepad : m_pGamePads)
+		gamepad->CleanUp();
 	m_pGamePads.clear();
-	delete m_pCurrentGamePad;
 	m_pCurrentGamePad = nullptr;
 	m_InputActions.clear();
 	m_pCommands.clear();
+	
 }
+
+void dae::Gamepad::CleanUp()
+{
+	ZeroMemory(&currentState, sizeof(XINPUT_STATE));
+	ZeroMemory(&previousState, sizeof(XINPUT_STATE));
+}
+
 
 
 void dae::InputManager::Init()
@@ -59,7 +69,7 @@ bool dae::InputManager::InitGamepads()
 	
 	if(playerID != -1)
 	{
-		m_pGamePads.push_back(new Gamepad(playerID));
+		m_pGamePads.push_back(std::make_shared<Gamepad>(playerID));
 	}
 	//Set number of gamepads
 	nGamepads = (unsigned int)m_pGamePads.size();
@@ -71,7 +81,8 @@ bool dae::InputManager::InitGamepads()
 	currentlyActivePlayer = 0;
 	if(m_pGamePads.size() > 0)
 		m_pCurrentGamePad = m_pGamePads[0];
-		
+
+	
 	return true;
 }
  

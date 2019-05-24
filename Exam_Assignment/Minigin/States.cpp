@@ -14,7 +14,7 @@
 //****FYGAR WANDER****//
 void dae::FygarWanderState::Update()
 {
-	m_deltaTime += GameTime::GetInstance().GetElapsed();
+	m_deltaTime += GameTime::GetInstance()->GetElapsed();
 	if(m_pContext->GetActor()->GetComponent<ColliderComponent>()->HasCollided())
 	{
 		int nr = rand() %2;
@@ -63,8 +63,8 @@ void dae::FygarChaseState::Update()
 	}
 	
 	
-	auto currCell = LevelGrid::GetInstance().GetCell(m_pContext->GetActor()->GetComponent<ColliderComponent>()->GetShapeCenter());
-	auto tarrCell = LevelGrid::GetInstance().GetCell( m_pContext->GetTarget()->GetComponent<ColliderComponent>()->GetShapeCenter());
+	auto currCell = LevelGrid::GetInstance()->GetCell(m_pContext->GetActor()->GetComponent<ColliderComponent>()->GetShapeCenter());
+	auto tarrCell = LevelGrid::GetInstance()->GetCell( m_pContext->GetTarget()->GetComponent<ColliderComponent>()->GetShapeCenter());
 
 	
 	std::array<Direction,4> dirUrgency = {UP,UP,UP,UP};
@@ -103,10 +103,10 @@ void dae::FygarChaseState::Update()
 	dirUrgency[goRight] = RIGHT;
 	dirUrgency[goDown] = DOWN;
 
-	auto vec = LevelGrid::GetInstance().GetNeighbourCells(dirUrgency,currCell);
+	auto vec = LevelGrid::GetInstance()->GetNeighbourCells(dirUrgency,currCell);
 	for(auto cellDir : vec)
 	{
-		if(cellDir.first.IsVisited())
+		if(cellDir.first->IsVisited())
 		{
 			auto command = std::make_shared<MoveCommand>(m_pContext->GetActor(),cellDir.second,45.f);
 			if(cellDir.second == LEFT)
@@ -128,7 +128,7 @@ void dae::FygarPhaseState::OnEnter()
 	//Setting collider off
 	m_pContext->GetActor()->GetComponent<ColliderComponent>()->PutToSleep();
 	//Setting targetCell
-	m_pTargetCell = LevelGrid::GetInstance().GetCellPtr(m_pContext->GetTarget()->GetTransform()->GetPosition());
+	m_pTargetCell = LevelGrid::GetInstance()->GetCell(m_pContext->GetTarget()->GetTransform()->GetPosition());
 }
 
 void dae::FygarPhaseState::Update()
@@ -171,7 +171,7 @@ void dae::FygarChargeState::Update()
 {
 	if(m_deltaTime < m_ChargeTime)
 	{
-		m_deltaTime += GameTime::GetInstance().GetElapsed();
+		m_deltaTime += GameTime::GetInstance()->GetElapsed();
 	}
 	else
 	{
@@ -224,7 +224,7 @@ void dae::FygarFireState::Update()
 
 	if(m_deltaTime < m_FireTime)
 	{
-		m_deltaTime += GameTime::GetInstance().GetElapsed();
+		m_deltaTime += GameTime::GetInstance()->GetElapsed();
 	}
 	else
 	{

@@ -31,7 +31,7 @@ void dae::JumpCommand::execute()
 	//else
 		//throw std::exception("Logger::GetAudio() -> Audio was not yet initialized");
 	auto pos = m_pGameObject->GetTransform()->GetPosition();
-	m_pGameObject->GetTransform()->Translate(0.f,-m_JumpVel * GameTime::GetInstance().GetElapsed());
+	m_pGameObject->GetTransform()->Translate(0.f,-m_JumpVel * GameTime::GetInstance()->GetElapsed());
 }
 
 void dae::FireCommand::execute()
@@ -58,10 +58,10 @@ void dae::MoveCommand::execute()
 
 	auto shape = m_pGameObject->GetComponent<ColliderComponent>()->GetShape();
 	glm::vec2 center = {shape->x + shape->w / 2.f,shape->y + shape->h / 2.f};
-	auto target = LevelGrid::GetInstance().GetPathForDir(m_Dir,center);
+	auto target = LevelGrid::GetInstance()->GetPathForDir(m_Dir,center);
 	{
 		auto targetV = NormalizeAssert(target - center);
-		targetV *= glm::vec2{m_LinVel* GameTime::GetInstance().GetElapsed(),m_LinVel* GameTime::GetInstance().GetElapsed()};
+		targetV *= glm::vec2{m_LinVel* GameTime::GetInstance()->GetElapsed(),m_LinVel* GameTime::GetInstance()->GetElapsed()};
 
 		
 		m_pGameObject->GetTransform()->Translate(targetV.x,targetV.y);
@@ -72,7 +72,7 @@ void dae::PhaseMoveCommand::execute()
 {
 	auto center = m_pGameObject->GetTransform()->GetPosition();
 	auto targetV = NormalizeAssert(m_Target - center);
-	targetV *= glm::vec2{m_LinVel* GameTime::GetInstance().GetElapsed(),m_LinVel* GameTime::GetInstance().GetElapsed()};
+	targetV *= glm::vec2{m_LinVel* GameTime::GetInstance()->GetElapsed(),m_LinVel* GameTime::GetInstance()->GetElapsed()};
 	m_pGameObject->GetTransform()->Translate(targetV.x,targetV.y);
 	
 }

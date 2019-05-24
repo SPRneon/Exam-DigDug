@@ -1,4 +1,5 @@
 #pragma once
+#include "Entity.h"
 
 namespace dae{
 
@@ -6,21 +7,19 @@ namespace dae{
 	class BaseCommand;
 	class Subject;
 
-class Player
+class Player : public Entity
 {
 public:
-	Player(int playerID = -1);
-	~Player();
+	Player(std::string name,int playerID = -1);
+	~Player() = default;
 
-	void Update();
-	std::shared_ptr<GameObject> GetGameObject() const { return m_pGameObject;}
+	void Update() override;
+	void Place(int row, int column) override;
 
 	void SetSubject(std::shared_ptr<Subject> obs){m_pSubject = obs;}
 	std::shared_ptr<Subject> GetSubject()const {return m_pSubject;}
 private:
-	std::shared_ptr<GameObject> m_pGameObject;
 	int m_PlayerIndex;
-
 	std::shared_ptr<Subject> m_pSubject;
 	};
 }

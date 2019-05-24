@@ -4,15 +4,20 @@
 #include "Renderer.h"
 #include "BaseComponent.h"
 #include "TransformComponent.h"
+#include "ColliderComponent.h"
 
-dae::GameObject::GameObject()
+dae::GameObject::GameObject(std::string objectName):
+m_Name(objectName)
 {
 	m_pTransform = std::make_shared<TransformComponent>();
 	AddComponent(m_pTransform);
 }
 
 
-dae::GameObject::~GameObject() = default;
+dae::GameObject::~GameObject()
+{
+	m_pComponents.clear();
+}
 
 
 void dae::GameObject::Initialize()
@@ -24,8 +29,7 @@ void dae::GameObject::Initialize()
 			m_pComponents[i]->Initialize();
 	}
 
-	for(auto gameObject : m_pChildren)
-		gameObject->Initialize();
+
 }
 
 
@@ -37,8 +41,7 @@ void dae::GameObject::Update()
 			m_pComponents[i]->Update();
 	}
 
-	for(auto gameObject : m_pChildren)
-		gameObject->Update();
+
 }
 
 void dae::GameObject::Draw() const
@@ -50,8 +53,7 @@ void dae::GameObject::Draw() const
 			m_pComponents[i]->Draw();
 	}
 
-	for(auto gameObject : m_pChildren)
-		gameObject->Draw();
+
 }
 
 void dae::GameObject::AddComponent(std::shared_ptr<BaseComponent> component)
@@ -59,6 +61,7 @@ void dae::GameObject::AddComponent(std::shared_ptr<BaseComponent> component)
 	//First check if user isnt trying to add transformcomponent
 	if(typeid(*component) == typeid(TransformComponent) && (m_pTransform))
 		return;
+
 	
 	//Add to vector of components
 	m_pComponents.push_back(component);

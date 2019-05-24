@@ -42,24 +42,10 @@ namespace dae{
 		std::shared_ptr<GameObject> m_pGameObject;
 	};
 
-	class Pillar
-	{
-	public:
-		Pillar(glm::vec2 pos, glm::vec2 scale);
-
-		friend class LevelGrid;
-		std::shared_ptr<GameObject> GetGameObject() const {return m_pGameObject;}
-		glm::vec2 GetPosition() const { return m_Position;}
-		glm::vec2 GetScale() const { return m_Scale;}
-	private:
-		glm::vec2 m_Position;
-		glm::vec2 m_Scale;
-		std::shared_ptr<GameObject> m_pGameObject;
-	};
 
 	//TYPEDEF for grid -> vector in vector creates matrix like structure
 	//TODO: Clean this up 
-	typedef std::vector<std::vector<Cell>> Grid;
+	typedef std::vector<std::vector<std::shared_ptr<Cell>>> Grid;
 
 	class Subject;
 
@@ -68,6 +54,7 @@ class LevelGrid : public Singleton<LevelGrid>
 public:
 	LevelGrid();
 	~LevelGrid();
+	void CleanUp();
 
 	void Initialize(int rows, int columns, glm::vec2 pos, glm::vec2 scale );
 
@@ -75,12 +62,11 @@ public:
 
 	void SetRowsAndCollums(const int rows, const int columns, glm::vec2 pos, glm::vec2 scale);
 
-	Cell GetCell(int row, int column){ return m_GridCells[row][column];}
-	Cell GetCell(glm::vec2 pos);
-	std::shared_ptr<Cell> GetCellPtr(glm::vec2 pos);
+	std::shared_ptr<Cell> GetCell(int row, int column){ return m_GridCells[row][column];}
+	std::shared_ptr<Cell> GetCell(glm::vec2 pos);
 
 	Grid GetCells() const {return m_GridCells;}
-	std::vector<Pillar> GetPillars() const {return m_GridPillars;}
+
 
 	int GetNrCells() const {return m_NrCells;}
 	int GetRows() const {return m_Rows;}
@@ -88,7 +74,7 @@ public:
 
 	void SetCellInactive(int row, int column);
 	glm::vec2 GetPathForDir(Direction dir, glm::vec2 pos);
-	std::vector<std::pair<dae::Cell,dae::Direction>> GetNeighbourCells(std::array<Direction,4> directionOrder, Cell currCell);
+	std::vector<std::pair<std::shared_ptr<Cell>,dae::Direction>> GetNeighbourCells(std::array<Direction,4> directionOrder, std::shared_ptr<Cell> currCell);
 
 	void SetSubject(std::shared_ptr<Subject> obs){m_pSubject = obs;}
 	std::shared_ptr<Subject> GetSubject(){return m_pSubject;}
@@ -102,7 +88,7 @@ private:
 	Color m_GroundColors[4] = { Colors::LightSand, Colors::DarkSand, Colors::LightClay, Colors::DarkClay};
 
 	Grid m_GridCells;
-	std::vector<Pillar> m_GridPillars;
+	
 
 	std::shared_ptr<Subject> m_pSubject;
 };

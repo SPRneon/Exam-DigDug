@@ -32,9 +32,6 @@
     <Filter Include="Base\Input">
       <UniqueIdentifier>{daa632a4-9641-414f-8436-445a002f2532}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Audio">
-      <UniqueIdentifier>{5a961544-6832-454a-bb8d-3f9c9a171d4b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Prefabs">
       <UniqueIdentifier>{e54b550d-5f4b-40f9-9bd0-565a7069091d}</UniqueIdentifier>
     </Filter>
@@ -43,6 +40,9 @@
     </Filter>
     <Filter Include="ObserveSystem">
       <UniqueIdentifier>{209eac1b-fcb4-4eae-9616-302ceded8fce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Audio">
+      <UniqueIdentifier>{5a961544-6832-454a-bb8d-3f9c9a171d4b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,12 +112,6 @@
     <ClInclude Include="BaseCommand.h">
       <Filter>Base\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Locator.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="Audio.h">
-      <Filter>Content</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Game\Prefabs</Filter>
     </ClInclude>
@@ -159,6 +153,21 @@
     </ClInclude>
     <ClInclude Include="LevelObserver.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Content\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Locator.h">
+      <Filter>Content\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Rock.h">
+      <Filter>Game\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Game\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="FygarStates.h">
+      <Filter>AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -222,12 +231,6 @@
     <ClCompile Include="BaseCommand.cpp">
       <Filter>Base\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Locator.cpp">
-      <Filter>Content</Filter>
-    </ClCompile>
-    <ClCompile Include="Audio.cpp">
-      <Filter>Content</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Game\Prefabs</Filter>
     </ClCompile>
@@ -256,6 +259,21 @@
       <Filter>Game\Prefabs</Filter>
     </ClCompile>
     <ClCompile Include="Transition.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Content\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Locator.cpp">
+      <Filter>Content\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Rock.cpp">
+      <Filter>Game\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Game\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="FygarStates.cpp">
       <Filter>AI</Filter>
     </ClCompile>
   </ItemGroup>

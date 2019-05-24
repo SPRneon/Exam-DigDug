@@ -9,7 +9,7 @@
 
 dae::UIDisplay::UIDisplay()
 {
-	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
+	auto font = ResourceManager::GetInstance()->LoadFont("Lingua.otf", 24);
 
 	//Score
 	auto scoreDisplay = std::make_shared<GameObject>();
@@ -39,12 +39,12 @@ dae::UIDisplay::~UIDisplay()
 }
 
 
-void dae::UIDisplay::OnNotify(Event* event)
+void dae::UIDisplay::OnNotify(std::shared_ptr<Event> event)
 {
 	std::string str = event->type();
 	if(str == "ScoreEvent")
 	{
-		auto score = dynamic_cast<ScoreEvent*>(event)->m_Score;
+		auto score = std::dynamic_pointer_cast<ScoreEvent>(event)->m_Score;
 		m_score += score;
 		m_pDisplayMap.at("ScoreDisplay")->GetComponent<TextComponent>()->SetText("Score: " + std::to_string(m_score));
 	}

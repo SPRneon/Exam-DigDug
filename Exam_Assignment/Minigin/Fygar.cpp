@@ -5,15 +5,16 @@
 #include "TextureComponent.h"
 #include "ColliderComponent.h"
 #include "States.h"
+#include "LevelGrid.h"
 
 
-dae::Fygar::Fygar(std::shared_ptr<GameObject> player) : m_pPlayer(player)
+dae::Fygar::Fygar(std::string name, std::shared_ptr<GameObject> player) : m_pPlayer(player), Entity(name)
 {
-	m_pGameObject = std::make_shared<GameObject>();
 	m_pGameObject->AddComponent(std::make_shared<CommandComponent>());
 	m_pGameObject->AddComponent(std::make_shared<TextureComponent>("Fygar.png",2,0.4f));
 	SDL_Rect rect{0,0,24,24};
-	m_pGameObject->AddComponent(std::make_shared<ColliderComponent>(rect,ENEMIES));
+	auto collider = std::make_shared<ColliderComponent>(rect,ENEMIES);
+	m_pGameObject->AddComponent(collider);
 	m_pGameObject->GetComponent<ColliderComponent>()->SetIgnoreFlags(ENEMIES);
 	
 	m_pActionStateMachine = std::make_shared<FiniteStateMachine>();
@@ -27,5 +28,14 @@ dae::Fygar::Fygar(std::shared_ptr<GameObject> player) : m_pPlayer(player)
 void dae::Fygar::Update()
 {
 	m_pActionStateMachine->Update();
+}
+
+void dae::Fygar::Place(int row, int column)
+{
+	GetGameObject()->GetTransform()->SetPosition(LevelGrid::GetInstance()->GetCell(row,column)->GetCenter());
+	GetGameObject()->GetTransform()->Translate(-10.f,-10.f);
+	LevelGrid::GetInstance()->SetCellInactive(row,column-1);
+	LevelGrid::GetInstance()->SetCellInactive(row,column);
+	LevelGrid::GetInstance()->SetCellInactive(row,column+1);
 }
 

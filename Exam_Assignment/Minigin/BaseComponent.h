@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 namespace dae{
-class BaseComponent
+class BaseComponent 
 {
 public:
 	BaseComponent();

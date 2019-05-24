@@ -16,7 +16,7 @@ dae::FPSScene::FPSScene(const std::string& name) : Scene(name){}
 
 void dae::FPSScene::Initialize()
 {
-	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	auto font = ResourceManager::GetInstance()->LoadFont("Lingua.otf", 36);
 
 	m_FPSCounter = std::make_shared<GameObject>();
 	auto text = std::make_shared<TextComponent>("Test",font, Colors::yellow);
@@ -46,7 +46,7 @@ void dae::FPSScene::Initialize()
 
 
 	//INPUT
-	auto input = &InputManager::GetInstance();
+	auto input = InputManager::GetInstance();
 	auto ia = InputAction(0,KeyState::JustPressed,'A',-1,XINPUT_GAMEPAD_A,0);
 	auto command = std::make_shared<JumpCommand>(m_FPSCounter,5.f);
 	if(input->AddInput(ia,command))
@@ -63,15 +63,15 @@ void dae::FPSScene::Update()
 {
 	
 
-	const auto fpsText =  GameTime::GetInstance().GetFps();
+	const auto fpsText =  GameTime::GetInstance()->GetFps();
 	const std::string out = std::string(std::to_string(fpsText) + " FPS");
 	m_FPSCounter->GetComponent<TextComponent>()->SetText(out);
 
-	const int timeText =  static_cast<int>(GameTime::GetInstance().GetTotal());
+	const int timeText =  static_cast<int>(GameTime::GetInstance()->GetTotal());
 	const std::string outTime = std::string(std::to_string(timeText) + " Total Time");
 	m_TimeCounter->GetComponent<TextComponent>()->SetText(outTime);
 
-	const auto elaText =  (GameTime::GetInstance().GetElapsed() / 1000000.f);
+	const auto elaText =  (GameTime::GetInstance()->GetElapsed() / 1000000.f);
 	const std::string elaTime = std::string(std::to_string(elaText) + " Elapsed Time");
 	m_ElapsedCounter->GetComponent<TextComponent>()->SetText(elaTime);
 }

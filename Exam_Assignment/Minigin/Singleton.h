@@ -5,19 +5,35 @@ namespace dae
 	class Singleton
 	{
 	public:
-		static T& GetInstance()
+		static T* GetInstance()
 		{
-			static T instance{};
-			return instance;
+			if(!m_Instance)
+			{
+			m_Instance = new T();
+			}
+
+		return m_Instance;
 		}
 
-		virtual ~Singleton() = default;
+		static void DestroyInstance()
+		{
+		delete m_Instance;
+		m_Instance = nullptr;
+		}
+
+		/*virtual ~Singleton() = default;
+
 		Singleton(const Singleton& other) = delete;
 		Singleton(Singleton&& other) = delete;
 		Singleton& operator=(const Singleton& other) = delete;
-		Singleton& operator=(Singleton&& other) = delete;
+		Singleton& operator=(Singleton&& other) = delete;*/
 
-	protected:
-		Singleton() = default;
+	
+
+	private:
+	static T* m_Instance;
 	};
 }
+
+template<class T> 
+T* dae::Singleton<T>::m_Instance = nullptr;

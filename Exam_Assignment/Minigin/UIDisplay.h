@@ -17,7 +17,7 @@ public:
 	UIDisplay();
 	virtual ~UIDisplay();
 
-	void OnNotify(Event* event) override;
+	void OnNotify(std::shared_ptr<Event> event) override;
 
 	std::shared_ptr<GameObject> GetDisplay(std::string name){return m_pDisplayMap.at(name);}
 	/*Subject* GetSubject(){return m_pSubject;}
