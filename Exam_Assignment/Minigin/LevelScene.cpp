@@ -130,7 +130,7 @@ void dae::LevelScene::PostDraw() const
 void dae::LevelScene::ResetLevel() const
 {
 	std::cout << "Should reset level" << std::endl;
-	GameTime::GetInstance()->Stop();
+	//GameTime::GetInstance()->Stop();
 
 }
 

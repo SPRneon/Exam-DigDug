@@ -4,7 +4,7 @@
 #include "CommandComponent.h"
 #include "TextureComponent.h"
 #include "ColliderComponent.h"
-#include "States.h"
+#include "FygarStates.h"
 #include "LevelGrid.h"
 
 

@@ -2,7 +2,10 @@
 #include "GameObject.h"
 #include "Entity.h"
 
+
 namespace dae{
+	class FiniteStateMachine;
+
 class Rock : public Entity
 {
 public:
@@ -14,6 +17,7 @@ public:
 
 private:
 	bool m_FirstUpdatePassed = false;
+	std::shared_ptr<FiniteStateMachine> m_pActionStateMachine;
 };
 
 }

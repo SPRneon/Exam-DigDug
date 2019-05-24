@@ -16,6 +16,7 @@ public:
 protected:
 	std::shared_ptr<GameObject> m_pGameObject;
 	std::string m_Name;
+
 };
 }
 

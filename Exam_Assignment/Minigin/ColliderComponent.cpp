@@ -43,8 +43,12 @@ SDL_Rect* dae::ColliderComponent::CheckCollisions()
 		//CHeck if there is any intersection
 		for(auto collider : it->second)
 		{
+			//Check if collider is sleeping ->ignore
 			if(collider->IsSleeping())
 				continue;
+
+
+
 			auto result = SDL_IntersectRect(&m_Shape, collider->GetShape(), temp);
 			if(result == SDL_TRUE)
 			{	
@@ -98,6 +102,10 @@ const bool dae::ColliderComponent::HasCollidedWith(ColliderGroups groups)
 	return false;
 }
 
+std::shared_ptr<dae::GameObject> dae::ColliderComponent::GetCollisionObject(ColliderGroups objectFlag)
+{
+	
+}
 
 
 void dae::ColliderComponent::Update()

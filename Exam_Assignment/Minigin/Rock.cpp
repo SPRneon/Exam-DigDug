@@ -5,16 +5,24 @@
 #include "LevelGrid.h"
 #include "CommandComponent.h"
 #include "BaseCommand.h"
+#include "FiniteStateMachine.h"
+#include "States.h"
+
 
 dae::Rock::Rock(std::string name) : Entity(name)
 {
 	m_pGameObject->AddComponent(std::make_shared<TextureComponent>("Rock.png"));
-	SDL_Rect rect{0,0,24,4};
+	SDL_Rect rect{0,0,24,24};
 	auto collider = std::make_shared<ColliderComponent>(rect,ROCK);
-	collider->SetOffset({0.f,24.f});
+	collider->SetIgnoreFlags(PLAYER);
+	collider->SetIgnoreFlags(ENEMIES);
 	m_pGameObject->AddComponent(collider);
 	m_pGameObject->AddComponent(std::make_shared<CommandComponent>());
 
+	//FSM
+	m_pActionStateMachine = std::make_shared<FiniteStateMachine>();
+	
+	
 }
 
 
@@ -26,12 +34,7 @@ void dae::Rock::Update()
 		m_FirstUpdatePassed = true;
 		return;
 	}
-	if(!m_pGameObject->GetComponent<ColliderComponent>()->HasCollidedWith(TERRAIN))
-	{
-		std::cout << "Undercut"<< std::endl;
-		auto fallCommand = std::make_shared<MoveCommand>(m_pGameObject,DOWN,30.f);
-		m_pGameObject->GetComponent<CommandComponent>()->AddToCommandStream(fallCommand);
-	}
+	m_pActionStateMachine->Update();
 }
 
 void dae::Rock::Place(int row, int column)
@@ -42,6 +45,8 @@ void dae::Rock::Place(int row, int column)
 	pos.x += (scale.x/2) - 12.f;
 
 	GetGameObject()->GetTransform()->SetPosition(pos);
-
+	auto cell = LevelGrid::GetInstance()->GetCell(row+ 1,column);
+	auto initState =std::make_shared<RockIdleState>(m_pActionStateMachine);
+	m_pActionStateMachine->Initialize(initState,m_pGameObject,cell->GetGameObject());
 }
 
