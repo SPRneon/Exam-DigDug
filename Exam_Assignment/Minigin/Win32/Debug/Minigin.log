@@ -1,22 +1,53 @@
-﻿  ColliderComponent.cpp
+﻿  MiniginPCH.cpp
+  BaseCommand.cpp
+  BaseComponent.cpp
+  ColliderComponent.cpp
+  CommandComponent.cpp
   Entity.cpp
   FiniteStateMachine.cpp
   Fygar.cpp
   FygarStates.cpp
+  InputManager.cpp
+  LevelGrid.cpp
+  LevelScene.cpp
+  Player.cpp
   PlayerStates.cpp
   Pooka.cpp
   PookaStates.cpp
   Rock.cpp
+  SceneManager.cpp
   States.cpp
+  TransformComponent.cpp
+  ResourceManager.cpp
+  Generating Code...
+  Compiling...
+  Log.cpp
+  GameTime.cpp
+  FPSScene.cpp
+  Font.cpp
+  Renderer.cpp
+  Main.cpp
+  Minigin.cpp
+  GameObject.cpp
+  Scene.cpp
+  Texture2D.cpp
+  TextRenderer.cpp
+  TextComponent.cpp
+  TextureComponent.cpp
   Transition.cpp
   UIDisplay.cpp
   Generating Code...
-  LINK : C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exe not found or not built by the last incremental link; performing full link
      Creating library C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.lib and object C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exp
   Minigin.vcxproj -> C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exe
   C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2\lib\x86\SDL2.dll
   1 File(s) copied
-  File not found - x86*.dll
-  0 File(s) copied
-  File not found - x86*.dll
-  0 File(s) copied
+  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_image\lib\x86\libjpeg-9.dll
+  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_image\lib\x86\libpng16-16.dll
+  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_image\lib\x86\libtiff-5.dll
+  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_image\lib\x86\libwebp-7.dll
+  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_image\lib\x86\SDL2_image.dll
+  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_image\lib\x86\zlib1.dll
+  6 File(s) copied
+  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_ttf\lib\x86\libfreetype-6.dll
+  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2_ttf\lib\x86\SDL2_ttf.dll
+  2 File(s) copied
