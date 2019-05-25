@@ -210,5 +210,4 @@ void dae::LevelScene::CleanUp()
 {
 	LevelGrid::GetInstance()->CleanUp();
 	InputManager::GetInstance()->CleanUp();
-	InputManager::GetInstance()->Init();
 }

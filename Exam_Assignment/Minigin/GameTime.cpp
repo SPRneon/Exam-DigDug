@@ -34,6 +34,10 @@ void dae::GameTime::Update()
 {
 	if(m_IsPaused)
 	{
+		m_CurrTime = std::chrono::high_resolution_clock::now();
+		m_ElapsedPausedGameTime = static_cast<float>((std::chrono::duration_cast<std::chrono::microseconds>(m_CurrTime - m_PrevTime)).count());
+		m_PrevTime = m_CurrTime;
+
 		m_FPS = 0;
 		m_ElapsedGameTime = 0;
 		m_TotalGameTime = (std::chrono::duration_cast<std::chrono::seconds>(m_StopTime - m_BeginTime)).count() - m_PausedTime;

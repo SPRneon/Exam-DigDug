@@ -10,7 +10,7 @@ public:
 	m_pLevel(pLevel)
 	{
 	}
-	~LevelObserver(){delete m_pLevel; m_pLevel = nullptr;}
+	~LevelObserver(){ m_pLevel = nullptr;}
 
 	void OnNotify(std::shared_ptr<Event> event) override
 	{

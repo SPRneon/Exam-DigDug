@@ -16,7 +16,7 @@ public:
 class ScoreEvent final : public Event
 {
 public:
-	ScoreEvent(int score, glm::vec2 pos) : m_Score(score),m_Pos(pos){};
+	ScoreEvent(int score) : m_Score(score){};
 const std::string descriptor =  "ScoreEvent";
 
   virtual std::string type() const
@@ -25,7 +25,6 @@ const std::string descriptor =  "ScoreEvent";
   }
 
 	int m_Score;
-	glm::vec2 m_Pos;
 };
 
 class LivesEvent final : public Event

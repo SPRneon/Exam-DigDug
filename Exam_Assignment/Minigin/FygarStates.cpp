@@ -18,6 +18,15 @@
 //****************//
 
 //****FYGAR WANDER****//
+void dae::FygarWanderState::OnEnter()
+{
+	 m_PhaseTime = rand()  %5 + 5.f; 
+	m_FireTime = rand()  %5 + 5.f; 
+
+}
+
+
+
 void dae::FygarWanderState::Update()
 {
 	m_deltaTime += GameTime::GetInstance()->GetElapsed();
@@ -261,6 +270,7 @@ void dae::FygarFireState::OnExit()
 void dae::FygarAliveState::OnEnter()
 {
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("Fygar.png",2);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetPosition(0.f,0.f);
 }
 
 void dae::FygarAliveState::Update()
@@ -284,6 +294,7 @@ void dae::FygarHitState::OnEnter()
 {
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(RIGHT);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("FygarInflating.png",4);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetPosition(0.f,-5.f);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->Pause();
 }
 
@@ -327,7 +338,9 @@ void dae::FygarHitState::Update()
 
 void dae::FygarDeadState::OnEnter()
 {
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("Fygar.png",2);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(RIGHT);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetPosition(0.f,0.f);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->Pause();
 	m_pContext->GetActor()->GetComponent<ColliderComponent>()->PutToSleep();
 	m_pContext->GetActor()->GetScene()->Remove(m_pContext->GetActor());

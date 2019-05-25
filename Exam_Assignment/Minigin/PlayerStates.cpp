@@ -8,6 +8,7 @@
 #include "TextureComponent.h"
 #include "TransformComponent.h"
 #include "Scene.h"
+#include "Renderer.h"
 
 
 void dae::PlayerAliveState::OnEnter()
@@ -189,6 +190,41 @@ void dae::PlayerPumpingState::OnExit()
 {
 	m_pContext->GetActor()->GetScene()->Remove(m_pMisile);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("Player.png",2);
+}
+
+void dae::PlayerDeadState::OnEnter()
+{
+	m_pContext->GetActor()->GetComponent<CommandComponent>()->SetControllable(false);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("PlayerDead.png",5);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->Pause();
+	GameTime::GetInstance()->Stop();
+}
+
+void dae::PlayerDeadState::Update()
+{
+	if(m_DeltaTime < m_StageTime)
+	{
+		m_DeltaTime +=GameTime::GetInstance()->GetPausedElapsed();
+	}
+	else
+	{
+		m_AnimStage++;
+		m_pContext->GetActor()->GetComponent<TextureComponent>()->NextFrame();
+		
+	}
+
+	if(m_AnimStage> 4)
+	{
+		m_pContext->GoToState(std::make_shared<PlayerAliveState>(m_pContext));
+		return;
+	}
+}
+
+void dae::PlayerDeadState::OnExit()
+{
+	m_pContext->GetActor()->GetComponent<CommandComponent>()->SetControllable(true);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->Play();
+	GameTime::GetInstance()->Start();
 }
 
 

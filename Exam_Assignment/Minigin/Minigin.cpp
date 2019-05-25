@@ -45,7 +45,6 @@ void dae::Minigin::Initialize()
 void dae::Minigin::LoadGame() const
 {
 	SceneManager::GetInstance()->CreateScene<LevelScene>("Demo");
-	SceneManager::GetInstance()->CreateScene<LevelScene>("Demo2");
 	SceneManager::GetInstance()->SetActiveScene("Demo");
 	InputAction ia{69,KeyState::Released,VK_ESCAPE,-41,XINPUT_GAMEPAD_BACK};
 	InputManager::GetInstance()->AddInput(ia,std::make_shared<ExitCommand>());

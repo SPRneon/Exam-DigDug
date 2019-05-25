@@ -42,7 +42,7 @@ void dae::Pooka::Update()
 		m_IsDead = true;
 		auto currCel = LevelGrid::GetInstance()->GetCell(m_pGameObject->GetTransform()->GetPosition());
 		int score  = 400 + static_cast<int>(currCel->GetRow() / 4.f) * 200;
-		m_pSubject->notify(std::make_shared<ScoreEvent>(score,m_pGameObject->GetTransform()->GetPosition()));
+		m_pSubject->notify(std::make_shared<ScoreEvent>(score));
 		this->MarkForDestroy();
 	}
 		m_pStateMachine->Update();

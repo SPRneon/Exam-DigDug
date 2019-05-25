@@ -1,11 +1,44 @@
-﻿  Fygar.cpp
+﻿  MiniginPCH.cpp
+  BaseCommand.cpp
+  BaseComponent.cpp
+  ColliderComponent.cpp
+  CommandComponent.cpp
+  Entity.cpp
+  FiniteStateMachine.cpp
+  Fygar.cpp
   FygarStates.cpp
+  InputManager.cpp
+  LevelGrid.cpp
   LevelScene.cpp
+  Player.cpp
+  PlayerStates.cpp
   Pooka.cpp
   PookaStates.cpp
+  Rock.cpp
+  SceneManager.cpp
+  States.cpp
+  TransformComponent.cpp
+  ResourceManager.cpp
+  Generating Code...
+  Compiling...
+  Log.cpp
+  GameTime.cpp
+  FPSScene.cpp
+  Font.cpp
+  Renderer.cpp
+  Main.cpp
+  Minigin.cpp
+  GameObject.cpp
+  Scene.cpp
+  Texture2D.cpp
+  TextRenderer.cpp
+  TextComponent.cpp
+  TextureComponent.cpp
+  Transition.cpp
+  UIDisplay.cpp
+  Generating Code...
+     Creating library C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.lib and object C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exp
   Minigin.vcxproj -> C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exe
-  C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\Fmod\bin\fmod.dll
-  1 File(s) copied
   C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2\lib\x86\SDL2.dll
   1 File(s) copied
   File not found - x86*.dll

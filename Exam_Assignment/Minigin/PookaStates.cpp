@@ -160,6 +160,7 @@ void dae::PookaPhaseState::OnExit()
 void dae::PookaAliveState::OnEnter()
 {
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("Pooka.png",2);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetPosition(0.f,0.f);
 }
 
 void dae::PookaAliveState::Update()
@@ -171,7 +172,7 @@ void dae::PookaAliveState::Update()
 		m_pContext->GoToState(std::make_shared<PookaHitState>(m_pContext));
 		return;
 	}
-	std::cout << "NO" << std::endl;
+
 
 	if(m_pContext->GetActor()->GetComponent<ColliderComponent>()->HasCollidedWith(ROCK))
 	{
@@ -184,6 +185,7 @@ void dae::PookaHitState::OnEnter()
 {
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(RIGHT);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("PookaInflating.png",4);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetPosition(0.f,-5.f);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->Pause();
 }
 
@@ -229,6 +231,7 @@ void dae::PookaHitState::Update()
 
 void dae::PookaDeadState::OnEnter()
 {
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetPosition(0.f,0.f);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(RIGHT);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->Pause();
 	m_pContext->GetActor()->GetComponent<ColliderComponent>()->PutToSleep();

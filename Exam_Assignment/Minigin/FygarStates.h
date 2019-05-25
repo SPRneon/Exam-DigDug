@@ -11,7 +11,7 @@ namespace dae{
 	public:
 		FygarWanderState(std::shared_ptr<FiniteStateMachine> context) : State(context){}
 		FygarWanderState(std::shared_ptr<FiniteStateMachine> context, Direction dir) : State(context), m_WanderDir(dir){}
-		virtual void OnEnter() override { m_PhaseTime = rand()  %5 + 5.f; m_FireTime = rand()  %5 + 5.f;}
+		virtual void OnEnter() override; 
 		virtual void Update() override;
 		virtual void OnExit() override{ }
 	private:

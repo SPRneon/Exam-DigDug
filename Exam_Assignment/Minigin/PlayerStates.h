@@ -58,9 +58,12 @@ class PlayerDeadState : public State
 public:
 	PlayerDeadState(std::shared_ptr<FiniteStateMachine> context) : State(context){}
 
-		virtual void OnEnter() override{}
-		virtual void Update() override{};
-		virtual void OnExit() override{}
+		virtual void OnEnter() override;
+		virtual void Update() override;
+		virtual void OnExit() override;
 private:
+	float m_DeltaTime = 0;
+	float m_StageTime = 2.f;
+	int m_AnimStage = 0;
 };
 }

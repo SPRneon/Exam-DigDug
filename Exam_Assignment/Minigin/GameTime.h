@@ -15,6 +15,7 @@ namespace dae
 		void Update();
 
 		const float GetElapsed(){return m_ElapsedGameTime / 1000000.f;}
+		const float GetPausedElapsed(){return m_ElapsedPausedGameTime / 1000000.f;}
 		const float GetTotal() { return m_TotalGameTime;}
 		const int GetFps(){return m_FPS;}
 		const bool IsPaused()const {return m_IsPaused;}
@@ -26,12 +27,15 @@ namespace dae
 	private:
 		float m_TotalGameTime;
 		float m_ElapsedGameTime;
+		float m_ElapsedPausedGameTime;
 		float m_SecPerCount;
+
 		float m_PausedTime;
 
 		std::chrono::time_point<std::chrono::steady_clock> m_BeginTime;
 		std::chrono::time_point<std::chrono::steady_clock> m_CurrTime;
 		std::chrono::time_point<std::chrono::steady_clock> m_PrevTime;
+		std::chrono::time_point<std::chrono::steady_clock> m_PrevPauseTime;
 
 		std::chrono::time_point<std::chrono::steady_clock> m_StartTime;
 		std::chrono::time_point<std::chrono::steady_clock> m_StopTime;
