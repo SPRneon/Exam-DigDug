@@ -40,6 +40,14 @@ void dae::Player::Update()
 	}
 
 	}
+	else
+	{
+		auto state = m_pFiniteStateMachine->GetState();
+		if(typeid(*state) == typeid(PlayerAliveState))
+		{
+		m_IsDead = false;
+		}
+	}
 }
 
 void dae::Player::Reset()
