@@ -24,7 +24,16 @@ void dae::CommandComponent::PerformAllCommands()
 {
 	while(!m_pCommandStream.empty())
 	{
-		m_pCommandStream.front()->execute();
+		if(typeid(*m_pCommandStream.front()) == typeid(MoveCommand))
+		{
+			if(m_AllowMovement)
+			{
+				m_LastDir = std::dynamic_pointer_cast<MoveCommand>(m_pCommandStream.front())->GetDir();
+				m_pCommandStream.front()->execute();
+			}
+		}
+		else
+			m_pCommandStream.front()->execute();
 		m_pCommandStream.pop();
 	}
 }

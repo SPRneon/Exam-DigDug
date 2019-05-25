@@ -5,6 +5,8 @@
 #include <glm/vec2.hpp>
 #pragma warning(pop)
 #include <SDL.h>
+#include "MathHelper.h"
+
 namespace dae{
 
 
@@ -25,7 +27,7 @@ public:
 	void SetPosition(float x, float y);
 	void SetAnimSpeed(float animSpeed){m_AnimSpeed = animSpeed;}
 	void Translate(float x, float y){m_TexturePos.x += x; m_TexturePos.y += y;}
-	void SetFlip(SDL_RendererFlip flip){m_Flip = flip;};
+	void SetDir(Direction dir){m_Direction = dir;};
 	void Pause(){m_Play = false;}
 	void Play(){m_Play = true;}
 	void NextFrame(){currSprites++; currSprites %= m_NrOfSprites;}
@@ -36,7 +38,7 @@ private:
 	int currSprites = 0;
 	float m_AnimSpeed;
 	float m_DeltaTime = 0;
-	SDL_RendererFlip m_Flip = SDL_FLIP_NONE;
+	Direction m_Direction = RIGHT;
 	bool m_Play = true;
 
 	glm::vec2 m_ClipWH;

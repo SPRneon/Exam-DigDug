@@ -21,8 +21,12 @@ dae::Fygar::Fygar(std::string name, std::shared_ptr<Player> player) : m_pPlayer(
 	m_pGameObject->GetComponent<ColliderComponent>()->SetIgnoreFlags(ENEMIES);
 	
 	m_pActionStateMachine = std::make_shared<FiniteStateMachine>();
-	auto initState =std::make_shared<FygarWanderState>(m_pActionStateMachine);
-	m_pActionStateMachine->Initialize(initState,m_pGameObject,m_pPlayer);
+	auto initAction =std::make_shared<FygarWanderState>(m_pActionStateMachine);
+	m_pActionStateMachine->Initialize(initAction,m_pGameObject,m_pPlayer);
+
+	m_pStateMachine = std::make_shared<FiniteStateMachine>();
+	auto initState =std::make_shared<FygarAliveState>(m_pStateMachine);
+	m_pStateMachine->Initialize(initState,m_pGameObject,m_pPlayer);
 }
 
 
@@ -32,16 +36,20 @@ void dae::Fygar::Update()
 {
 	if(!m_IsDead)
 	{
-	if(GetGameObject()->IsMarkedForDestroy())
+	auto state = m_pStateMachine->GetState();
+	if(typeid(*state) == typeid(FygarAliveState))
+	{
+		m_pActionStateMachine->Update();
+	}
+	if(typeid(*state) == typeid(FygarDeadState))
 	{
 		m_IsDead = true;
 		auto currCel = LevelGrid::GetInstance()->GetCell(m_pGameObject->GetTransform()->GetPosition());
 		int score  = 400 + static_cast<int>(currCel->GetRow() / 4.f) * 200;
-		m_pSubject->notify(std::make_shared<ScoreEvent>(score));
+		m_pSubject->notify(std::make_shared<ScoreEvent>(score,m_pGameObject->GetTransform()->GetPosition()));
 		this->MarkForDestroy();
 	}
-	
-	m_pActionStateMachine->Update();
+		m_pStateMachine->Update();
 	}
 }
 

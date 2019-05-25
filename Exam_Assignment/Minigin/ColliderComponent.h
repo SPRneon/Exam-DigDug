@@ -87,6 +87,7 @@ private:
 	std::vector<ColliderGroups> m_GroupsToIgnore;
 	glm::vec2 m_Pivot;
 	glm::vec2 m_Offset = {0.f,0.f};
+	glm::vec2 m_Rotation = {0.f,0.f};
 	
 };
 }

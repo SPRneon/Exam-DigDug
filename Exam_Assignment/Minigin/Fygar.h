@@ -23,6 +23,7 @@ public:
 private:
 	std::shared_ptr<Player> m_pPlayer;
 	std::shared_ptr<FiniteStateMachine> m_pActionStateMachine;
+	std::shared_ptr<FiniteStateMachine> m_pStateMachine;
 	int m_Row, m_Col;
 
 	bool m_IsDead = false;

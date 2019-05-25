@@ -8,10 +8,11 @@
 #include "ColliderComponent.h"
 #include "LevelGrid.h"
 #include "Singleton.h"
+#include "SceneManager.h"
+#include "Player.h"
 #pragma warning(push)
 #pragma warning (disable:4201)
 #include "glm/geometric.hpp"
-#include "SceneManager.h"
 #pragma warning(pop)
 
 
@@ -38,12 +39,7 @@ void dae::BaseCommand::AddToCommandStream()
 void dae::FireCommand::execute()
 {
 	std::cout <<  "Fire by player("  << ")" << std::endl;
-if(typeid(Locator::getAudio()) != typeid(NullAudio)){
-	Locator::getAudio().stopAllSounds(); 
-	Locator::getAudio().playSound("../Data/Audio/Fire.wav");
-	}
-	else
-		throw std::exception("Logger::GetAudio() -> Audio was not yet initialized");
+	m_pPlayer->Fire();
 }
 
 

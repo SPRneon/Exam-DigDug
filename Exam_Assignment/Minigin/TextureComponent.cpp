@@ -64,7 +64,7 @@ void dae::TextureComponent::Draw() const
 			src.y = 0;
 			src.w = static_cast<int>(m_ClipWH.x);
 			src.h =  static_cast<int>(m_ClipWH.y);
-			Renderer::GetInstance()->RenderTexturePart(*m_pTexture, src,dst,m_Flip);
+			Renderer::GetInstance()->RenderTexturePart(*m_pTexture, src,dst,m_Direction);
 
 		}
 	}

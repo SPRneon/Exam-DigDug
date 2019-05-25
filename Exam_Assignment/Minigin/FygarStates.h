@@ -103,7 +103,7 @@ namespace dae{
 		virtual void OnExit() override{}
 	private:
 		float m_DeltaTime = 0.f;
-		float m_StageTime = 0.25f;
+		float m_StageTime = 1.f;
 		int m_HitStage= 0;
 		bool m_StillHit = true;
 	};
@@ -113,7 +113,7 @@ namespace dae{
 	public:
 		FygarDeadState(std::shared_ptr<FiniteStateMachine> context) : State(context){}
 
-		virtual void OnEnter() override{}
+		virtual void OnEnter() override;
 		virtual void Update() override{}
 		virtual void OnExit() override{}
 	};

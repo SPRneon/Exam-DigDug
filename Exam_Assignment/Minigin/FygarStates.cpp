@@ -30,10 +30,9 @@ void dae::FygarWanderState::Update()
 			m_WanderDir = IncrementDirectionCCW(m_WanderDir);
 	}
 	auto command = std::make_shared<MoveCommand>(m_pContext->GetActor(),m_WanderDir,40.f);
-	if(m_WanderDir == LEFT)
-		m_pContext->GetActor()->GetComponent<TextureComponent>()->SetFlip(SDL_FLIP_HORIZONTAL);
-	else
-		m_pContext->GetActor()->GetComponent<TextureComponent>()->SetFlip(SDL_FLIP_NONE);
+	
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(m_WanderDir);
+	
 	m_pContext->GetActor()->GetComponent<CommandComponent>()->AddToCommandStream(command);
 
 	//CONDITION TO GO TO CHASE
@@ -115,10 +114,9 @@ void dae::FygarChaseState::Update()
 		if(cellDir.first->IsVisited())
 		{
 			auto command = std::make_shared<MoveCommand>(m_pContext->GetActor(),cellDir.second,45.f);
-			if(cellDir.second == LEFT)
-				m_pContext->GetActor()->GetComponent<TextureComponent>()->SetFlip(SDL_FLIP_HORIZONTAL);
-			else
-				m_pContext->GetActor()->GetComponent<TextureComponent>()->SetFlip(SDL_FLIP_NONE);
+			
+			m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(cellDir.second);
+			
 			m_pContext->GetActor()->GetComponent<CommandComponent>()->AddToCommandStream(command);
 			return;
 		}
@@ -166,8 +164,7 @@ void dae::FygarChargeState::OnEnter()
 	//Setting texture
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("FygarCharge.png",2);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetAnimSpeed(0.25f);
-	if(m_WanderDir == LEFT)
-		m_pContext->GetActor()->GetComponent<TextureComponent>()->SetFlip(SDL_FLIP_HORIZONTAL);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(m_WanderDir);
 	
 
 }
@@ -198,9 +195,8 @@ void dae::FygarFireState::OnEnter()
 {
 	m_pFire = std::make_shared<GameObject>();
 	//Texture
-	m_pFire->AddComponent(std::make_shared<TextureComponent>("FygarFire.png",3,0.33f,false));
-	if(m_CurrentDir < 0)
-		m_pFire->GetComponent<TextureComponent>()->SetFlip(SDL_FLIP_HORIZONTAL);
+	m_pFire->AddComponent(std::make_shared<TextureComponent>("FygarFire.png",3,m_FireTime,false));
+	m_pFire->GetComponent<TextureComponent>()->SetDir(m_WanderDir);
 	
 	SDL_Rect rect {0,0,28,14};
 	m_pFire->AddComponent(std::make_shared<ColliderComponent>(rect,ENEMIES));
@@ -286,6 +282,7 @@ void dae::FygarAliveState::Update()
 
 void dae::FygarHitState::OnEnter()
 {
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(RIGHT);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("FygarInflating.png",4);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->Pause();
 }
@@ -326,5 +323,13 @@ void dae::FygarHitState::Update()
 		return;
 	}
 
+}
+
+void dae::FygarDeadState::OnEnter()
+{
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(RIGHT);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->Pause();
+	m_pContext->GetActor()->GetComponent<ColliderComponent>()->PutToSleep();
+	m_pContext->GetActor()->GetScene()->Remove(m_pContext->GetActor());
 }
 	

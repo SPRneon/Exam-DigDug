@@ -31,6 +31,7 @@ dae::Cell::Cell(int row, int column, bool visited,glm::vec2 pos, glm::vec2 scale
 	collider->SetIgnoreFlags(ENEMIES);
 	collider->SetIgnoreFlags(WALL);
 	collider->SetIgnoreFlags(ROCK);
+	collider->SetIgnoreFlags(MISILE);
 	m_pGameObject->AddComponent(collider);
 
 	auto font = ResourceManager::GetInstance()->LoadFont("Lingua.otf", 12);

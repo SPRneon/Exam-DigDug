@@ -6,10 +6,12 @@
 #include <glm/vec2.hpp>
 #pragma warning(pop)
 #include "MathHelper.h"
+#include "Player.h"
 
 namespace dae {
 	class GameObject;
 	class LevelGrid;
+	class Player;
 	
 
 class BaseCommand : public std::enable_shared_from_this<BaseCommand>
@@ -29,11 +31,17 @@ protected:
 class FireCommand final : public BaseCommand
 {
 public:
+	FireCommand(std::shared_ptr<Player> player) : m_pPlayer(player),BaseCommand(player->GetGameObject()){}
 	 void execute() override;
 	 std::string GetCommandName() const override{ return name;}
 private:
 	const std::string name = "Fire Command";
+	std::shared_ptr<Player> m_pPlayer;;
 };
+
+
+
+
 
 	//******UI*******//
 class ExitCommand final : public BaseCommand
@@ -65,8 +73,9 @@ public:
 
 		
 	}
-	 void execute() override;
-	 std::string GetCommandName() const override{ return name;}
+	void execute() override;
+	Direction GetDir()const{return m_Dir;}
+	std::string GetCommandName() const override{ return name;}
 private:
 	const std::string name = "Chase Command";
 	Direction m_Dir;

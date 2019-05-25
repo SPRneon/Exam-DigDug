@@ -9,6 +9,7 @@
 #include "FiniteStateMachine.h"
 #include "Player.h"
 #include "LevelGrid.h"
+#include "Scene.h"
 
 //****************//
 //*****ACTIONS****//
@@ -31,10 +32,9 @@ void dae::PookaWanderState::Update()
 
 
 	auto command = std::make_shared<MoveCommand>(m_pContext->GetActor(),m_WanderDir,40.f);
-	if(m_WanderDir == LEFT)
-		m_pContext->GetActor()->GetComponent<TextureComponent>()->SetFlip(SDL_FLIP_HORIZONTAL);
-	else
-		m_pContext->GetActor()->GetComponent<TextureComponent>()->SetFlip(SDL_FLIP_NONE);
+	
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(m_WanderDir);
+	
 	m_pContext->GetActor()->GetComponent<CommandComponent>()->AddToCommandStream(command);
 
 	//CONDITION TO GO TO CHASE
@@ -109,10 +109,9 @@ void dae::PookaChaseState::Update()
 		if(cellDir.first->IsVisited())
 		{
 			auto command = std::make_shared<MoveCommand>(m_pContext->GetActor(),cellDir.second,45.f);
-			if(cellDir.second == LEFT)
-				m_pContext->GetActor()->GetComponent<TextureComponent>()->SetFlip(SDL_FLIP_HORIZONTAL);
-			else
-				m_pContext->GetActor()->GetComponent<TextureComponent>()->SetFlip(SDL_FLIP_NONE);
+			
+			m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(cellDir.second);
+			
 			m_pContext->GetActor()->GetComponent<CommandComponent>()->AddToCommandStream(command);
 			return;
 		}
@@ -166,12 +165,13 @@ void dae::PookaAliveState::OnEnter()
 void dae::PookaAliveState::Update()
 {
 	
-
+	
 	if(m_pContext->GetActor()->GetComponent<ColliderComponent>()->HasCollidedWith(MISILE))
 	{
 		m_pContext->GoToState(std::make_shared<PookaHitState>(m_pContext));
 		return;
 	}
+	std::cout << "NO" << std::endl;
 
 	if(m_pContext->GetActor()->GetComponent<ColliderComponent>()->HasCollidedWith(ROCK))
 	{
@@ -182,6 +182,7 @@ void dae::PookaAliveState::Update()
 
 void dae::PookaHitState::OnEnter()
 {
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(RIGHT);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("PookaInflating.png",4);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->Pause();
 }
@@ -225,4 +226,12 @@ void dae::PookaHitState::Update()
 }
 
 
+
+void dae::PookaDeadState::OnEnter()
+{
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(RIGHT);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->Pause();
+	m_pContext->GetActor()->GetComponent<ColliderComponent>()->PutToSleep();
+	m_pContext->GetActor()->GetScene()->Remove(m_pContext->GetActor());
+}
 

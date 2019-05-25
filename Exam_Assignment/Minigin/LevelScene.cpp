@@ -132,6 +132,9 @@ void dae::LevelScene::Initialize()
 	ia = {3,KeyState::Pressed,'S',-1,XINPUT_GAMEPAD_DPAD_DOWN,0};
 	auto cmdDown = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),DOWN,50.f);
 	InputManager::GetInstance()->AddInput(ia,cmdDown);
+	ia = {4,KeyState::Pressed,VK_SPACE,-1,XINPUT_GAMEPAD_A,0};
+	auto cmdFire = std::make_shared<FireCommand>(m_pPlayer);
+	InputManager::GetInstance()->AddInput(ia,cmdFire);
 
 	//Audio
 	

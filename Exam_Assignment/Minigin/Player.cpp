@@ -10,6 +10,8 @@
 #include "Subject.h"
 #include "Event.h"
 #include "LevelGrid.h"
+#include "FiniteStateMachine.h"
+#include "PlayerStates.h"
 
 dae::Player::Player(std::string name,int playerID) :Entity(name) ,m_PlayerIndex(playerID)
 {
@@ -19,11 +21,14 @@ dae::Player::Player(std::string name,int playerID) :Entity(name) ,m_PlayerIndex(
 	auto collider = std::make_shared<ColliderComponent>(rect,PLAYER);
 	m_pGameObject->AddComponent(collider);
 	m_pGameObject->GetComponent<ColliderComponent>()->AddIgnoreGroup(TERRAIN);
+	m_pFiniteStateMachine = std::make_shared<FiniteStateMachine>();
+	m_pFiniteStateMachine->Initialize(std::make_shared<PlayerAliveState>(m_pFiniteStateMachine),m_pGameObject,nullptr);
 }
 
 
 void dae::Player::Update()
 {
+	m_pFiniteStateMachine->Update();
 	
 	if(m_pGameObject->GetComponent<ColliderComponent>()->HasCollidedWith(ENEMIES) || m_pGameObject->GetComponent<ColliderComponent>()->HasCollidedWith(FIRE) )
 	{
@@ -66,6 +71,15 @@ void dae::Player::Place(int row, int column)
 			LevelGrid::GetInstance()->SetCellInactive(i,column);
 	}
 
+}
+
+void dae::Player::Fire()
+{
+	auto state = m_pFiniteStateMachine->GetState();
+	if(typeid(*state) == typeid(PlayerChargedState))
+	{
+	m_pFiniteStateMachine->GoToState(std::make_shared<PlayerFiringState>(m_pFiniteStateMachine,m_pGameObject->GetComponent<CommandComponent>()->GetLastDir()));
+	}
 }
 
 

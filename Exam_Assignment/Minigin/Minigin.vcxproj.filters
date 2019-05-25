@@ -44,6 +44,12 @@
     <Filter Include="Content\Audio">
       <UniqueIdentifier>{5a961544-6832-454a-bb8d-3f9c9a171d4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\UI">
+      <UniqueIdentifier>{18834353-1fe6-4dc3-9a4c-8c5dffb5a974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scenes">
+      <UniqueIdentifier>{ee1fb327-0b60-43bb-ac84-0bf3a51182b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneManager.h">
@@ -69,9 +75,6 @@
     </ClInclude>
     <ClInclude Include="Log.h">
       <Filter>Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="FPSScene.h">
-      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>Helpers</Filter>
@@ -118,12 +121,6 @@
     <ClInclude Include="CommandComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="LevelGrid.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelScene.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="ColliderComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -142,17 +139,11 @@
     <ClInclude Include="Event.h">
       <Filter>ObserveSystem</Filter>
     </ClInclude>
-    <ClInclude Include="UIDisplay.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Fygar.h">
       <Filter>Game\Prefabs</Filter>
     </ClInclude>
     <ClInclude Include="Transition.h">
       <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelObserver.h">
-      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Audio.h">
       <Filter>Content\Audio</Filter>
@@ -177,6 +168,21 @@
     </ClInclude>
     <ClInclude Include="PlayerStates.h">
       <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIDisplay.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSScene.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelScene.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelGrid.h">
+      <Filter>Game\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelObserver.h">
+      <Filter>ObserveSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -213,9 +219,6 @@
     <ClCompile Include="Log.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="FPSScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
@@ -246,12 +249,6 @@
     <ClCompile Include="CommandComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="LevelGrid.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelScene.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="ColliderComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -260,9 +257,6 @@
     </ClCompile>
     <ClCompile Include="States.cpp">
       <Filter>AI</Filter>
-    </ClCompile>
-    <ClCompile Include="UIDisplay.cpp">
-      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Fygar.cpp">
       <Filter>Game\Prefabs</Filter>
@@ -293,6 +287,18 @@
     </ClCompile>
     <ClCompile Include="PlayerStates.cpp">
       <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDisplay.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSScene.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelScene.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelGrid.cpp">
+      <Filter>Game\Prefabs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
