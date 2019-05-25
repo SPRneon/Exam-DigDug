@@ -3,7 +3,6 @@
   FiniteStateMachine.cpp
   Fygar.cpp
   FygarStates.cpp
-  Player.cpp
   PlayerStates.cpp
   Pooka.cpp
   PookaStates.cpp
