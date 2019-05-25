@@ -20,6 +20,7 @@ protected:
 	std::string m_Name;
 
 	bool m_MarkedForDestroy = false;
+	bool m_IsDead = false;
 
 };
 }

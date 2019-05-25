@@ -118,8 +118,6 @@ void dae::RockLandedState::Update()
 		
 		for(auto& victim : m_pVictims)
 		{
-		if(victim->GetName() == "Player")
-			m_pContext->GetTarget()->HitByRock();
 		
 			victim->MarkForDestroy();
 			victim = nullptr;

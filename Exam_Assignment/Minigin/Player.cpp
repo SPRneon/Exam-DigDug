@@ -28,29 +28,23 @@ dae::Player::Player(std::string name,int playerID) :Entity(name) ,m_PlayerIndex(
 
 void dae::Player::Update()
 {
-	m_pFiniteStateMachine->Update();
-	
-	if(m_pGameObject->GetComponent<ColliderComponent>()->HasCollidedWith(ENEMIES) || m_pGameObject->GetComponent<ColliderComponent>()->HasCollidedWith(FIRE) )
+	if(!m_IsDead)
 	{
-		std::cout << "Has Collided" << std::endl;
+		m_pFiniteStateMachine->Update();
+		auto state = m_pFiniteStateMachine->GetState();
+
+	if(typeid(*state) == typeid(PlayerDeadState))
+	{
 		m_pSubject->notify(std::make_shared<LivesEvent>());
-		m_pGameObject->GetComponent<ColliderComponent>()->PutToSleep();
-		m_pGameObject->GetComponent<CommandComponent>()->SetControllable(false);
+		m_IsDead = true;
 	}
 
-	if(m_KilledByRock)
-	{
-		std::cout << "Hit by rock" << std::endl;
-		m_pSubject->notify(std::make_shared<LivesEvent>());
-		m_pGameObject->GetComponent<ColliderComponent>()->PutToSleep();
-		m_pGameObject->GetComponent<CommandComponent>()->SetControllable(false);
 	}
-	
 }
 
 void dae::Player::Reset()
 {
-	m_KilledByRock = false;
+	
 	GetGameObject()->GetTransform()->SetScale(1.f,1.f);
 	GetGameObject()->GetComponent<CommandComponent>()->SetControllable(true);
 	GetGameObject()->GetComponent<TextureComponent>()->Play();
