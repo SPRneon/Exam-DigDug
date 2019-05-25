@@ -7,6 +7,7 @@
 #include "BaseCommand.h"
 #include "FiniteStateMachine.h"
 #include "States.h"
+#include "Scene.h"
 
 
 dae::Rock::Rock(std::string name,std::shared_ptr<Player> player) : Entity(name), m_pPlayer(player)
@@ -27,12 +28,30 @@ dae::Rock::Rock(std::string name,std::shared_ptr<Player> player) : Entity(name),
 
 void dae::Rock::Update()
 {
+	if(!m_IsDead)
+	{
 	if(!m_FirstUpdatePassed)
 	{
 		m_FirstUpdatePassed = true;
 		return;
 	}
-	m_pActionStateMachine->Update();
+
+	auto state = m_pActionStateMachine->GetState();
+	if(typeid(*state) == typeid(RockLandedState))
+	{
+		m_pGameObject->GetComponent<ColliderComponent>()->PutToSleep();
+		LevelGrid::GetInstance()->GetCell(m_pGameObject->GetTransform()->GetPosition())->DropRock();
+		m_pGameObject->GetScene()->Remove(m_pGameObject);
+		m_pActionStateMachine = nullptr;
+		
+		std::cout << m_pGameObject.use_count() << std::endl;
+		m_pGameObject.reset();
+		m_IsDead = true;
+		
+	}
+	else
+		m_pActionStateMachine->Update();
+	}
 }
 
 void dae::Rock::Reset()
@@ -45,6 +64,7 @@ void dae::Rock::Reset()
 
 void dae::Rock::Place(int row, int column)
 {
+	LevelGrid::GetInstance()->GetCell(row,column)->PlaceRock();
 	glm::vec2 pos = LevelGrid::GetInstance()->GetCell(row,column)->GetPosition();
 	auto scale = LevelGrid::GetInstance()->GetCell(row,column)->GetScale();
 	pos.y += scale.y - 24.f;

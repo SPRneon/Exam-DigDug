@@ -22,6 +22,8 @@ private:
 	std::shared_ptr<FiniteStateMachine> m_pActionStateMachine;
 
 	std::shared_ptr<Player> m_pPlayer;
+	bool m_IsDead = false;
+	int m_Row, m_Col;
 };
 
 }

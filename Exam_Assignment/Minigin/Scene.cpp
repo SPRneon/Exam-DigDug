@@ -46,10 +46,11 @@ void dae::Scene::RootUpdate()
 
 	for(auto gameObject : mObjects)
 	{
-		if(!gameObject->IsMarkedForDestroy())
+		if(gameObject || !gameObject->IsMarkedForDestroy())
 			gameObject->Update();
 		else
-			Remove(gameObject);
+			Remove(gameObject);		
+		
 	}
 
 	PostUpdate();
@@ -68,4 +69,10 @@ void dae::Scene::RootDraw()
 	PostDraw();
 }
 
+void dae::Scene::RootCleanUp()
+{
+	mObjects.clear();
 
+
+	CleanUp();
+}

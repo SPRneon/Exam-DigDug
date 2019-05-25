@@ -11,7 +11,6 @@ dae::Entity::Entity(std::string name)
 
 void dae::Entity::MarkForDestroy()
 {	m_MarkedForDestroy = true; 
-	m_pGameObject->MarkForDestroy();
 }
 
 

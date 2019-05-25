@@ -46,16 +46,16 @@ void dae::FPSScene::Initialize()
 
 
 	//INPUT
-	auto input = InputManager::GetInstance();
-	auto ia = InputAction(0,KeyState::JustPressed,'A',-1,XINPUT_GAMEPAD_A,0);
-	auto command = std::make_shared<JumpCommand>(m_FPSCounter,5.f);
-	if(input->AddInput(ia,command))
-		std::cout << "Command was added" << std::endl;
+	//auto input = InputManager::GetInstance();
+	//auto ia = InputAction(0,KeyState::JustPressed,'A',-1,XINPUT_GAMEPAD_A,0);
+	//auto command = std::make_shared<JumpCommand>(m_FPSCounter,5.f);
+	//if(input->AddInput(ia,command))
+	//	std::cout << "Command was added" << std::endl;
 
-	auto ia2 = InputAction(1,KeyState::Released,'S',-1,XINPUT_GAMEPAD_B,0);
-	auto command2 = std::make_shared<JumpCommand>(m_ElapsedCounter,-5.f);
-	if(input->AddInput(ia2,command2))
-		std::cout << "Command was added" << std::endl;
+	//auto ia2 = InputAction(1,KeyState::Released,'S',-1,XINPUT_GAMEPAD_B,0);
+	//auto command2 = std::make_shared<JumpCommand>(m_ElapsedCounter,-5.f);
+	//if(input->AddInput(ia2,command2))
+	//	std::cout << "Command was added" << std::endl;
 	
 }
 

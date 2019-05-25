@@ -22,6 +22,7 @@ void dae::InputManager::CleanUp()
 	m_pCurrentGamePad = nullptr;
 	m_InputActions.clear();
 	m_pCommands.clear();
+	m_IsInitialized = false;
 	
 }
 
@@ -185,10 +186,13 @@ void dae::InputManager::HandleInput()
 		{	
 			for(auto command : m_pCommands[currAction->ActionId])
 			{
-				if(currAction->ActionId == 69)
+				if(currAction->ActionId == 69 || currAction->ActionId == 96)
+				{
 					command->execute();
+					return;
+				}
 				else
-				command->AddToCommandStream();
+					command->AddToCommandStream();
 				
 			}
 			

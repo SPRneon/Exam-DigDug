@@ -41,6 +41,7 @@ void dae::RockChargeState::Update()
 	}
 	else
 	{
+		LevelGrid::GetInstance()->GetCell(m_pContext->GetActor()->GetTransform()->GetPosition())->DropRock();
 		m_pContext->GoToState(std::make_shared<RockFallingState>(m_pContext));
 		return;
 	}
@@ -114,15 +115,16 @@ void dae::RockLandedState::Update()
 		m_DeltaTime += GameTime::GetInstance()->GetElapsed();
 	else
 	{
-		for(auto victim : m_pVictims)
+		
+		for(auto& victim : m_pVictims)
 		{
 		if(victim->GetName() == "Player")
 			m_pContext->GetTarget()->HitByRock();
-		victim = nullptr;
-			
+		
+			victim->MarkForDestroy();
+			victim = nullptr;
 		}
 		m_pVictims.clear();
-		//m_pContext->GetActor()->MarkForDestroy();
 	}
 }
 

@@ -169,6 +169,15 @@
     <ClInclude Include="FygarStates.h">
       <Filter>AI</Filter>
     </ClInclude>
+    <ClInclude Include="Pooka.h">
+      <Filter>Game\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="PookaStates.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStates.h">
+      <Filter>AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -274,6 +283,15 @@
       <Filter>Game\Prefabs</Filter>
     </ClCompile>
     <ClCompile Include="FygarStates.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Pooka.cpp">
+      <Filter>Game\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="PookaStates.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStates.cpp">
       <Filter>AI</Filter>
     </ClCompile>
   </ItemGroup>

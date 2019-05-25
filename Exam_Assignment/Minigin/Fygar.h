@@ -1,10 +1,12 @@
 #pragma once
-#include "FiniteStateMachine.h"
 #include "Entity.h"
 
 namespace dae{
 	class GameObject;
 	class State;
+	class Subject;
+	class FiniteStateMachine;
+	class Player;
 
 class Fygar : public Entity
 {
@@ -16,9 +18,16 @@ public:
 	void Reset() override;
 	void Place(int row, int column) override;
 
+	void SetSubject(std::shared_ptr<Subject> obs){m_pSubject = obs;}
+	std::shared_ptr<Subject> GetSubject()const {return m_pSubject;}
 private:
 	std::shared_ptr<Player> m_pPlayer;
 	std::shared_ptr<FiniteStateMachine> m_pActionStateMachine;
+	int m_Row, m_Col;
+
+	bool m_IsDead = false;
+
+	std::shared_ptr<Subject> m_pSubject;
 };
 }
 

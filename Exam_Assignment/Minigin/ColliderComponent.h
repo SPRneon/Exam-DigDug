@@ -17,7 +17,8 @@ namespace dae{
 		PLAYER = 2,
 		ENEMIES = 3,
 		FIRE = 4,
-		ROCK = 5,
+		MISILE = 5,
+		ROCK = 6,
 		MIN =TERRAIN,
 		MAX = ROCK
 	};

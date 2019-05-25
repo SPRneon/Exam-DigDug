@@ -29,6 +29,7 @@ public:
 	void Pause(){m_Play = false;}
 	void Play(){m_Play = true;}
 	void NextFrame(){currSprites++; currSprites %= m_NrOfSprites;}
+	void PrevFrame(){currSprites--; if(currSprites == -1) currSprites = m_NrOfSprites-1;}
 private:
 	std::shared_ptr<Texture2D> m_pTexture;
 	int m_NrOfSprites;

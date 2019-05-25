@@ -11,6 +11,7 @@
 #pragma warning(push)
 #pragma warning (disable:4201)
 #include "glm/geometric.hpp"
+#include "SceneManager.h"
 #pragma warning(pop)
 
 
@@ -20,19 +21,19 @@ void dae::BaseCommand::AddToCommandStream()
 	m_pGameObject->GetComponent<CommandComponent>()->AddToCommandStream(shared_from_this());
 }
 
-
-void dae::JumpCommand::execute()
-{ 
-	std::cout << "Jump by player("  << ")" << std::endl;
-	//if(typeid(Locator::getAudio()) != typeid(NullAudio)){
-	Locator::getAudio().stopAllSounds(); 
-	Locator::getAudio().playSound("../Data/Audio/Jump.wav");
-	//}
-	//else
-		//throw std::exception("Logger::GetAudio() -> Audio was not yet initialized");
-	auto pos = m_pGameObject->GetTransform()->GetPosition();
-	m_pGameObject->GetTransform()->Translate(0.f,-m_JumpVel * GameTime::GetInstance()->GetElapsed());
-}
+//TODO CLEAN
+//void dae::JumpCommand::execute()
+//{ 
+//	std::cout << "Jump by player("  << ")" << std::endl;
+//	//if(typeid(Locator::getAudio()) != typeid(NullAudio)){
+//	Locator::getAudio().stopAllSounds(); 
+//	Locator::getAudio().playSound("../Data/Audio/Jump.wav");
+//	//}
+//	//else
+//		//throw std::exception("Logger::GetAudio() -> Audio was not yet initialized");
+//	auto pos = m_pGameObject->GetTransform()->GetPosition();
+//	m_pGameObject->GetTransform()->Translate(0.f,-m_JumpVel * GameTime::GetInstance()->GetElapsed());
+//}
 
 void dae::FireCommand::execute()
 {
@@ -53,8 +54,7 @@ void dae::ExitCommand::execute()
 
 void dae::MoveCommand::execute()
 {
-	/*if(m_pGameObject->GetComponent<ColliderComponent>()->HasCollided())
-			return;*/
+	
 
 	auto shape = m_pGameObject->GetComponent<ColliderComponent>()->GetShape();
 	glm::vec2 center = {shape->x + shape->w / 2.f,shape->y + shape->h / 2.f};
@@ -125,6 +125,7 @@ void dae::ChaseCommand::execute()
 	//m_pGameObject->GetTransform()->Translate(targetV.x,targetV.y);
 }
 
-
-
- 
+void dae::NextSceneCommand::execute()
+{
+	SceneManager::GetInstance()->GoToNextScene();
+}

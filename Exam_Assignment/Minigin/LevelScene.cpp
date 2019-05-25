@@ -18,6 +18,8 @@
 #include "LevelObserver.h"
 #include "GameTime.h"
 #include "Rock.h"
+#include "Pooka.h"
+#include "PookaStates.h"
 
 
 dae::LevelScene::LevelScene(const std::string & name)
@@ -48,19 +50,32 @@ void dae::LevelScene::Initialize()
 	//Player
 	m_pPlayer = std::make_shared<Player>("Player");
 	m_pPlayer->Place(6,6);
-	m_pEntities.push_back(m_pPlayer);
+	m_pPlayers.push_back(m_pPlayer);
 	this->Add(m_pPlayer->GetGameObject());
 
 	//FYGAR
-	m_pFygar = std::make_shared<Fygar>("Fygar1",m_pPlayer);
-	m_pFygar->Place(8,2);
-	m_pEntities.push_back(m_pFygar);
-	this->Add(m_pFygar->GetGameObject());
+	auto fygar1 = std::make_shared<Fygar>("Fygar1",m_pPlayer);
+	fygar1->Place(8,2);
+	m_pEnemies.push_back(fygar1);
+	this->Add(fygar1->GetGameObject());
 
 	auto fygar2 = std::make_shared<Fygar>("Fygar2",m_pPlayer);
 	fygar2->Place(12,7);
-	m_pEntities.push_back(fygar2);
+	m_pEnemies.push_back(fygar2);
 	this->Add(fygar2->GetGameObject());
+
+	//POOKA
+	auto pooka1 = std::make_shared<Pooka>("Pooka1",m_pPlayer);
+	pooka1->Place(3,3);
+	m_pEnemies.push_back(pooka1);
+	this->Add(pooka1->GetGameObject());
+
+	auto pooka2 = std::make_shared<Pooka>("pooka2",m_pPlayer);
+	pooka2->Place(4,10);
+	m_pEnemies.push_back(pooka2);
+	this->Add(pooka2->GetGameObject());
+
+
 	//UI
 	auto ui = std::make_shared<UIDisplay>();
 	for(auto it = ui->GetMap()->begin(); it != ui->GetMap()->end();++it)
@@ -72,6 +87,12 @@ void dae::LevelScene::Initialize()
 	auto scoreSubject = std::make_shared<Subject>();
 	scoreSubject->AddObserver(ui);
 	levelGrid->SetSubject(scoreSubject);
+	//Enemy Subjects
+	fygar1->SetSubject(scoreSubject);
+	fygar2->SetSubject(scoreSubject);
+	pooka1->SetSubject(scoreSubject);
+	pooka2->SetSubject(scoreSubject);
+
 	auto livesSubject = std::make_shared<Subject>();
 	livesSubject->AddObserver(ui);
 	m_pObserver = std::make_shared<LevelObserver>(this);
@@ -82,17 +103,17 @@ void dae::LevelScene::Initialize()
 	//ROCK
 	auto rock1 = std::make_shared<Rock>("Rock1", m_pPlayer);
 	rock1->Place(4,8);
-	m_pEntities.push_back(rock1);
+	m_pRocks.push_back(rock1);
 	Add(rock1->GetGameObject());
 
 	auto rock2 = std::make_shared<Rock>("Rock2", m_pPlayer);
 	rock2->Place(3,10);
-	m_pEntities.push_back(rock2);
+	m_pRocks.push_back(rock2);
 	Add(rock2->GetGameObject());
 
 	auto rock3 = std::make_shared<Rock>("Rock3", m_pPlayer);
 	rock3->Place(11,9);
-	m_pEntities.push_back(rock3);
+	m_pRocks.push_back(rock3);
 	Add(rock3->GetGameObject());
 
 	
@@ -121,7 +142,27 @@ void dae::LevelScene::Update()
 	
 	
 	LevelGrid::GetInstance()->Update();
-	for(auto entity : m_pEntities)
+	
+	bool allDead = true;
+	for(auto entity : m_pEnemies)
+	{	
+		if(entity->IsMarkedForDestroy())
+			continue;
+		entity->Update();
+		allDead = false;
+	}
+	if(allDead)
+	{
+		//gotonextscene
+	}
+
+	
+
+	for(auto entity : m_pRocks)
+	{	
+		entity->Update();
+	}
+	for(auto entity : m_pPlayers)
 	{	
 		entity->Update();
 	}
@@ -133,10 +174,7 @@ void dae::LevelScene::Draw() const
 
 }
 
-void dae::LevelScene::PostDraw() const
-{
-	
-}
+
 
 void dae::LevelScene::ResetScene()
 {
@@ -148,9 +186,15 @@ void dae::LevelScene::ResetScene()
 	m_pPlayer->Place(6,6);
 	m_pPlayer->Reset();
 
-	//FYGAR
-	m_pFygar->Place(8,2);
-	m_pFygar->Reset();
+	//Enemies
+	for(auto enemy : m_pEnemies)
+	{
+	if(!enemy->GetGameObject()->IsMarkedForDestroy()){
+	enemy->Reset();
+	}
+	else
+		Remove(enemy->GetGameObject());
+	}
 
 
 
@@ -159,3 +203,9 @@ void dae::LevelScene::ResetScene()
 	m_MarkedForReset = false;
 }
 
+void dae::LevelScene::CleanUp()
+{
+	LevelGrid::GetInstance()->CleanUp();
+	InputManager::GetInstance()->CleanUp();
+	InputManager::GetInstance()->Init();
+}

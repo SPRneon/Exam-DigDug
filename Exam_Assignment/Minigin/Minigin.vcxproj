@@ -218,6 +218,9 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClInclude Include="Locator.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerStates.h" />
+    <ClInclude Include="Pooka.h" />
+    <ClInclude Include="PookaStates.h" />
     <ClInclude Include="Rock.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="States.h" />
@@ -258,6 +261,9 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClCompile Include="LevelScene.cpp" />
     <ClCompile Include="Locator.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerStates.cpp" />
+    <ClCompile Include="Pooka.cpp" />
+    <ClCompile Include="PookaStates.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="States.cpp" />

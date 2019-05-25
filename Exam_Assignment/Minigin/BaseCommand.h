@@ -25,16 +25,6 @@ protected:
 	std::shared_ptr<GameObject> m_pGameObject;
 };
 
-class JumpCommand final : public BaseCommand
-{
-public:
-	JumpCommand(std::shared_ptr<GameObject> pGameObject, float jumpVel):BaseCommand(pGameObject), m_JumpVel(jumpVel){}
-	 void execute() override;
-	 std::string GetCommandName() const override{ return name;}
-private:
-	const std::string name = "Jump Command";
-	float m_JumpVel;
-};
 
 class FireCommand final : public BaseCommand
 {
@@ -45,6 +35,7 @@ private:
 	const std::string name = "Fire Command";
 };
 
+	//******UI*******//
 class ExitCommand final : public BaseCommand
 {
 public:	
@@ -53,7 +44,16 @@ public:
 private:
 	const std::string name = "Exit Command";
 };
+class NextSceneCommand final : public BaseCommand
+{
+public:	
+	 void execute() override;
+	 std::string GetCommandName() const override{ return name;}
+private:
+	const std::string name = "NextScene Command";
+};
 
+	//*****GAMEPLAY******//
 class MoveCommand final : public BaseCommand
 {
 public:

@@ -30,6 +30,9 @@ namespace dae{
 		int GetRow()const { return m_Row;}
 		int GetCol()const { return m_Column;}
 		Color GetColor() const {return m_Color;}
+		void PlaceRock(){m_ContainsRock = true;}
+		void DropRock(){m_ContainsRock = false;}
+		bool ContainsRock() const { return m_ContainsRock;}
 
 		
 	private:
@@ -40,6 +43,7 @@ namespace dae{
 		glm::vec2 m_Scale;
 		dae::Color m_Color;
 		std::shared_ptr<GameObject> m_pGameObject;
+		bool m_ContainsRock = false;
 	};
 
 
@@ -75,6 +79,7 @@ public:
 
 	void SetCellInactive(int row, int column);
 	glm::vec2 GetPathForDir(Direction dir, glm::vec2 pos);
+	std::shared_ptr<Cell> GetCellForDir(Direction dir, glm::vec2 pos);
 	std::vector<std::pair<std::shared_ptr<Cell>,dae::Direction>> GetNeighbourCells(std::array<Direction,4> directionOrder, std::shared_ptr<Cell> currCell);
 
 	void SetSubject(std::shared_ptr<Subject> obs){m_pSubject = obs;}

@@ -110,7 +110,11 @@ void dae::LevelGrid::Update()
 	{
 		for(auto& col : row)
 		{
-			if(!col->m_pGameObject->GetComponent<ColliderComponent>()->IsSleeping() && col->m_pGameObject->GetComponent<ColliderComponent>()->HasCollided())
+			
+
+			if(!col->m_pGameObject->GetComponent<ColliderComponent>()->IsSleeping() 
+				&& col->m_pGameObject->GetComponent<ColliderComponent>()->HasCollided()  
+				&& !col->m_ContainsRock)
 			{
 				col->m_pGameObject->GetComponent<TextComponent>()->SetColor(Colors::white);
 				col->m_pGameObject->GetComponent<ColliderComponent>()->PutToSleep();
@@ -211,13 +215,17 @@ glm::vec2 dae::LevelGrid::GetPathForDir(Direction dir, glm::vec2 pos)
 		return GetPathForDir(IncrementDirectionCW(dir),pos);
 	
 	auto targetCell = GetCell(tarRow,tarCol);
-	
+
+	//Cant go into cell with rock
+	if(targetCell->m_ContainsRock)
+		return currCell->m_Center;
+
 
 	//dist target-player + player-currcell
 	auto dist1 = glm::distance(targetCell->m_Center, pos)+glm::distance(pos,currCell->m_Center);
 	//dist target-currcell
 	auto dist2 = glm::distance(targetCell->m_Center,currCell->m_Center);
-	//IF PLAYER is laready on the straightline between the cells
+	//IF PLAYER is already on the straight line between the cells
 	if(std::abs(dist1-dist2) < 2.5f)
 	{
 		return targetCell->m_Center;
@@ -225,6 +233,36 @@ glm::vec2 dae::LevelGrid::GetPathForDir(Direction dir, glm::vec2 pos)
 	else
 		return currCell->m_Center;
 	
+}
+
+std::shared_ptr<dae::Cell> dae::LevelGrid::GetCellForDir(Direction dir, glm::vec2 pos)
+{
+	auto currCell = GetCell(pos);
+	int tarRow = currCell->m_Row;
+	int tarCol = currCell->m_Column;
+	switch(dir)
+	{
+	case UP:
+		if(tarRow != 0)
+			tarRow--;
+	break;
+		case DOWN:
+		if(tarRow < (m_Rows - 1))
+		tarRow++;
+	break;
+		case LEFT:
+		if(tarCol != 0)
+			tarCol--;
+	break;
+		case RIGHT:
+		if(tarCol < (m_Columns - 1))
+			tarCol++;
+	break;
+	}
+
+	
+	
+	return GetCell(tarRow,tarCol);
 }
 
 std::vector<std::pair<std::shared_ptr<dae::Cell>,dae::Direction>> dae::LevelGrid::GetNeighbourCells(std::array<Direction, 4> directionOrder, std::shared_ptr<Cell> currCel)

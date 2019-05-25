@@ -12,6 +12,11 @@
 #include "Scene.h"
 #include "Player.h"
 
+
+//****************//
+//*****ACTIONS****//
+//****************//
+
 //****FYGAR WANDER****//
 void dae::FygarWanderState::Update()
 {
@@ -140,7 +145,6 @@ void dae::FygarPhaseState::Update()
 	m_pContext->GetActor()->GetComponent<CommandComponent>()->AddToCommandStream(command);
 	glm::vec2 deltaPos = m_pTargetCell->GetPosition() - m_pContext->GetActor()->GetTransform()->GetPosition();
 	//CONDITION TO GO TO WANDER STATE
-	std::cout << Magnitude(deltaPos) << std::endl;
 	if(Magnitude(deltaPos) < 5.f)
 	{
 		m_pContext->GoToState(std::make_shared<FygarWanderState>(m_pContext));
@@ -254,3 +258,73 @@ void dae::FygarFireState::OnExit()
 	m_pContext->GetActor()->GetScene()->Remove(m_pFire);
 }
 
+//****************//
+//*****STATES****//
+//****************//
+
+void dae::FygarAliveState::OnEnter()
+{
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("Fygar.png",2);
+}
+
+void dae::FygarAliveState::Update()
+{
+	
+
+	if(m_pContext->GetActor()->GetComponent<ColliderComponent>()->HasCollidedWith(MISILE))
+	{
+		m_pContext->GoToState(std::make_shared<FygarHitState>(m_pContext));
+		return;
+	}
+
+	if(m_pContext->GetActor()->GetComponent<ColliderComponent>()->HasCollidedWith(ROCK))
+	{
+		m_pContext->GoToState(std::make_shared<FygarDeadState>(m_pContext));
+		return;
+	}
+}
+
+void dae::FygarHitState::OnEnter()
+{
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("FygarInflating.png",4);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->Pause();
+}
+
+void dae::FygarHitState::Update()
+{
+	//Check if still getting hit
+	
+	m_StillHit = m_pContext->GetActor()->GetComponent<ColliderComponent>()->HasCollidedWith(MISILE);
+
+	if(m_DeltaTime < m_StageTime)
+	{
+		m_DeltaTime += GameTime::GetInstance()->GetElapsed();
+	}
+	else
+	{
+		if(m_StillHit)
+		{
+			m_HitStage++;
+			m_pContext->GetActor()->GetComponent<TextureComponent>()->NextFrame();
+		}
+		else
+		{
+			m_HitStage--;
+			m_pContext->GetActor()->GetComponent<TextureComponent>()->PrevFrame();
+		}
+			
+	}
+
+	if(m_HitStage <0)
+	{
+		m_pContext->GoToState(std::make_shared<FygarAliveState>(m_pContext));
+		return;
+	}
+	else if(m_HitStage > 3)
+	{
+		m_pContext->GoToState(std::make_shared<FygarDeadState>(m_pContext));
+		return;
+	}
+
+}
+	

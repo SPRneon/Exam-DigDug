@@ -19,6 +19,7 @@ namespace dae
 
 		void MarkForReset(){m_MarkedForReset = true;}
 		virtual void ResetScene() = 0;
+		virtual void CleanUp() = 0;
 	protected:
 		virtual void Update() = 0;
 		virtual void PostUpdate() =0;
@@ -36,7 +37,7 @@ private:
 		void RootUpdate();
 		void RootDraw();
 		void RootInitialize();
-
+		void RootCleanUp();
 		
 		std::vector < std::shared_ptr<GameObject>> mObjects{};
 

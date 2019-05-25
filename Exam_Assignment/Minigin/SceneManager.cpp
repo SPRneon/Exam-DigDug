@@ -2,24 +2,28 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "GameTime.h"
+#include <cassert>
 
 
 void dae::SceneManager::Update()
 {
-	
-	for(auto scene : mScenes)
+	assert(m_pActiveScene != nullptr);
+	m_pActiveScene->RootUpdate();
+	/*for(auto scene : mScenes)
 	{
 		scene->RootUpdate();
-	}
+	}*/
 	
 }
 
 void dae::SceneManager::Draw()
 {
-	for (const auto scene : mScenes)
+	assert(m_pActiveScene != nullptr);
+	m_pActiveScene->RootDraw();
+	/*for (const auto scene : mScenes)
 	{
 		scene->RootDraw();
-	}
+	}*/
 }
 
 void dae::SceneManager::CleanUp()
@@ -27,6 +31,43 @@ void dae::SceneManager::CleanUp()
 	/*for(auto scene : mScenes)
 		delete scene;*/
 }
+
+void dae::SceneManager::GoToNextScene()
+{
+	m_pActiveScene->RootCleanUp();
+	for(size_t i = 0; i < mScenes.size(); ++i)
+	{
+		if(mScenes[i] == m_pActiveScene)
+		{
+			if(i == mScenes.size()-1)
+				m_pActiveScene = mScenes[0];
+			else
+				m_pActiveScene = mScenes[i+1];
+
+			m_pActiveScene->RootInitialize();
+			return;
+		}
+
+	}
+
+	
+}
+
+void dae::SceneManager::SetActiveScene(std::string sceneName)
+{
+	for(size_t i = 0; i < mScenes.size(); ++i)
+	{
+		if(mScenes[i]->mName == sceneName)
+		{
+			
+			m_pActiveScene = mScenes[i];
+			m_pActiveScene->RootInitialize();
+			return;
+		}
+
+	}
+}
+
 
 
 

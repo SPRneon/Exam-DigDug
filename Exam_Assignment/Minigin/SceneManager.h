@@ -33,7 +33,7 @@ namespace dae
 				if(it == mScenes.end())
 				{
 				mScenes.push_back(scene);
-				scene->RootInitialize();
+				//scene->RootInitialize();
 				}
 			return *scene;
 		}
@@ -41,9 +41,11 @@ namespace dae
 		void Update();
 		void Draw();
 		void CleanUp();
-
+		void GoToNextScene();
+		void SetActiveScene(std::string sceneName);
 	private:
 		std::vector<std::shared_ptr<Scene>> mScenes;
+		std::shared_ptr<Scene> m_pActiveScene;
 	};
 
 }

@@ -6,6 +6,9 @@
 #include "ColliderComponent.h"
 #include "FygarStates.h"
 #include "LevelGrid.h"
+#include "Event.h"
+#include "Subject.h"
+#include "FiniteStateMachine.h"
 
 
 dae::Fygar::Fygar(std::string name, std::shared_ptr<Player> player) : m_pPlayer(player), Entity(name)
@@ -27,20 +30,32 @@ dae::Fygar::Fygar(std::string name, std::shared_ptr<Player> player) : m_pPlayer(
 
 void dae::Fygar::Update()
 {
+	if(!m_IsDead)
+	{
+	if(GetGameObject()->IsMarkedForDestroy())
+	{
+		m_IsDead = true;
+		auto currCel = LevelGrid::GetInstance()->GetCell(m_pGameObject->GetTransform()->GetPosition());
+		int score  = 400 + static_cast<int>(currCel->GetRow() / 4.f) * 200;
+		m_pSubject->notify(std::make_shared<ScoreEvent>(score));
+		this->MarkForDestroy();
+	}
 	
 	m_pActionStateMachine->Update();
+	}
 }
 
 void dae::Fygar::Reset()
 {
-	auto initState =std::make_shared<FygarWanderState>(m_pActionStateMachine);
-	m_pActionStateMachine->Initialize(initState,m_pGameObject,m_pPlayer);
+	m_pActionStateMachine->GoToState(std::make_shared<FygarWanderState>(m_pActionStateMachine));
 	GetGameObject()->GetComponent<CommandComponent>()->SetControllable(true);
+	Place(m_Row,m_Col);
 }
 
 
 void dae::Fygar::Place(int row, int column)
 {
+	m_Row = row; m_Col = column;
 	GetGameObject()->GetTransform()->SetPosition(LevelGrid::GetInstance()->GetCell(row,column)->GetCenter());
 	GetGameObject()->GetTransform()->Translate(-10.f,-10.f);
 	LevelGrid::GetInstance()->SetCellInactive(row,column-1);
