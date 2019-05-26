@@ -1,7 +1,4 @@
-﻿  CommandComponent.cpp
-  InputManager.cpp
-  Generating Code...
-     Creating library C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.lib and object C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exp
+﻿  Parser.cpp
   Minigin.vcxproj -> C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exe
   C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2\lib\x86\SDL2.dll
   1 File(s) copied
