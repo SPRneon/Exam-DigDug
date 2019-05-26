@@ -28,6 +28,8 @@ private:
 	std::shared_ptr<FiniteStateMachine> m_pStateMachine;
 	int m_Row, m_Col;
 
+	bool m_IsControlled =false;
+
 
 	std::shared_ptr<Subject> m_pSubject;
 };

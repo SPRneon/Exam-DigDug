@@ -19,6 +19,7 @@ void dae::SceneManager::Update()
 void dae::SceneManager::Draw()
 {
 	assert(m_pActiveScene != nullptr);
+	
 	m_pActiveScene->RootDraw();
 	/*for (const auto scene : mScenes)
 	{

@@ -83,7 +83,7 @@ void dae::Minigin::Run()
 	{
 		auto gameTime = GameTime::GetInstance();
 		gameTime->Reset();
-		gameTime->Stop();
+		gameTime->Start();
 		auto renderer = Renderer::GetInstance();
 		auto sceneManager = SceneManager::GetInstance();
 		auto input = InputManager::GetInstance();

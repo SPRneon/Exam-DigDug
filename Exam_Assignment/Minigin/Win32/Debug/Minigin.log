@@ -1,24 +1,4 @@
-﻿  BaseCommand.cpp
-  ColliderComponent.cpp
-  CommandComponent.cpp
-  FPSScene.cpp
-  Fygar.cpp
-  FygarStates.cpp
-  GameObject.cpp
-  InputManager.cpp
-  LevelGrid.cpp
-  LevelScene.cpp
-  MenuScene.cpp
-  Minigin.cpp
-  Player.cpp
-  PlayerStates.cpp
-  Pooka.cpp
-  PookaStates.cpp
-  Rock.cpp
-  States.cpp
-  TextureComponent.cpp
-  UIDisplay.cpp
-  Generating Code...
+﻿  PlayerStates.cpp
   Minigin.vcxproj -> C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\Win32\Debug\Minigin.exe
   C:\Users\Zeno Watteeuw\Documents\School\Prog4\Master\Exam_Assignment\3rdParty\SDL2\lib\x86\SDL2.dll
   1 File(s) copied

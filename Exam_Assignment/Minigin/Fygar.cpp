@@ -35,24 +35,45 @@ dae::Fygar::Fygar(std::string name, std::shared_ptr<Player> player) : m_pPlayer(
 
 void dae::Fygar::Update()
 {
-	if(!m_IsDead)
+	if(!m_IsDead) //CHeck if alive
 	{
-	auto state = m_pStateMachine->GetState();
-	if(typeid(*state) == typeid(FygarAliveState))
-	{
-		m_pActionStateMachine->Update();
-	}
-	if(typeid(*state) == typeid(FygarDeadState))
-	{
-		m_pActionStateMachine->GoToState(std::make_shared<FygarAliveState>(m_pStateMachine));
-		m_IsDead = true;
-		auto currCel = LevelGrid::GetInstance()->GetCell(m_pGameObject->GetTransform()->GetPosition());
-		int score  = 400 + static_cast<int>(currCel->GetRow() / 4.f) * 200;
-		m_pSubject->notify(std::make_shared<ScoreEvent>(score));
-		this->MarkForDestroy();
-	}
 		m_pStateMachine->Update();
+		auto state = m_pStateMachine->GetState();
+		if(!m_IsControlled){ //FSM for Fygar
+			if(typeid(*state) == typeid(FygarAliveState))
+			{
+				m_pActionStateMachine->Update();
+				}
+			if(typeid(*state) == typeid(FygarDeadState))
+			{
+				m_pActionStateMachine->GoToState(std::make_shared<FygarAliveState>(m_pStateMachine));
+				m_IsDead = true;
+				auto currCel = LevelGrid::GetInstance()->GetCell(m_pGameObject->GetTransform()->GetPosition());
+				int score  = 400 + static_cast<int>(currCel->GetRow() / 4.f) * 200;
+				m_pSubject->notify(std::make_shared<ScoreEvent>(score));
+				this->MarkForDestroy();
+			}
+		}
+		else //FSM for controlled fygar
+		{
+			if(typeid(*state) == typeid(PlayerDeadState))
+			{
+			m_pSubject->notify(std::make_shared<LivesEvent>());
+			m_IsDead = true;
+			}
+		}
 	}
+	else //Check if respawned
+	{	
+		auto state = m_pStateMachine->GetState();
+		if(typeid(*state) == typeid(PlayerAliveState))
+		{
+			m_IsDead = false;
+		}
+	}
+	
+		
+	
 }
 
 void dae::Fygar::Reset()
@@ -75,21 +96,28 @@ void dae::Fygar::Place(int row, int column)
 
 void dae::Fygar::Fire()
 {
-	
+	auto state = m_pStateMachine->GetState();
+	if(typeid(*state) == typeid(PlayerChargedState))
+	{
+		m_pStateMachine->GoToState(std::make_shared<PlayerFiringState>(m_pStateMachine,m_pGameObject->GetComponent<CommandComponent>()->GetLastDir()));
+	}	
 }
 void dae::Fygar::SetAsPlayer()
 {
-	//COllider
+	//Collider
 	m_pGameObject->GetComponent<ColliderComponent>()->ClearIgnoreFlags();
 	m_pGameObject->GetComponent<ColliderComponent>()->SetIgnoreFlags(PLAYER);
 	m_pGameObject->GetComponent<ColliderComponent>()->SetIgnoreFlags(TERRAIN);
 	m_pGameObject->GetComponent<ColliderComponent>()->SetColliderFlags(PLAYER);
 	//StateMachine
+	std::cout << m_pActionStateMachine.use_count() << std::endl;
+	std::cout << m_pStateMachine.use_count() << std::endl;
 	m_pActionStateMachine.reset();
+	m_pStateMachine.reset();
 	m_pStateMachine = std::make_shared<FiniteStateMachine>();
 	m_pStateMachine->Initialize(std::make_shared<PlayerAliveState>(m_pStateMachine),m_pGameObject,nullptr);
 
-	
+	m_IsControlled = true;
 
 }
 

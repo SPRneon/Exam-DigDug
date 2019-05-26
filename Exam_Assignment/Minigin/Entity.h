@@ -13,6 +13,7 @@ public:
 	virtual void Reset() = 0;
 	void MarkForDestroy();
 	const bool IsMarkedForDestroy() const {return m_MarkedForDestroy;}
+	const bool IsDead() const {return m_IsDead;}
 	std::shared_ptr<GameObject> GetGameObject(){return m_pGameObject;}
 
 protected:

@@ -85,7 +85,7 @@ void dae::MenuScene::StartUpLevel(int NrofPlayers)
 
 	auto& scene = SceneManager::GetInstance()->CreateScene<LevelScene>("LevelScene");
 	dynamic_cast<LevelScene&>(scene).SetPlayer(NrofPlayers);
-
+	this->MarkForReset();
 
 	m_IsToggled = true;
 }

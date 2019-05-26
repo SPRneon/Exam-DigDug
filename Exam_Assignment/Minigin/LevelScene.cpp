@@ -56,7 +56,13 @@ void dae::LevelScene::Initialize()
 	//FYGAR
 	auto fygar1 = std::make_shared<Fygar>("Fygar1",m_pPlayer);
 	fygar1->Place(8,2);
-	m_pEnemies.push_back(fygar1);
+	if(m_NrOfPlayers == 2)
+	{
+		fygar1->SetAsPlayer();
+		m_pPlayers.push_back(fygar1);
+	}
+	else
+		m_pEnemies.push_back(fygar1);
 	this->Add(fygar1->GetGameObject());
 
 	auto fygar2 = std::make_shared<Fygar>("Fygar2",m_pPlayer);
@@ -141,35 +147,38 @@ void dae::LevelScene::Initialize()
 	{
 		//INPUT
 		ia = {10,KeyState::Pressed,'J',-1,XINPUT_GAMEPAD_DPAD_LEFT,1};
-		auto cmdLeft2 = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),LEFT,50.f);
+		auto cmdLeft2 = std::make_shared<MoveCommand>(fygar1->GetGameObject(),LEFT,50.f);
 		InputManager::GetInstance()->AddInput(ia,cmdLeft2);
 		ia = {11,KeyState::Pressed,'I',-1,XINPUT_GAMEPAD_DPAD_UP,1};
-		auto cmdUp2 = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),UP,50.f);
+		auto cmdUp2 = std::make_shared<MoveCommand>(fygar1->GetGameObject(),UP,50.f);
 		InputManager::GetInstance()->AddInput(ia,cmdUp2);
 		ia = {12,KeyState::Pressed,'L',-1,XINPUT_GAMEPAD_DPAD_RIGHT,1};
-		auto cmdRight2 = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),RIGHT,50.f);
+		auto cmdRight2 = std::make_shared<MoveCommand>(fygar1->GetGameObject(),RIGHT,50.f);
 		InputManager::GetInstance()->AddInput(ia,cmdRight2);
 		ia = {13,KeyState::Pressed,'K',-1,XINPUT_GAMEPAD_DPAD_DOWN,1};
-		auto cmdDown2 = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),DOWN,50.f);
+		auto cmdDown2 = std::make_shared<MoveCommand>(fygar1->GetGameObject(),DOWN,50.f);
 		InputManager::GetInstance()->AddInput(ia,cmdDown2);
 		ia = {14,KeyState::Pressed,'H',-1,XINPUT_GAMEPAD_A,1};
-		auto cmdFire2 = std::make_shared<FireCommand>(m_pPlayer);
+		auto cmdFire2 = std::make_shared<FygarFireCommand>(fygar1);
 		InputManager::GetInstance()->AddInput(ia,cmdFire2);
 	}
 	GameTime::GetInstance()->Reset();
-	GameTime::GetInstance()->Start();
+	GameTime::GetInstance()->Stop();
 }
 
 void dae::LevelScene::Update()
 {
-	
+	if(m_DeltaTime < m_PauseTime)
+		m_DeltaTime += GameTime::GetInstance()->GetPausedElapsed();
+	else
+		GameTime::GetInstance()->Start();
 	
 	LevelGrid::GetInstance()->Update();
 	
 	bool allDead = true;
 	for(auto entity : m_pEnemies)
 	{	
-		if(entity->IsMarkedForDestroy())
+		if(entity->IsDead())
 			continue;
 		entity->Update();
 		allDead = false;

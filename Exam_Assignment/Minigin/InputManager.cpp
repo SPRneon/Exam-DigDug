@@ -160,7 +160,7 @@ void dae::InputManager::HandleInput()
 		 currAction->IsTriggered = false;
 
 		//GAMEPAD
-		if(m_UseGamepad && currAction->GamepadButtonCode != 0)
+		if(m_UseGamepad && currAction->GamepadButtonCode != 0 && m_pGamePads.size() - 1 >= currAction->PlayerIndex)
 		{
 			if(m_pGamePads[currAction->PlayerIndex])
 			{	//TODO:

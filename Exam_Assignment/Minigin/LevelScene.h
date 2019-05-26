@@ -40,6 +40,8 @@ private:
 	std::vector<std::shared_ptr<Entity>> m_pRocks;
 	std::shared_ptr<Player> m_pPlayer = nullptr;
 
+	float m_DeltaTime = 0.f;
+	float m_PauseTime = 3.f;
 
 	int m_pScore;
 	int m_NrOfPlayers;

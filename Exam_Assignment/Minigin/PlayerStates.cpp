@@ -81,7 +81,8 @@ void dae::PlayerFiringState::OnEnter()
 	//Creating missile
 	m_pMisile = std::make_shared<GameObject>("Misile");
 	//TEXTURE
-	m_pMisile->AddComponent(std::make_shared<TextureComponent>("Misile.png",4,m_StageTime));
+	auto path = m_pContext->GetActor()->GetComponent<TextureComponent>()->GetOriPath();
+	m_pMisile->AddComponent(std::make_shared<TextureComponent>(path + "Misile.png",4,m_StageTime));
 	m_pMisile->GetComponent<TextureComponent>()->SetDir(m_WanderDir);
 	//COLLIDER
 	SDL_Rect rect {0,0,14,14};

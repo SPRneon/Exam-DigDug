@@ -28,7 +28,7 @@ void dae::BaseCommand::AddToCommandStream()
 
 void dae::FireCommand::execute()
 {
-	std::cout <<  "Fire by player("  << ")" << std::endl;
+	
 	m_pPlayer->Fire();
 }
 

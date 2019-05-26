@@ -30,7 +30,9 @@ void dae::Scene::RootInitialize()
 
 	for(auto gameObject : mObjects)
 	{
+		
 		gameObject->Initialize();
+		 
 	}
 }
 
@@ -63,6 +65,7 @@ void dae::Scene::RootDraw()
 
 	for (const auto gameObject : mObjects)
 	{
+		
 		gameObject->Draw();
 	}
 
