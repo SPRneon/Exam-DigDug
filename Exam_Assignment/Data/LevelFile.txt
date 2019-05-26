@@ -14,6 +14,13 @@ Level2
 [
 Level:{14,16,0,100,450,480}
 Player:{6,6}
-Entity:Fygar{Fygar1,10,10}
-
+Entity:Fygar{Fygar1,2,8}
+Entity:Fygar{Fygar2,12,3}
+Entity:Fygar{Fygar3,7,5}
+Entity:Pooka{Pooka1,9,9}
+Entity:Pooka{Pooka2,4,10}
+Entity:Pooka{Pooka3,9,13}
+Rock:{Rock1,4,8}
+Rock:{Rock2,2,10}
+Rock:{Rock3,10,9}
 ]

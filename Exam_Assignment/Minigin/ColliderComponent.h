@@ -67,7 +67,7 @@ public:
 	//LOOP METHODS
 	void Update() override;
 	void Initialize() override;
-	void Draw() const override;
+	void Draw() const override{};
 
 	//ASSIGNMENT/COPY
 	ColliderComponent(const ColliderComponent& other) = delete;

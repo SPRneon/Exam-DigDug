@@ -35,12 +35,7 @@ dae::Cell::Cell(int row, int column, bool visited,glm::vec2 pos, glm::vec2 scale
 	collider->SetIgnoreFlags(MISILE);
 	m_pGameObject->AddComponent(collider);
 
-	auto font = ResourceManager::GetInstance()->LoadFont("Lingua.otf", 12);
-	auto text = std::make_shared<TextComponent>("Test",font, Colors::black);
-	text->SetText(std::to_string(column) + ',' + std::to_string(row));
-	text->SetNeedsUpdate(false);
-	//text->SetPosition(m_Position.x,m_Position.y);
-	m_pGameObject->AddComponent(text);
+	
 
 }
 
@@ -121,7 +116,7 @@ void dae::LevelGrid::Update()
 				&& col->m_pGameObject->GetComponent<ColliderComponent>()->HasCollided()  
 				&& !col->m_ContainsRock)
 			{
-				col->m_pGameObject->GetComponent<TextComponent>()->SetColor(Colors::white);
+				
 				col->m_pGameObject->GetComponent<ColliderComponent>()->PutToSleep();
 				m_pSubject->notify(std::make_shared<ScoreEvent>(10));
 				col->SetVisited(true);

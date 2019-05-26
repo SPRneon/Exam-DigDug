@@ -185,10 +185,7 @@ void dae::ColliderComponent::Initialize()
 	m_IsInitialized = true;
 }
 
-void dae::ColliderComponent::Draw() const
-{
-	Renderer::GetInstance()->RenderSquare(m_Shape,Colors::red,false);
-}
+
 
 void dae::ColliderComponent::SetRect(SDL_Rect rect)
 {

@@ -47,7 +47,8 @@ void dae::LevelScene::Initialize()
 	m_LevelInfo = Parser::GetInstance()->ParseLevel(m_LevelID);
 	//Grid
 	m_pLevelGrid  = std::make_shared<LevelGrid>();
-	m_pLevelGrid->Initialize(14,16,{0,100},{450,480});
+	auto& levelDesc = m_LevelInfo.m_LevelDesc;
+	m_pLevelGrid->Initialize(levelDesc.row,levelDesc.col,{levelDesc.pos.x,levelDesc.pos.y},{levelDesc.scale.x,levelDesc.scale.y});
 	//Cells
 	for(auto row : m_pLevelGrid->GetCells())
 	{
