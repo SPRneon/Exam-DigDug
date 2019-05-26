@@ -111,10 +111,11 @@ private:
 class MoveCommand final : public BaseCommand
 {
 public:
-	MoveCommand(std::shared_ptr<GameObject> pGameObject, Direction dir, float linVel):
+	MoveCommand(std::shared_ptr<GameObject> pGameObject,std::shared_ptr<LevelGrid> grid, Direction dir, float linVel):
 		BaseCommand(pGameObject),
 		m_Dir(dir),
-		m_LinVel(linVel)
+		m_LinVel(linVel),
+		m_pLevelGrid(grid)
 	{
 
 		
@@ -126,6 +127,7 @@ private:
 	const std::string name = "Chase Command";
 	Direction m_Dir;
 	float m_LinVel;
+	std::shared_ptr<LevelGrid> m_pLevelGrid;
 
 };
 

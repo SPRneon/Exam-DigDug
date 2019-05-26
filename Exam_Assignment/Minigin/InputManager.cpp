@@ -127,7 +127,7 @@ bool dae::InputManager::AddInput(InputAction action, std::shared_ptr<BaseCommand
 	{	auto v = std::vector<std::shared_ptr<BaseCommand>>();
 		v.push_back(pCommand);
 		m_InputActions.emplace(action.ActionId, action);
-		m_pCommands.emplace(action.ActionId, v);
+		m_pCommands.at(action.ActionId) = v;
 		return true;
 	}
 	else

@@ -15,13 +15,14 @@ public:
 
 	void Update() override;
 	void Reset() override;
-	void Place(int row, int column) override;
+	void Place(int row, int column, std::shared_ptr<LevelGrid> grid) override;
 
 private:
 	bool m_FirstUpdatePassed = false;
 	std::shared_ptr<FiniteStateMachine> m_pActionStateMachine;
 
 	std::shared_ptr<Player> m_pPlayer;
+	std::shared_ptr<LevelGrid> m_pLevelGrid;
 	bool m_IsDead = false;
 	int m_Row, m_Col;
 };

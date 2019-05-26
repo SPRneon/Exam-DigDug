@@ -1,6 +1,7 @@
 #pragma once
 namespace dae{
 	class GameObject;
+	class LevelGrid;
 class Entity
 {
 public:
@@ -9,7 +10,7 @@ public:
 
 	virtual void Update() = 0;
 
-	virtual void Place(int row, int column) = 0;
+	virtual void Place(int row, int column, std::shared_ptr<LevelGrid> grid) = 0;
 	virtual void Reset() = 0;
 	void MarkForDestroy();
 	const bool IsMarkedForDestroy() const {return m_MarkedForDestroy;}

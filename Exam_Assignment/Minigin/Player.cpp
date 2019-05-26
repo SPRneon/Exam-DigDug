@@ -22,7 +22,7 @@ dae::Player::Player(std::string name,int playerID) :Entity(name) ,m_PlayerIndex(
 	m_pGameObject->AddComponent(collider);
 	m_pGameObject->GetComponent<ColliderComponent>()->SetIgnoreFlags(TERRAIN);
 	m_pFiniteStateMachine = std::make_shared<FiniteStateMachine>();
-	m_pFiniteStateMachine->Initialize(std::make_shared<PlayerAliveState>(m_pFiniteStateMachine),m_pGameObject,nullptr);
+	
 }
 
 
@@ -62,17 +62,18 @@ void dae::Player::Reset()
 }
 
 
-void dae::Player::Place(int row, int column)
+void dae::Player::Place(int row, int column, std::shared_ptr<LevelGrid> grid)
 {
-	GetGameObject()->GetTransform()->SetPosition(LevelGrid::GetInstance()->GetCell(row,column)->GetPosition());
+	m_pLevelGrid = grid;
+	GetGameObject()->GetTransform()->SetPosition(m_pLevelGrid->GetCell(row,column)->GetPosition());
 	{
-		LevelGrid::GetInstance()->SetCellInactive(row,column-1);
-		LevelGrid::GetInstance()->SetCellInactive(row,column);
-		LevelGrid::GetInstance()->SetCellInactive(row,column+1);
+		m_pLevelGrid->SetCellInactive(row,column-1);
+		m_pLevelGrid->SetCellInactive(row,column);
+		m_pLevelGrid->SetCellInactive(row,column+1);
 		for(int i =0; i < row;++i)
-			LevelGrid::GetInstance()->SetCellInactive(i,column);
+			m_pLevelGrid->SetCellInactive(i,column);
 	}
-
+	m_pFiniteStateMachine->Initialize(std::make_shared<PlayerAliveState>(m_pFiniteStateMachine),m_pGameObject,nullptr,m_pLevelGrid);
 }
 
 void dae::Player::Fire()

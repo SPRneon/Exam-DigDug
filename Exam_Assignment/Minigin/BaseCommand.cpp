@@ -91,7 +91,7 @@ void dae::MoveCommand::execute()
 
 	auto shape = m_pGameObject->GetComponent<ColliderComponent>()->GetShape();
 	glm::vec2 center = {shape->x + shape->w / 2.f,shape->y + shape->h / 2.f};
-	auto target = LevelGrid::GetInstance()->GetPathForDir(m_Dir,center);
+	auto target = m_pLevelGrid->GetPathForDir(m_Dir,center);
 	{
 		auto targetV = NormalizeAssert(target - center);
 		targetV *= glm::vec2{m_LinVel* GameTime::GetInstance()->GetElapsed(),m_LinVel* GameTime::GetInstance()->GetElapsed()};

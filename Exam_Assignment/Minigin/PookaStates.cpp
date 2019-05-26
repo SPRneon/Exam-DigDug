@@ -20,7 +20,7 @@ void dae::PookaWanderState::Update()
 {
 	m_deltaTime += GameTime::GetInstance()->GetElapsed();
 	if(m_pContext->GetActor()->GetComponent<ColliderComponent>()->HasCollided() 
-		|| LevelGrid::GetInstance()->GetCellForDir(m_WanderDir, m_pContext->GetActor()->GetTransform()->GetPosition())->ContainsRock() )
+		|| m_pContext->GetGrid()->GetCellForDir(m_WanderDir, m_pContext->GetActor()->GetTransform()->GetPosition())->ContainsRock() )
 	{
 		int nr = rand() %2;
 		if(nr == 0)
@@ -31,7 +31,7 @@ void dae::PookaWanderState::Update()
 	
 
 
-	auto command = std::make_shared<MoveCommand>(m_pContext->GetActor(),m_WanderDir,40.f);
+	auto command = std::make_shared<MoveCommand>(m_pContext->GetActor(),m_pContext->GetGrid(),m_WanderDir,40.f);
 	
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(m_WanderDir);
 	
@@ -63,8 +63,8 @@ void dae::PookaChaseState::Update()
 	}
 	
 	
-	auto currCell = LevelGrid::GetInstance()->GetCell(m_pContext->GetActor()->GetComponent<ColliderComponent>()->GetShapeCenter());
-	auto tarrCell = LevelGrid::GetInstance()->GetCell( m_pContext->GetTarget()->GetGameObject()->GetComponent<ColliderComponent>()->GetShapeCenter());
+	auto currCell = m_pContext->GetGrid()->GetCell(m_pContext->GetActor()->GetComponent<ColliderComponent>()->GetShapeCenter());
+	auto tarrCell = m_pContext->GetGrid()->GetCell( m_pContext->GetTarget()->GetGameObject()->GetComponent<ColliderComponent>()->GetShapeCenter());
 
 	
 	std::array<Direction,4> dirUrgency = {UP,UP,UP,UP};
@@ -103,12 +103,12 @@ void dae::PookaChaseState::Update()
 	dirUrgency[goRight] = RIGHT;
 	dirUrgency[goDown] = DOWN;
 
-	auto vec = LevelGrid::GetInstance()->GetNeighbourCells(dirUrgency,currCell);
+	auto vec = m_pContext->GetGrid()->GetNeighbourCells(dirUrgency,currCell);
 	for(auto cellDir : vec)
 	{
 		if(cellDir.first->IsVisited())
 		{
-			auto command = std::make_shared<MoveCommand>(m_pContext->GetActor(),cellDir.second,45.f);
+			auto command = std::make_shared<MoveCommand>(m_pContext->GetActor(),m_pContext->GetGrid(),cellDir.second,45.f);
 			
 			m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(cellDir.second);
 			
@@ -127,7 +127,7 @@ void dae::PookaPhaseState::OnEnter()
 	//Setting collider off
 	m_pContext->GetActor()->GetComponent<ColliderComponent>()->PutToSleep();
 	//Setting targetCell
-	m_pTargetCell = LevelGrid::GetInstance()->GetCell(m_pContext->GetTarget()->GetGameObject()->GetTransform()->GetPosition());
+	m_pTargetCell = m_pContext->GetGrid()->GetCell(m_pContext->GetTarget()->GetGameObject()->GetTransform()->GetPosition());
 }
 
 void dae::PookaPhaseState::Update()

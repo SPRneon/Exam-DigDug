@@ -16,6 +16,9 @@ dae::CommandComponent::~CommandComponent()
 
 void dae::CommandComponent::AddToCommandStream(std::shared_ptr<BaseCommand> pCommand)
 {
+	if(m_pGameObject->GetName() == "Player")
+		std::cout << "Player command added" << std::endl;
+
 	if(m_IsControllable)
 		m_pCommandStream.push(pCommand);
 }

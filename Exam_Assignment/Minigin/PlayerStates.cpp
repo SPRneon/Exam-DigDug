@@ -13,6 +13,7 @@
 
 void dae::PlayerAliveState::OnEnter()
 {
+	m_pContext->GetActor()->GetComponent<CommandComponent>()->SetControllable(true);
 	m_pContext->GetActor()->GetComponent<CommandComponent>()->AllowMovement();
 	auto path = m_pContext->GetActor()->GetComponent<TextureComponent>()->GetOriPath();
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture(path + ".png",2);
@@ -76,7 +77,7 @@ void dae::PlayerChargedState::Update()
 
 void dae::PlayerFiringState::OnEnter()
 {
-	//m_pContext->GetActor()->GetComponent<CommandComponent>()->BlockMovement();
+	m_pContext->GetActor()->GetComponent<CommandComponent>()->BlockMovement();
 	m_WanderDir = m_pContext->GetActor()->GetComponent<CommandComponent>()->GetLastDir();
 	//Creating missile
 	m_pMisile = std::make_shared<GameObject>("Misile");

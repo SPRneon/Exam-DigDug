@@ -16,7 +16,7 @@ public:
 
 	void Update() override;
 	void Reset() override;
-	void Place(int row, int column) override;
+	void Place(int row, int column, std::shared_ptr<LevelGrid> grid) override;
 	void Fire();
 
 	void SetSubject(std::shared_ptr<Subject> obs){m_pSubject = obs;}
@@ -24,6 +24,8 @@ public:
 private:
 	int m_PlayerIndex;
 	std::shared_ptr<Subject> m_pSubject;
+
+	std::shared_ptr<LevelGrid> m_pLevelGrid;
 
 	std::shared_ptr<FiniteStateMachine> m_pFiniteStateMachine = nullptr;
 	};

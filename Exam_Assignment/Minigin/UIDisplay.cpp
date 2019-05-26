@@ -5,6 +5,7 @@
 #include "TextComponent.h"
 #include "TransformComponent.h"
 #include "TextureComponent.h"
+#include "LevelScene.h"
 
 
 dae::UIDisplay::UIDisplay()
@@ -18,6 +19,7 @@ dae::UIDisplay::UIDisplay()
 	m_pDisplayMap.insert_or_assign("Logo", logo);
 
 
+	
 
 	//Score
 	auto scoreDisplay = std::make_shared<GameObject>();

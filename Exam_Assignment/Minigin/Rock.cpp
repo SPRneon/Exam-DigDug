@@ -40,7 +40,7 @@ void dae::Rock::Update()
 	if(typeid(*state) == typeid(RockLandedState))
 	{
 		m_pGameObject->GetComponent<ColliderComponent>()->PutToSleep();
-		LevelGrid::GetInstance()->GetCell(m_pGameObject->GetTransform()->GetPosition())->DropRock();
+		m_pLevelGrid->GetCell(m_pGameObject->GetTransform()->GetPosition())->DropRock();
 		m_pGameObject->GetScene()->Remove(m_pGameObject);
 		m_pActionStateMachine = nullptr;
 		
@@ -58,21 +58,22 @@ void dae::Rock::Reset()
 {
 	m_FirstUpdatePassed = false;
 	auto initState =std::make_shared<RockIdleState>(m_pActionStateMachine);
-	m_pActionStateMachine->Initialize(initState,m_pGameObject,m_pPlayer);
+	m_pActionStateMachine->Initialize(initState,m_pGameObject,m_pPlayer, m_pLevelGrid);
 }
 
 
-void dae::Rock::Place(int row, int column)
+void dae::Rock::Place(int row, int column, std::shared_ptr<LevelGrid> grid)
 {
-	LevelGrid::GetInstance()->GetCell(row,column)->PlaceRock();
-	glm::vec2 pos = LevelGrid::GetInstance()->GetCell(row,column)->GetPosition();
-	auto scale = LevelGrid::GetInstance()->GetCell(row,column)->GetScale();
+	m_pLevelGrid = grid;
+	m_pLevelGrid->GetCell(row,column)->PlaceRock();
+	glm::vec2 pos = m_pLevelGrid->GetCell(row,column)->GetPosition();
+	auto scale = m_pLevelGrid->GetCell(row,column)->GetScale();
 	pos.y += scale.y - 24.f;
 	pos.x += (scale.x/2) - 12.f;
 
 	GetGameObject()->GetTransform()->SetPosition(pos);
-	auto cell = LevelGrid::GetInstance()->GetCell(row+ 1,column);
+	auto cell = m_pLevelGrid->GetCell(row+ 1,column);
 	auto initState =std::make_shared<RockIdleState>(m_pActionStateMachine);
-	m_pActionStateMachine->Initialize(initState,m_pGameObject,m_pPlayer);
+	m_pActionStateMachine->Initialize(initState,m_pGameObject,m_pPlayer,m_pLevelGrid);
 }
 

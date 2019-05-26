@@ -53,7 +53,7 @@ namespace dae{
 
 	class Subject;
 
-class LevelGrid : public Singleton<LevelGrid>
+class LevelGrid 
 	{
 public:
 	LevelGrid();

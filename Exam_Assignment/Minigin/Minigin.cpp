@@ -64,9 +64,7 @@ void dae::Minigin::Cleanup()
 	GameTime::GetInstance()->DestroyInstance();
 	SceneManager::GetInstance()->DestroyInstance();
 	ColliderComponent::m_pColliderMap.clear();
-	//TODO Do this in scene
-	LevelGrid::GetInstance()->CleanUp();
-	LevelGrid::DestroyInstance();
+
 	SDL_DestroyWindow(window);
 	window = nullptr;
 	SDL_Quit();

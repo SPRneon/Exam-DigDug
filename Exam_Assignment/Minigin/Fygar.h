@@ -7,6 +7,7 @@ namespace dae{
 	class Subject;
 	class FiniteStateMachine;
 	class Player;
+	class LevelGrid;
 
 class Fygar : public Entity
 {
@@ -16,7 +17,7 @@ public:
 
 	void Update() override;
 	void Reset() override;
-	void Place(int row, int column) override;
+	void Place(int row, int column, std::shared_ptr<LevelGrid> grid) override;
 	void Fire();
 	void SetAsPlayer();
 
@@ -29,7 +30,7 @@ private:
 	int m_Row, m_Col;
 
 	bool m_IsControlled =false;
-
+	std::shared_ptr<LevelGrid> m_pLevelGrid;
 
 	std::shared_ptr<Subject> m_pSubject;
 };

@@ -31,6 +31,7 @@ public:
 	void ResetScene() override;
 	void CleanUp() override;
 	void SetPlayer(int NrOfPlayers){m_NrOfPlayers = NrOfPlayers;};
+	std::shared_ptr<LevelGrid> GetLevelGrid() const {return m_pLevelGrid;}
 
 	std::shared_ptr<Observer> GetObserver(){return m_pObserver;}
 	void SetObserver(std::shared_ptr<Observer> observer){m_pObserver = observer;}
@@ -40,11 +41,19 @@ private:
 	std::vector<std::shared_ptr<Entity>> m_pRocks;
 	std::shared_ptr<Player> m_pPlayer = nullptr;
 
+	void NextLevel();
+	void LoadLevel();
+
 	float m_DeltaTime = 0.f;
 	float m_PauseTime = 3.f;
 
 	int m_pScore;
 	int m_NrOfPlayers;
+	bool m_IsToggled = false;
+
+	static int m_LevelID;
+
+	std::shared_ptr<LevelGrid> m_pLevelGrid = nullptr;
 	std::shared_ptr<GameObject> m_pScoreDisplay;
 
 	std::shared_ptr<Observer> m_pObserver;

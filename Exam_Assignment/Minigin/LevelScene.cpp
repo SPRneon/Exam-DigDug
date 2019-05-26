@@ -20,7 +20,9 @@
 #include "Rock.h"
 #include "Pooka.h"
 #include "PookaStates.h"
+#include "TextComponent.h"
 
+int dae::LevelScene::m_LevelID = 0;
 
 dae::LevelScene::LevelScene(const std::string & name)
 	:Scene(name),
@@ -30,18 +32,21 @@ dae::LevelScene::LevelScene(const std::string & name)
 
 dae::LevelScene::~LevelScene()
 {
-	LevelGrid::GetInstance()->DestroyInstance();
+	m_pLevelGrid->CleanUp();
+	m_pLevelGrid.reset();
 }
 
 
 
 void dae::LevelScene::Initialize()
 {
+	m_LevelID++;
+
 	//Grid
-	auto levelGrid = LevelGrid::GetInstance();
-	levelGrid->Initialize(14,16,{0,100},{450,480});
+	m_pLevelGrid  = std::make_shared<LevelGrid>();
+	m_pLevelGrid->Initialize(14,16,{0,100},{450,480});
 	//Cells
-	for(auto row : levelGrid->GetCells())
+	for(auto row : m_pLevelGrid->GetCells())
 	{
 		for(auto coll : row)
 			Add(coll->GetGameObject());
@@ -49,13 +54,13 @@ void dae::LevelScene::Initialize()
 
 	//Player
 	m_pPlayer = std::make_shared<Player>("Player");
-	m_pPlayer->Place(6,6);
+	m_pPlayer->Place(6,6, m_pLevelGrid);
 	m_pPlayers.push_back(m_pPlayer);
 	this->Add(m_pPlayer->GetGameObject());
 
 	//FYGAR
 	auto fygar1 = std::make_shared<Fygar>("Fygar1",m_pPlayer);
-	fygar1->Place(8,2);
+	fygar1->Place(8,2, m_pLevelGrid);
 	if(m_NrOfPlayers == 2)
 	{
 		fygar1->SetAsPlayer();
@@ -66,20 +71,20 @@ void dae::LevelScene::Initialize()
 	this->Add(fygar1->GetGameObject());
 
 	auto fygar2 = std::make_shared<Fygar>("Fygar2",m_pPlayer);
-	fygar2->Place(12,7);
+	fygar2->Place(12,7,m_pLevelGrid);
 	m_pEnemies.push_back(fygar2);
 	this->Add(fygar2->GetGameObject());
 
 	//POOKA
-	auto pooka1 = std::make_shared<Pooka>("Pooka1",m_pPlayer);
-	pooka1->Place(3,3);
+	/*auto pooka1 = std::make_shared<Pooka>("Pooka1",m_pPlayer);
+	pooka1->Place(3,3,m_pLevelGrid);
 	m_pEnemies.push_back(pooka1);
 	this->Add(pooka1->GetGameObject());
 
 	auto pooka2 = std::make_shared<Pooka>("pooka2",m_pPlayer);
-	pooka2->Place(4,10);
+	pooka2->Place(4,10,m_pLevelGrid);
 	m_pEnemies.push_back(pooka2);
-	this->Add(pooka2->GetGameObject());
+	this->Add(pooka2->GetGameObject());*/
 
 
 	//UI
@@ -92,12 +97,12 @@ void dae::LevelScene::Initialize()
 	//OBSERVESYSTEM
 	auto scoreSubject = std::make_shared<Subject>();
 	scoreSubject->AddObserver(ui);
-	levelGrid->SetSubject(scoreSubject);
+	m_pLevelGrid->SetSubject(scoreSubject);
 	//Enemy Subjects
 	fygar1->SetSubject(scoreSubject);
 	fygar2->SetSubject(scoreSubject);
-	pooka1->SetSubject(scoreSubject);
-	pooka2->SetSubject(scoreSubject);
+	/*pooka1->SetSubject(scoreSubject);
+	pooka2->SetSubject(scoreSubject);*/
 
 	auto livesSubject = std::make_shared<Subject>();
 	livesSubject->AddObserver(ui);
@@ -108,37 +113,37 @@ void dae::LevelScene::Initialize()
 
 	//ROCK
 	auto rock1 = std::make_shared<Rock>("Rock1", m_pPlayer);
-	rock1->Place(4,8);
+	rock1->Place(4,8, m_pLevelGrid);
 	m_pRocks.push_back(rock1);
 	Add(rock1->GetGameObject());
 
 	auto rock2 = std::make_shared<Rock>("Rock2", m_pPlayer);
-	rock2->Place(2,10);
+	rock2->Place(2,10,m_pLevelGrid);
 	m_pRocks.push_back(rock2);
 	Add(rock2->GetGameObject());
 
 	auto rock3 = std::make_shared<Rock>("Rock3", m_pPlayer);
-	rock3->Place(11,9);
+	rock3->Place(11,9,m_pLevelGrid);
 	m_pRocks.push_back(rock3);
 	Add(rock3->GetGameObject());
 
 	
-
+	
 
 	//INPUT PLAYER 1
 	InputAction ia = {0,KeyState::Pressed,'A',-1,XINPUT_GAMEPAD_DPAD_LEFT,0};
-	auto cmdLeft = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),LEFT,50.f);
+	auto cmdLeft = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),m_pLevelGrid,LEFT,50.f);
 	InputManager::GetInstance()->AddInput(ia,cmdLeft);
 	ia = {1,KeyState::Pressed,'W',-1,XINPUT_GAMEPAD_DPAD_UP,0};
-	auto cmdUp = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),UP,50.f);
+	auto cmdUp = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),m_pLevelGrid,UP,50.f);
 	InputManager::GetInstance()->AddInput(ia,cmdUp);
 	ia = {2,KeyState::Pressed,'D',-1,XINPUT_GAMEPAD_DPAD_RIGHT,0};
-	auto cmdRight = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),RIGHT,50.f);
+	auto cmdRight = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),m_pLevelGrid,RIGHT,50.f);
 	InputManager::GetInstance()->AddInput(ia,cmdRight);
 	ia = {3,KeyState::Pressed,'S',-1,XINPUT_GAMEPAD_DPAD_DOWN,0};
-	auto cmdDown = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),DOWN,50.f);
+	auto cmdDown = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),m_pLevelGrid,DOWN,50.f);
 	InputManager::GetInstance()->AddInput(ia,cmdDown);
-	ia = {4,KeyState::Pressed,VK_SPACE,-1,XINPUT_GAMEPAD_A,0};
+	ia = {4,KeyState::Pressed,'F',-1,XINPUT_GAMEPAD_A,0};
 	auto cmdFire = std::make_shared<FireCommand>(m_pPlayer);
 	InputManager::GetInstance()->AddInput(ia,cmdFire);
 
@@ -147,16 +152,16 @@ void dae::LevelScene::Initialize()
 	{
 		//INPUT
 		ia = {10,KeyState::Pressed,'J',-1,XINPUT_GAMEPAD_DPAD_LEFT,1};
-		auto cmdLeft2 = std::make_shared<MoveCommand>(fygar1->GetGameObject(),LEFT,50.f);
+		auto cmdLeft2 = std::make_shared<MoveCommand>(fygar1->GetGameObject(),m_pLevelGrid,LEFT,50.f);
 		InputManager::GetInstance()->AddInput(ia,cmdLeft2);
 		ia = {11,KeyState::Pressed,'I',-1,XINPUT_GAMEPAD_DPAD_UP,1};
-		auto cmdUp2 = std::make_shared<MoveCommand>(fygar1->GetGameObject(),UP,50.f);
+		auto cmdUp2 = std::make_shared<MoveCommand>(fygar1->GetGameObject(),m_pLevelGrid,UP,50.f);
 		InputManager::GetInstance()->AddInput(ia,cmdUp2);
 		ia = {12,KeyState::Pressed,'L',-1,XINPUT_GAMEPAD_DPAD_RIGHT,1};
-		auto cmdRight2 = std::make_shared<MoveCommand>(fygar1->GetGameObject(),RIGHT,50.f);
+		auto cmdRight2 = std::make_shared<MoveCommand>(fygar1->GetGameObject(),m_pLevelGrid,RIGHT,50.f);
 		InputManager::GetInstance()->AddInput(ia,cmdRight2);
 		ia = {13,KeyState::Pressed,'K',-1,XINPUT_GAMEPAD_DPAD_DOWN,1};
-		auto cmdDown2 = std::make_shared<MoveCommand>(fygar1->GetGameObject(),DOWN,50.f);
+		auto cmdDown2 = std::make_shared<MoveCommand>(fygar1->GetGameObject(),m_pLevelGrid,DOWN,50.f);
 		InputManager::GetInstance()->AddInput(ia,cmdDown2);
 		ia = {14,KeyState::Pressed,'H',-1,XINPUT_GAMEPAD_A,1};
 		auto cmdFire2 = std::make_shared<FygarFireCommand>(fygar1);
@@ -173,7 +178,7 @@ void dae::LevelScene::Update()
 	else
 		GameTime::GetInstance()->Start();
 	
-	LevelGrid::GetInstance()->Update();
+	m_pLevelGrid->Update();
 	
 	bool allDead = true;
 	for(auto entity : m_pEnemies)
@@ -185,7 +190,8 @@ void dae::LevelScene::Update()
 	}
 	if(allDead)
 	{
-		//gotonextscene
+		NextLevel();
+
 	}
 
 	
@@ -198,11 +204,16 @@ void dae::LevelScene::Update()
 	{	
 		entity->Update();
 	}
+
+	if(m_IsToggled)
+	{
+		SceneManager::GetInstance()->GoToNextScene();
+	}
 }
 
 void dae::LevelScene::Draw() const
 {
-	LevelGrid::GetInstance()->Draw();
+	m_pLevelGrid->Draw();
 
 }
 
@@ -210,33 +221,20 @@ void dae::LevelScene::Draw() const
 
 void dae::LevelScene::ResetScene()
 {
-	std::cout << "Should reset level" << std::endl;
-	
-
-
-	//Player
-	m_pPlayer->Place(6,6);
-	m_pPlayer->Reset();
-
-	//Enemies
-	for(auto enemy : m_pEnemies)
-	{
-	if(!enemy->GetGameObject()->IsMarkedForDestroy()){
-	enemy->Reset();
-	}
-	else
-		Remove(enemy->GetGameObject());
-	}
-
-
-
-
-	
 	m_MarkedForReset = false;
 }
 
 void dae::LevelScene::CleanUp()
 {
-	LevelGrid::GetInstance()->CleanUp();
-	InputManager::GetInstance()->CleanUp();
+	m_pLevelGrid->CleanUp();
+}
+
+void dae::LevelScene::NextLevel()
+{
+	m_LevelID++;
+	auto& scene = SceneManager::GetInstance()->CreateScene<LevelScene>("Level-" + std::to_string(m_LevelID));
+	dynamic_cast<LevelScene&>(scene).SetPlayer(m_NrOfPlayers);
+	this->MarkForReset();
+
+	m_IsToggled = true;
 }

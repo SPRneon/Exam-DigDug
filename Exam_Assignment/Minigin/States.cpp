@@ -15,8 +15,8 @@
 
 void dae::RockIdleState::OnEnter()
 {
-	auto currCell = LevelGrid::GetInstance()->GetCell(m_pContext->GetActor()->GetTransform()->GetPosition());
-	m_pStartCell = LevelGrid::GetInstance()->GetCell(currCell->GetRow() + 1,currCell->GetCol());
+	auto currCell = m_pContext->GetGrid()->GetCell(m_pContext->GetActor()->GetTransform()->GetPosition());
+	m_pStartCell = m_pContext->GetGrid()->GetCell(currCell->GetRow() + 1,currCell->GetCol());
 }
 
 
@@ -41,7 +41,7 @@ void dae::RockChargeState::Update()
 	}
 	else
 	{
-		LevelGrid::GetInstance()->GetCell(m_pContext->GetActor()->GetTransform()->GetPosition())->DropRock();
+		m_pContext->GetGrid()->GetCell(m_pContext->GetActor()->GetTransform()->GetPosition())->DropRock();
 		m_pContext->GoToState(std::make_shared<RockFallingState>(m_pContext));
 		return;
 	}
@@ -51,15 +51,15 @@ void dae::RockChargeState::Update()
 
 void dae::RockFallingState::OnEnter()
 {
-	auto currCell = LevelGrid::GetInstance()->GetCell(m_pContext->GetActor()->GetTransform()->GetPosition());
-	m_pStartCell = LevelGrid::GetInstance()->GetCell(currCell->GetRow() + 1,currCell->GetCol());
+	auto currCell = m_pContext->GetGrid()->GetCell(m_pContext->GetActor()->GetTransform()->GetPosition());
+	m_pStartCell = m_pContext->GetGrid()->GetCell(currCell->GetRow() + 1,currCell->GetCol());
 }
 
 
 void dae::RockFallingState::Update()
 {
 	
-	auto fallCommand = std::make_shared<MoveCommand>(m_pContext->GetActor(),DOWN,50.f);
+	auto fallCommand = std::make_shared<MoveCommand>(m_pContext->GetActor(),m_pContext->GetGrid(),DOWN,50.f);
 	m_pContext->GetActor()->GetComponent<CommandComponent>()->AddToCommandStream(fallCommand);
 
 	
