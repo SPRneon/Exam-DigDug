@@ -39,6 +39,7 @@ public:
 	SDL_Rect* WillCollide(glm::vec2 movement);
 	const bool HasCollidedWith(ColliderGroups groups);
 	GameObject* GetCollisionObject(ColliderGroups objectFlag);
+	void ResetCollisions();
 
 	//FLAGS
 	void SetColliderFlags(ColliderGroups group){m_CollisionGroup = group;}

@@ -1,5 +1,7 @@
 #pragma once
 #include "Scene.h"
+#include "Parser.h"
+
 
 namespace dae{
 
@@ -10,6 +12,7 @@ namespace dae{
 	class Observer;
 	class Rock;
 	class Entity;
+	class UIDisplay;
 class LevelScene final:	public dae::Scene
 {
 public:
@@ -43,6 +46,8 @@ private:
 
 	void NextLevel();
 	void LoadLevel();
+	void BackToMenu();
+
 
 	float m_DeltaTime = 0.f;
 	float m_PauseTime = 3.f;
@@ -52,9 +57,12 @@ private:
 	bool m_IsToggled = false;
 
 	static int m_LevelID;
+	LevelInfo m_LevelInfo;
+	std::shared_ptr<UIDisplay> m_pUI = nullptr;
 
 	std::shared_ptr<LevelGrid> m_pLevelGrid = nullptr;
 	std::shared_ptr<GameObject> m_pScoreDisplay;
+	std::shared_ptr<GameObject> m_pGameOver = nullptr;
 
 	std::shared_ptr<Observer> m_pObserver;
 };

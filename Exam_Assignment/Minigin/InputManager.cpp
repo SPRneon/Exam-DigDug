@@ -8,21 +8,31 @@
 //*******************//
 //***INPUTMANAGER***//
 //*******************//
-dae::InputManager::InputManager()
-{
-	
-}
 
 //CLEANUP
 void dae::InputManager::CleanUp()
 {
 	for(auto& gamepad : m_pGamePads)
+	{
 		gamepad->CleanUp();
+		gamepad.reset();
+	}
 	m_pGamePads.clear();
-	m_pCurrentGamePad = nullptr;
+	m_pCurrentGamePad.reset();
 	m_InputActions.clear();
+	for(auto& it : m_pCommands)
+	{
+		for(auto& com : it.second)
+		{
+			com.reset();
+		}
+		it.second.clear();
+	}
 	m_pCommands.clear();
 	m_IsInitialized = false;
+
+	ZeroMemory(&currentState, sizeof(XINPUT_STATE));
+	ZeroMemory(&previousState, sizeof(XINPUT_STATE));
 	
 }
 

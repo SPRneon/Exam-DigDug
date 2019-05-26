@@ -29,8 +29,13 @@ void dae::SceneManager::Draw()
 
 void dae::SceneManager::CleanUp()
 {
-	/*for(auto scene : mScenes)
-		delete scene;*/
+	m_pActiveScene.reset();
+	for(auto& scene : mScenes)
+	{
+		scene->CleanUp();
+		scene.reset();
+	}
+	mScenes.clear();
 }
 
 void dae::SceneManager::GoToNextScene()

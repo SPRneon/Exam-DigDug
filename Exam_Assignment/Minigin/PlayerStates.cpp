@@ -17,6 +17,7 @@ void dae::PlayerAliveState::OnEnter()
 	m_pContext->GetActor()->GetComponent<CommandComponent>()->AllowMovement();
 	auto path = m_pContext->GetActor()->GetComponent<TextureComponent>()->GetOriPath();
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture(path + ".png",2);
+	
 }
 
 void dae::PlayerAliveState::Update()
@@ -181,8 +182,6 @@ void dae::PlayerPumpingState::OnEnter()
 
 void dae::PlayerPumpingState::Update()
 {
-
-
 	//IF no enemies hit -> go back to normal
 	if(!m_pMisile->GetComponent<ColliderComponent>()->HasCollidedWith(ENEMIES))
 	{
@@ -203,7 +202,7 @@ void dae::PlayerDeadState::OnEnter()
 	auto path = m_pContext->GetActor()->GetComponent<TextureComponent>()->GetOriPath();
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture(path +"Dead.png",5);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->Pause();
-	GameTime::GetInstance()->Stop();
+	
 }
 
 void dae::PlayerDeadState::Update()
@@ -230,7 +229,7 @@ void dae::PlayerDeadState::OnExit()
 {
 	m_pContext->GetActor()->GetComponent<CommandComponent>()->SetControllable(true);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->Play();
-	GameTime::GetInstance()->Start();
+	
 }
 
 

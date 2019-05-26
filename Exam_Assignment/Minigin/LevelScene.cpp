@@ -22,6 +22,7 @@
 #include "PookaStates.h"
 #include "TextComponent.h"
 #include "Parser.h"
+#include "MenuScene.h"
 
 int dae::LevelScene::m_LevelID = 0;
 
@@ -33,8 +34,8 @@ dae::LevelScene::LevelScene(const std::string & name)
 
 dae::LevelScene::~LevelScene()
 {
-	m_pLevelGrid->CleanUp();
-	m_pLevelGrid.reset();
+	CleanUp();
+
 }
 
 
@@ -43,7 +44,7 @@ void dae::LevelScene::Initialize()
 {
 	
 	m_LevelID++;
-	auto levelinfo = Parser::GetInstance()->ParseLevel(m_LevelID);
+	m_LevelInfo = Parser::GetInstance()->ParseLevel(m_LevelID);
 	//Grid
 	m_pLevelGrid  = std::make_shared<LevelGrid>();
 	m_pLevelGrid->Initialize(14,16,{0,100},{450,480});
@@ -55,32 +56,32 @@ void dae::LevelScene::Initialize()
 	}
 
 	//Player
-	auto playerDesc = levelinfo.m_PlayerDesc;
+	auto playerDesc = m_LevelInfo.m_PlayerDesc;
 	m_pPlayer = std::make_shared<Player>(playerDesc.entityName);
 	m_pPlayer->Place(playerDesc.row,playerDesc.col, m_pLevelGrid);
 	m_pPlayers.push_back(m_pPlayer);
 	this->Add(m_pPlayer->GetGameObject());
 
 	//UI
-	auto ui = std::make_shared<UIDisplay>();
-	for(auto it = ui->GetMap()->begin(); it != ui->GetMap()->end();++it)
+	m_pUI = std::make_shared<UIDisplay>();
+	for(auto it = m_pUI->GetMap()->begin(); it != m_pUI->GetMap()->end();++it)
 	{
 		Add(it->second);
 	}
 
 	//OBSERVESYSTEM
 	auto scoreSubject = std::make_shared<Subject>();
-	scoreSubject->AddObserver(ui);
+	scoreSubject->AddObserver(m_pUI);
 	m_pLevelGrid->SetSubject(scoreSubject);
 	auto livesSubject = std::make_shared<Subject>();
-	livesSubject->AddObserver(ui);
+	livesSubject->AddObserver(m_pUI);
 	m_pObserver = std::make_shared<LevelObserver>(this);
 	livesSubject->AddObserver(m_pObserver);
 	m_pPlayer->SetSubject(livesSubject);
 
 	std::shared_ptr<Fygar> tempPtr;
 	//ENEMIES
-	for(auto entityDesc : levelinfo.m_Entities)
+	for(auto entityDesc : m_LevelInfo.m_Entities)
 	{
 		if(entityDesc.type == "Fygar")
 		{
@@ -166,7 +167,10 @@ void dae::LevelScene::Update()
 	if(m_DeltaTime < m_PauseTime)
 		m_DeltaTime += GameTime::GetInstance()->GetPausedElapsed();
 	else
+	{
+		
 		GameTime::GetInstance()->Start();
+	}
 	
 	m_pLevelGrid->Update();
 	
@@ -195,10 +199,17 @@ void dae::LevelScene::Update()
 		entity->Update();
 	}
 
+	if(m_pUI->GetLives() ==0)
+	{
+		BackToMenu();
+	}
+
 	if(m_IsToggled)
 	{
 		SceneManager::GetInstance()->GoToNextScene();
 	}
+
+	
 }
 
 void dae::LevelScene::Draw() const
@@ -211,12 +222,61 @@ void dae::LevelScene::Draw() const
 
 void dae::LevelScene::ResetScene()
 {
+	
+	m_pEnemies.erase(std::remove_if(m_pEnemies.begin(),m_pEnemies.end(),[] (const std::shared_ptr<Entity>& enemy){return enemy->IsDead();}),m_pEnemies.end());
+
+	//Resetting enemies
+	for(auto& enemy : m_pEnemies)
+	{
+		for(auto& desc : m_LevelInfo.m_Entities)
+		{
+			if(enemy->GetGameObject()->GetName() == desc.entityName)
+			{
+				enemy->Reset();
+				enemy->Place(desc.row,desc.col, m_pLevelGrid);
+			}
+		}
+	}
+
+	//Resetting player
+	m_pPlayer->Place(m_LevelInfo.m_PlayerDesc.row,m_LevelInfo.m_PlayerDesc.col, m_pLevelGrid);
+	m_pPlayer->Reset();
+
+	//fixing timess
+	m_DeltaTime -= m_PauseTime;
+	GameTime::GetInstance()->Stop();
 	m_MarkedForReset = false;
 }
 
 void dae::LevelScene::CleanUp()
 {
+
+	for(auto& player : m_pPlayers)
+	{
+		Remove(player->GetGameObject());
+		player.reset();
+	}
+	m_pPlayers.clear();
+	m_pPlayer.reset();
+	
+	m_pPlayer.reset();
+	for(auto& enemy : m_pEnemies)
+	{
+		Remove(enemy->GetGameObject());
+		enemy.reset();
+	}
+	m_pEnemies.clear();
+	for(auto& rock : m_pRocks)
+	{
+		Remove(rock->GetGameObject());
+		rock.reset();
+	}
+	m_pRocks.clear();
+
 	m_pLevelGrid->CleanUp();
+	m_pLevelGrid.reset();
+
+	
 }
 
 void dae::LevelScene::NextLevel()
@@ -228,3 +288,29 @@ void dae::LevelScene::NextLevel()
 	m_pPlayer->GetGameObject()->GetComponent<ColliderComponent>()->PutToSleep();
 	m_IsToggled = true;
 }
+
+void dae::LevelScene::BackToMenu()
+{
+	if(!m_pGameOver){
+	auto font = ResourceManager::GetInstance()->LoadFont("emulogic.ttf", 12);
+	m_pGameOver = std::make_shared<GameObject>();
+	m_pGameOver->AddComponent(std::make_shared<TextComponent>("GameOver.png",font,Colors::white));
+	m_pGameOver->GetTransform()->SetPosition(125.f,200.f);
+		this->Add(m_pGameOver);
+	GameTime::GetInstance()->Stop();
+		m_DeltaTime -= m_PauseTime;
+	}
+	else
+	{
+		if(m_DeltaTime < m_PauseTime)
+			m_DeltaTime += GameTime::GetInstance()->GetPausedElapsed();
+		else
+		{
+			m_LevelID = 0;
+			SceneManager::GetInstance()->CreateScene<MenuScene>("MenuScene");
+			SceneManager::GetInstance()->GoToNextScene();
+			return;
+		}
+	}
+}
+

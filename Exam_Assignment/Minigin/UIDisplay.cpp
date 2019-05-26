@@ -6,6 +6,8 @@
 #include "TransformComponent.h"
 #include "TextureComponent.h"
 #include "LevelScene.h"
+#include "MenuScene.h"
+#include "SceneManager.h"
 
 
 dae::UIDisplay::UIDisplay()
@@ -64,7 +66,9 @@ void dae::UIDisplay::OnNotify(std::shared_ptr<Event> event)
 			auto liveTC = m_pLiveTextures.back();
 			m_pLiveTextures.pop_back();
 			m_pDisplayMap.at("LivesDisplay")->RemoveComponent(liveTC);
-			m_Lives--;	
+			m_Lives--;
+
+			
 		}
 	}
 	

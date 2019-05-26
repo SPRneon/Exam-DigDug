@@ -22,6 +22,7 @@ public:
 	std::shared_ptr<GameObject> GetDisplay(std::string name){return m_pDisplayMap.at(name);}
 	std::map<std::string,std::shared_ptr<GameObject>>* GetMap() {return &m_pDisplayMap;}
 
+	int GetLives() const {return m_Lives;}
 private:
 	int m_score = 0;
 	int m_Lives = 3;

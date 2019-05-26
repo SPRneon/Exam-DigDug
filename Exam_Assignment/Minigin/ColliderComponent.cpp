@@ -119,6 +119,14 @@ dae::GameObject* dae::ColliderComponent::GetCollisionObject(ColliderGroups objec
 	return nullptr;
 }
 
+void dae::ColliderComponent::ResetCollisions()
+{
+	for(auto& it : m_Collisions)
+	{
+		it.second = false;
+	}
+}
+
 
 void dae::ColliderComponent::Update()
 {

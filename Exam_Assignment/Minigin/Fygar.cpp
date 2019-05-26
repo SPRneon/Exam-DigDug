@@ -77,8 +77,9 @@ void dae::Fygar::Update()
 void dae::Fygar::Reset()
 {
 	m_pActionStateMachine->GoToState(std::make_shared<FygarWanderState>(m_pActionStateMachine));
+	m_pStateMachine->GoToState(std::make_shared<FygarAliveState>(m_pActionStateMachine));
 	GetGameObject()->GetComponent<CommandComponent>()->SetControllable(true);
-	Place(m_Row,m_Col,m_pLevelGrid);
+	
 }
 
 

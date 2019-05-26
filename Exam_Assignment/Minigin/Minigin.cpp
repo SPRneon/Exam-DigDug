@@ -45,8 +45,8 @@ void dae::Minigin::Initialize()
  */
 void dae::Minigin::LoadGame() const
 {
-	SceneManager::GetInstance()->CreateScene<MenuScene>("Demo");
-	SceneManager::GetInstance()->SetActiveScene("Demo");
+	SceneManager::GetInstance()->CreateScene<MenuScene>("MenuScene");
+	SceneManager::GetInstance()->SetActiveScene("MenuScene");
 	InputAction ia{69,KeyState::Released,VK_ESCAPE,-41,XINPUT_GAMEPAD_BACK};
 	InputManager::GetInstance()->AddInput(ia,std::make_shared<ExitCommand>());
 	 ia ={96,KeyState::Released,VK_F1,-41,XINPUT_GAMEPAD_START};
@@ -62,6 +62,7 @@ void dae::Minigin::Cleanup()
 	InputManager::GetInstance()->CleanUp();
 	InputManager::GetInstance()->DestroyInstance();
 	GameTime::GetInstance()->DestroyInstance();
+	SceneManager::GetInstance()->CleanUp();
 	SceneManager::GetInstance()->DestroyInstance();
 	ColliderComponent::m_pColliderMap.clear();
 

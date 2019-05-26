@@ -1,4 +1,0 @@
-https://github.com/SPRneon/Exam-DigDug
-
-The master branch has few commits as I almost solely worked on the Dev branch. 
-There you'll find the necessary commits.

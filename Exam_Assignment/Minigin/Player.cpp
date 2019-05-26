@@ -37,8 +37,9 @@ void dae::Player::Update()
 	{
 		m_pSubject->notify(std::make_shared<LivesEvent>());
 		m_IsDead = true;
+		m_pFiniteStateMachine->GoToState(std::make_shared<PlayerAliveState>(m_pFiniteStateMachine));
 	}
-
+	
 	}
 	else
 	{
@@ -52,18 +53,23 @@ void dae::Player::Update()
 
 void dae::Player::Reset()
 {
-	
+	m_IsDead = false;
 	GetGameObject()->GetTransform()->SetScale(1.f,1.f);
 	GetGameObject()->GetComponent<CommandComponent>()->SetControllable(true);
 	GetGameObject()->GetComponent<TextureComponent>()->Play();
-	SDL_Rect rect{0,0,20,20};
+	GetGameObject()->GetComponent<TextureComponent>()->SetDir(RIGHT);
+	auto pos = GetGameObject()->GetTransform()->GetPosition();
+	SDL_Rect rect{static_cast<int>(pos.x),static_cast<int>(pos.y),20,20};
 	GetGameObject()->GetComponent<ColliderComponent>()->SetRect(rect);
+	GetGameObject()->GetComponent<ColliderComponent>()->ResetCollisions();
 	GetGameObject()->GetComponent<ColliderComponent>()->Awake();
+	
 }
 
 
 void dae::Player::Place(int row, int column, std::shared_ptr<LevelGrid> grid)
 {
+	
 	m_pLevelGrid = grid;
 	GetGameObject()->GetTransform()->SetPosition(m_pLevelGrid->GetCell(row,column)->GetPosition());
 	{

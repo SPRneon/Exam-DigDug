@@ -178,7 +178,9 @@
     <ClInclude Include="MenuScene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Parser.h" />
+    <ClInclude Include="Parser.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -293,7 +295,7 @@
       <Filter>Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Parser.cpp">
-      <Filter>Main</Filter>
+      <Filter>Helpers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

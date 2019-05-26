@@ -65,10 +65,9 @@ void dae::Scene::RootDraw()
 
 	for (const auto gameObject : mObjects)
 	{
-		
 		gameObject->Draw();
 	}
-
+	
 	PostDraw();
 }
 

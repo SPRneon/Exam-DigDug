@@ -10,6 +10,7 @@
 #include "TextComponent.h"
 #include "Subject.h"
 #include "Renderer.h"
+#include "Scene.h"
 
 
 //*****CELLS*********//
@@ -97,7 +98,10 @@ void dae::LevelGrid::CleanUp()
 	for(auto& row : m_GridCells)
 	{
 		for(auto& cell : row)
+		{
+			cell->GetGameObject()->GetScene()->Remove(cell->GetGameObject());
 			cell.reset();
+		}
 	}
 	//Clear all the rows
 	m_GridCells.clear();

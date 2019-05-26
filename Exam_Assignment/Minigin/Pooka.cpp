@@ -52,7 +52,7 @@ void dae::Pooka::Reset()
 	m_pActionStateMachine->GoToState(std::make_shared<PookaWanderState>(m_pActionStateMachine));
 	m_pStateMachine->GoToState(std::make_shared<PookaAliveState>(m_pActionStateMachine));
 	GetGameObject()->GetComponent<CommandComponent>()->SetControllable(true);
-	Place(m_Row,m_Col, m_pLevelGrid);
+	
 }
 
 void dae::Pooka::Place(int row, int column, std::shared_ptr<LevelGrid> grid)

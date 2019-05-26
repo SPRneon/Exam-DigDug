@@ -100,7 +100,7 @@ namespace dae
 	class InputManager :public Singleton<InputManager>
 	{
 	public:
-		InputManager();
+		InputManager() = default;
 		void CleanUp();
 		void Init();
 		bool InitGamepads();
