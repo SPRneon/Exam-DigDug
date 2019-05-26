@@ -9,7 +9,15 @@
 
 dae::UIDisplay::UIDisplay()
 {
-	auto font = ResourceManager::GetInstance()->LoadFont("Lingua.otf", 24);
+	auto font = ResourceManager::GetInstance()->LoadFont("emulogic.ttf", 12);
+
+	//LOGO
+	auto logo = std::make_shared<GameObject>();
+	logo->AddComponent(std::make_shared<TextureComponent>("Logo.png"));
+	logo->GetTransform()->SetPosition(125.f,10.f);
+	m_pDisplayMap.insert_or_assign("Logo", logo);
+
+
 
 	//Score
 	auto scoreDisplay = std::make_shared<GameObject>();
@@ -25,7 +33,7 @@ dae::UIDisplay::UIDisplay()
 	livesDisplay->AddComponent(text);
 	for(int i = 0; i < m_Lives; ++i){
 	auto image = std::make_shared<TextureComponent>("Lives.png");
-		image->SetPosition(60.f + 20.f * i,10.f);
+		image->SetPosition(80.f + 20.f * i,0.f);
 		livesDisplay->AddComponent(image);
 		m_pLiveTextures.push_back(image);
 	}

@@ -6,11 +6,12 @@
 #pragma warning(pop)
 #include "MathHelper.h"
 #include "Player.h"
+#include "Fygar.h"
 
 namespace dae {
 	class GameObject;
 	class LevelGrid;
-	class Player;
+
 	
 
 class BaseCommand : public std::enable_shared_from_this<BaseCommand>
@@ -22,6 +23,7 @@ public:
 	virtual void execute() = 0;
 	virtual std::string GetCommandName() const  = 0;
 	void AddToCommandStream();
+	std::shared_ptr<GameObject> GetGameObject() const {return m_pGameObject;}
 protected:
 	std::shared_ptr<GameObject> m_pGameObject;
 };
@@ -38,11 +40,22 @@ private:
 	std::shared_ptr<Player> m_pPlayer;;
 };
 
+	class FygarFireCommand final : public BaseCommand
+{
+public:
+	FygarFireCommand(std::shared_ptr<Fygar> fygar) : m_pFygar(fygar),BaseCommand(fygar->GetGameObject()){}
+	 void execute() override;
+	 std::string GetCommandName() const override{ return name;}
+private:
+	const std::string name = "Fire Command";
+	std::shared_ptr<Fygar> m_pFygar;;
+};
 
 
 
 
-	//******UI*******//
+
+//******UI*******//
 class ExitCommand final : public BaseCommand
 {
 public:	
@@ -59,6 +72,40 @@ public:
 private:
 	const std::string name = "NextScene Command";
 };
+
+class ToggleButtonCommand final : public BaseCommand
+{
+public:
+	ToggleButtonCommand(GameObject* currentButton)
+		:m_pCurrentButton(currentButton){}
+
+	void execute() override;
+	void SetGameoBject(GameObject*  ptr){m_pCurrentButton = ptr;}
+	std::string GetCommandName() const override{ return name;}
+private:
+	GameObject* m_pCurrentButton;
+	const std::string name = "Toggle Button Command";
+};
+
+class MoveButtonCommand final : public BaseCommand
+{
+public:
+	MoveButtonCommand(GameObject** currentButton, std::vector<std::shared_ptr<GameObject>> buttons, std::shared_ptr<ToggleButtonCommand> command)
+		:m_pCurrentButton(currentButton),
+		m_pButtons(buttons),
+		m_pCommand(command){}
+
+	void execute() override;
+	std::string GetCommandName() const override{ return name;}
+private:
+	GameObject** m_pCurrentButton;
+	std::shared_ptr<ToggleButtonCommand> m_pCommand;
+	std::vector<std::shared_ptr<GameObject>> m_pButtons;
+	const std::string name = "Next Button Command";
+
+};
+
+
 
 	//*****GAMEPLAY******//
 class MoveCommand final : public BaseCommand
@@ -104,20 +151,4 @@ private:
 
 
 
-class ChaseCommand final : public BaseCommand
-{
-public:
-	ChaseCommand(std::shared_ptr<GameObject> pGameObject, std::shared_ptr<GameObject> pTarget, float linVel):
-		BaseCommand(pGameObject),
-		m_pTarget(pTarget),
-		m_LinVel(linVel){}
-	
-	void execute() override;
-	 std::string GetCommandName() const override{ return name;}
-private:
-	const std::string name = "Chase Command";
-	std::shared_ptr<GameObject> m_pTarget;
-	float m_LinVel;
-
-};
 }

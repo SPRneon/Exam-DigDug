@@ -186,13 +186,13 @@ void dae::InputManager::HandleInput()
 		{	
 			for(auto command : m_pCommands[currAction->ActionId])
 			{
-				if(currAction->ActionId == 69 || currAction->ActionId == 96)
+				if(command->GetGameObject())
+					command->AddToCommandStream();
+				else
 				{
 					command->execute();
 					return;
 				}
-				else
-					command->AddToCommandStream();
 				
 			}
 			
@@ -200,6 +200,18 @@ void dae::InputManager::HandleInput()
 	}
 
 }
+
+bool dae::InputManager::IsActionTriggered(int actionID)
+{
+
+	auto ia = m_InputActions.find(actionID);
+	if(ia == m_InputActions.end())
+		return false;
+
+	auto currAction = &(ia->second);
+	return currAction->IsTriggered;
+}
+
 
 //*******************//
 //*****KEYBOARD*****//

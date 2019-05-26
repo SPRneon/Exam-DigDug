@@ -171,7 +171,7 @@ void dae::FygarPhaseState::OnExit()
 void dae::FygarChargeState::OnEnter()
 {
 	//Setting texture
-	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("FygarCharge.png",2);
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("FygarCharged.png",2);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetAnimSpeed(0.25f);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetDir(m_WanderDir);
 	

@@ -41,9 +41,9 @@ public:
 	GameObject* GetCollisionObject(ColliderGroups objectFlag);
 
 	//FLAGS
-	void AddIgnoreGroup(ColliderGroups ignoreGroup){m_GroupsToIgnore.push_back(ignoreGroup);}
+	void SetColliderFlags(ColliderGroups group){m_CollisionGroup = group;}
 	void SetIgnoreFlags(ColliderGroups groupToIgnore){m_GroupsToIgnore.push_back(groupToIgnore);}
-
+	void ClearIgnoreFlags(){m_GroupsToIgnore.clear();}
 	//GET VARS
 	const SDL_Rect* GetShape() const {return &m_Shape;}
 	void SetOffset(glm::vec2 offset){m_Offset = offset;}

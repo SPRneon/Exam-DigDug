@@ -14,7 +14,8 @@
 void dae::PlayerAliveState::OnEnter()
 {
 	m_pContext->GetActor()->GetComponent<CommandComponent>()->AllowMovement();
-	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("Player.png",2);
+	auto path = m_pContext->GetActor()->GetComponent<TextureComponent>()->GetOriPath();
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture(path + ".png",2);
 }
 
 void dae::PlayerAliveState::Update()
@@ -50,7 +51,8 @@ void dae::PlayerAliveState::Update()
 
 void dae::PlayerChargedState::OnEnter()
 {
-	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("PlayerCharged.png",2);
+	auto path = m_pContext->GetActor()->GetComponent<TextureComponent>()->GetOriPath();
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture(path+ "Charged.png",2);
 }
 
 void dae::PlayerChargedState::Update()
@@ -171,7 +173,8 @@ void dae::PlayerFiringState::Update()
 void dae::PlayerPumpingState::OnEnter()
 {
 	m_pMisile->GetComponent<TextureComponent>()->Pause();
-	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("PlayerPumping.png",2);	
+	auto path = m_pContext->GetActor()->GetComponent<TextureComponent>()->GetOriPath();
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture(path+"Pumping.png",2);	
 }
 
 void dae::PlayerPumpingState::Update()
@@ -195,7 +198,8 @@ void dae::PlayerPumpingState::OnExit()
 void dae::PlayerDeadState::OnEnter()
 {
 	m_pContext->GetActor()->GetComponent<CommandComponent>()->SetControllable(false);
-	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture("PlayerDead.png",5);
+	auto path = m_pContext->GetActor()->GetComponent<TextureComponent>()->GetOriPath();
+	m_pContext->GetActor()->GetComponent<TextureComponent>()->SetTexture(path +"Dead.png",5);
 	m_pContext->GetActor()->GetComponent<TextureComponent>()->Pause();
 	GameTime::GetInstance()->Stop();
 }

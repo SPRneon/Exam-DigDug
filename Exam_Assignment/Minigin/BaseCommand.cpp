@@ -13,6 +13,8 @@
 #pragma warning(push)
 #pragma warning (disable:4201)
 #include "glm/geometric.hpp"
+#include "TextComponent.h"
+#include "TextureComponent.h"
 #pragma warning(pop)
 
 
@@ -22,19 +24,7 @@ void dae::BaseCommand::AddToCommandStream()
 	m_pGameObject->GetComponent<CommandComponent>()->AddToCommandStream(shared_from_this());
 }
 
-//TODO CLEAN
-//void dae::JumpCommand::execute()
-//{ 
-//	std::cout << "Jump by player("  << ")" << std::endl;
-//	//if(typeid(Locator::getAudio()) != typeid(NullAudio)){
-//	Locator::getAudio().stopAllSounds(); 
-//	Locator::getAudio().playSound("../Data/Audio/Jump.wav");
-//	//}
-//	//else
-//		//throw std::exception("Logger::GetAudio() -> Audio was not yet initialized");
-//	auto pos = m_pGameObject->GetTransform()->GetPosition();
-//	m_pGameObject->GetTransform()->Translate(0.f,-m_JumpVel * GameTime::GetInstance()->GetElapsed());
-//}
+
 
 void dae::FireCommand::execute()
 {
@@ -42,11 +32,58 @@ void dae::FireCommand::execute()
 	m_pPlayer->Fire();
 }
 
+void dae::FygarFireCommand::execute()
+{
+	std::cout <<  "Fire by Fygar("  << ")" << std::endl;
+	m_pFygar->Fire();
+}
+
 
 void dae::ExitCommand::execute()
 {
 	Minigin::Continue = false;
 }
+
+void dae::MoveButtonCommand::execute()
+{
+	if((*(m_pCurrentButton))->GetComponent<TextureComponent>() && (*(m_pCurrentButton))->GetComponent<TextureComponent>()->IsShown())
+		return;
+
+	(*(m_pCurrentButton))->GetComponent<TextComponent>()->SetColor(Colors::white);
+	for(auto it = m_pButtons.begin(); it != m_pButtons.end();++it)
+	{
+		if((*(m_pCurrentButton)) == (*it).get())
+		{
+			if(std::next(it) == m_pButtons.end())
+				(*(m_pCurrentButton)) =  m_pButtons.front().get();		
+			else
+				(*(m_pCurrentButton)) =  std::next(it)->get();
+
+			(*(m_pCurrentButton))->GetComponent<TextComponent>()->SetColor(Colors::yellow);
+			m_pCommand->SetGameoBject((*(m_pCurrentButton)));
+			return;
+		}
+	}
+}
+
+void dae::ToggleButtonCommand::execute()
+{
+	auto textureCOmp = m_pCurrentButton->GetComponent<TextureComponent>();
+	//ONLY SHOW CONTROLS
+	if(textureCOmp)
+	{
+		if(textureCOmp->IsShown())
+			textureCOmp->Hide();
+		else
+			textureCOmp->Show();
+	}
+	else
+	{
+		//CODE TO GO TO NEXT SCENE:
+	}
+}
+
+
 
 void dae::MoveCommand::execute()
 {
@@ -74,52 +111,7 @@ void dae::PhaseMoveCommand::execute()
 }
 
 
-void dae::ChaseCommand::execute()
-{
-	//glm::vec2 deltaPos = m_pTarget->GetTransform()->GetPosition() - m_pGameObject->GetTransform()->GetPosition();
-	//auto currCell = LevelGrid::GetInstance().GetCell(m_pGameObject->GetTransform()->GetPosition());
-	//auto tarrCell = LevelGrid::GetInstance().GetCell(m_pTarget->GetTransform()->GetPosition());
 
-	//if(currCell.GetRow() == tarrCell.GetRow() && currCell.GetCol() == currCell.GetCol())
-	//{
-	//	//In same cell, go directly to targetpos
-
-	//}
-	//else
-	//{
-	//	//Find poath through free 
-
-
-	//}
-
-	//int dirRow = tarrCell.GetRow() - currCell.GetRow();
-	//int dirCol = tarrCell.GetCol() - currCell.GetCol();
-	//
-	//if(std::abs(dirRow) > std::abs(dirCol))
-	//{
-	//	auto dir = GetIntBetweenRange(dirRow,-1,1);
-	//	tarrCell = LevelGrid::GetInstance().GetCell(currCell.GetRow()+ dir,currCell.GetCol());
-	//}
-	//else
-	//{
-	//	auto dir = GetIntBetweenRange(dirCol,-1,1);
-	//	tarrCell = LevelGrid::GetInstance().GetCell(currCell.GetRow(),currCell.GetCol() +dir);
-	//}
-
-	////TODO Make Chase shit
-	//auto dist1 = glm::distance(tarrCell.GetCenter(), m_pGameObject->GetTransform()->GetPosition())+glm::distance(m_pGameObject->GetTransform()->GetPosition(),currCell.GetCenter());
-	////dist target-currcell
-	//auto dist2 = glm::distance(tarrCell.GetCenter(),currCell.GetCenter());
-	////IF PLAYER is laready on the straightline between the cells
-	//glm::vec2 targetV;
-	//
-	//targetV = NormalizeAssert( center-tarrCell.GetCenter());
-	//
-	//	
-
-	//targetV *= glm::vec2{m_LinVel,m_LinVel};	
-	//m_pGameObject->GetTransform()->Translate(targetV.x,targetV.y);
-}
 
 void dae::NextSceneCommand::execute()
 {

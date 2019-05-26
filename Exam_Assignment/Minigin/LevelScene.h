@@ -30,6 +30,7 @@ protected:
 public:
 	void ResetScene() override;
 	void CleanUp() override;
+	void SetPlayer(int NrOfPlayers){m_NrOfPlayers = NrOfPlayers;};
 
 	std::shared_ptr<Observer> GetObserver(){return m_pObserver;}
 	void SetObserver(std::shared_ptr<Observer> observer){m_pObserver = observer;}
@@ -41,6 +42,7 @@ private:
 
 
 	int m_pScore;
+	int m_NrOfPlayers;
 	std::shared_ptr<GameObject> m_pScoreDisplay;
 
 	std::shared_ptr<Observer> m_pObserver;

@@ -9,6 +9,7 @@
 #include "Event.h"
 #include "Subject.h"
 #include "FiniteStateMachine.h"
+#include "PlayerStates.h"
 
 
 dae::Fygar::Fygar(std::string name, std::shared_ptr<Player> player) : m_pPlayer(player), Entity(name)
@@ -71,4 +72,26 @@ void dae::Fygar::Place(int row, int column)
 	LevelGrid::GetInstance()->SetCellInactive(row,column);
 	LevelGrid::GetInstance()->SetCellInactive(row,column+1);
 }
+
+void dae::Fygar::Fire()
+{
+	
+}
+void dae::Fygar::SetAsPlayer()
+{
+	//COllider
+	m_pGameObject->GetComponent<ColliderComponent>()->ClearIgnoreFlags();
+	m_pGameObject->GetComponent<ColliderComponent>()->SetIgnoreFlags(PLAYER);
+	m_pGameObject->GetComponent<ColliderComponent>()->SetIgnoreFlags(TERRAIN);
+	m_pGameObject->GetComponent<ColliderComponent>()->SetColliderFlags(PLAYER);
+	//StateMachine
+	m_pActionStateMachine.reset();
+	m_pStateMachine = std::make_shared<FiniteStateMachine>();
+	m_pStateMachine->Initialize(std::make_shared<PlayerAliveState>(m_pStateMachine),m_pGameObject,nullptr);
+
+	
+
+}
+
+
 

@@ -16,8 +16,6 @@ namespace dae
 
 			if(ti == typeid(Scene))
 			{
-				//TODO
-				//DEBUG LOG SCENE TYPE
 				throw std::exception("Cannot add scene of BaseClass <Scene>");
 			}
 

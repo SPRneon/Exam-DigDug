@@ -10,6 +10,7 @@
 #include <SDL.h>
 
 #include "LevelScene.h"
+#include "MenuScene.h"
 #include "LevelGrid.h"
 
 
@@ -44,7 +45,7 @@ void dae::Minigin::Initialize()
  */
 void dae::Minigin::LoadGame() const
 {
-	SceneManager::GetInstance()->CreateScene<LevelScene>("Demo");
+	SceneManager::GetInstance()->CreateScene<MenuScene>("Demo");
 	SceneManager::GetInstance()->SetActiveScene("Demo");
 	InputAction ia{69,KeyState::Released,VK_ESCAPE,-41,XINPUT_GAMEPAD_BACK};
 	InputManager::GetInstance()->AddInput(ia,std::make_shared<ExitCommand>());
@@ -82,6 +83,7 @@ void dae::Minigin::Run()
 	{
 		auto gameTime = GameTime::GetInstance();
 		gameTime->Reset();
+		gameTime->Stop();
 		auto renderer = Renderer::GetInstance();
 		auto sceneManager = SceneManager::GetInstance();
 		auto input = InputManager::GetInstance();

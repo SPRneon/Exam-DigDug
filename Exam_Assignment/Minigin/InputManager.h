@@ -107,6 +107,7 @@ namespace dae
 		void ProcessInput();
 		const KeyState GetKeystrokeState(int key) const;
 		bool IsKeyPressed(int key, bool prevFrame = false) const;
+		bool IsActionTriggered(int actionID);
 		glm::vec2 GetThumbSticksGamePad(int playerIndex) const;
 		void HandleInput();
 		

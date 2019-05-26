@@ -18,6 +18,8 @@ dae::TextureComponent::TextureComponent(const std::string & path, int nrOfSprite
 	m_Play(autoPlay)
 {
 	assert(m_NrOfSprites >= 1);
+	auto pos = path.find('.');
+	m_OriginalPath = path.substr(0,pos);
 	m_pTexture  = ResourceManager::GetInstance()->LoadTexture(path);
 	m_ClipWH.x = static_cast<float>((m_pTexture->getWidth() / m_NrOfSprites));
 	m_ClipWH.y = static_cast<float>(m_pTexture->getHeight());
@@ -40,7 +42,7 @@ void dae::TextureComponent::Update()
 
 void dae::TextureComponent::Draw() const
 {
-	if (m_pTexture != nullptr)
+	if (m_pTexture != nullptr && m_Show)
 	{	
 		if(m_NrOfSprites == 1)
 		{

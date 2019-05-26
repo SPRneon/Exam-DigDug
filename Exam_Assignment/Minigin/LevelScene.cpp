@@ -107,7 +107,7 @@ void dae::LevelScene::Initialize()
 	Add(rock1->GetGameObject());
 
 	auto rock2 = std::make_shared<Rock>("Rock2", m_pPlayer);
-	rock2->Place(3,10);
+	rock2->Place(2,10);
 	m_pRocks.push_back(rock2);
 	Add(rock2->GetGameObject());
 
@@ -119,7 +119,7 @@ void dae::LevelScene::Initialize()
 	
 
 
-	//INPUT
+	//INPUT PLAYER 1
 	InputAction ia = {0,KeyState::Pressed,'A',-1,XINPUT_GAMEPAD_DPAD_LEFT,0};
 	auto cmdLeft = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),LEFT,50.f);
 	InputManager::GetInstance()->AddInput(ia,cmdLeft);
@@ -136,8 +136,28 @@ void dae::LevelScene::Initialize()
 	auto cmdFire = std::make_shared<FireCommand>(m_pPlayer);
 	InputManager::GetInstance()->AddInput(ia,cmdFire);
 
-	//Audio
-	
+	//IF 2 PLAYERS
+	if(m_NrOfPlayers == 2)
+	{
+		//INPUT
+		ia = {10,KeyState::Pressed,'J',-1,XINPUT_GAMEPAD_DPAD_LEFT,1};
+		auto cmdLeft2 = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),LEFT,50.f);
+		InputManager::GetInstance()->AddInput(ia,cmdLeft2);
+		ia = {11,KeyState::Pressed,'I',-1,XINPUT_GAMEPAD_DPAD_UP,1};
+		auto cmdUp2 = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),UP,50.f);
+		InputManager::GetInstance()->AddInput(ia,cmdUp2);
+		ia = {12,KeyState::Pressed,'L',-1,XINPUT_GAMEPAD_DPAD_RIGHT,1};
+		auto cmdRight2 = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),RIGHT,50.f);
+		InputManager::GetInstance()->AddInput(ia,cmdRight2);
+		ia = {13,KeyState::Pressed,'K',-1,XINPUT_GAMEPAD_DPAD_DOWN,1};
+		auto cmdDown2 = std::make_shared<MoveCommand>(m_pPlayer->GetGameObject(),DOWN,50.f);
+		InputManager::GetInstance()->AddInput(ia,cmdDown2);
+		ia = {14,KeyState::Pressed,'H',-1,XINPUT_GAMEPAD_A,1};
+		auto cmdFire2 = std::make_shared<FireCommand>(m_pPlayer);
+		InputManager::GetInstance()->AddInput(ia,cmdFire2);
+	}
+	GameTime::GetInstance()->Reset();
+	GameTime::GetInstance()->Start();
 }
 
 void dae::LevelScene::Update()

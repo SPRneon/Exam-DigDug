@@ -30,6 +30,13 @@ public:
 	void SetDir(Direction dir){m_Direction = dir;};
 	void Pause(){m_Play = false;}
 	void Play(){m_Play = true;}
+
+	void Show(){m_Show = true;}
+	void Hide(){m_Show = false;}
+	bool IsShown() const{return m_Show;}
+
+	std::string GetOriPath() const {return m_OriginalPath;}
+
 	void NextFrame(){currSprites++; currSprites %= m_NrOfSprites;}
 	void PrevFrame(){currSprites--; if(currSprites == -1) currSprites = m_NrOfSprites-1;}
 private:
@@ -40,7 +47,9 @@ private:
 	float m_DeltaTime = 0;
 	Direction m_Direction = RIGHT;
 	bool m_Play = true;
+	bool m_Show = true;
 
+	std::string m_OriginalPath;
 	glm::vec2 m_ClipWH;
 	glm::vec2 m_TexturePos;
 };

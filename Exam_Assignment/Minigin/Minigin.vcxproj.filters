@@ -175,6 +175,9 @@
     <ClInclude Include="LevelObserver.h">
       <Filter>ObserveSystem</Filter>
     </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -284,6 +287,9 @@
     </ClCompile>
     <ClCompile Include="LevelGrid.cpp">
       <Filter>Game\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene.cpp">
+      <Filter>Game\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

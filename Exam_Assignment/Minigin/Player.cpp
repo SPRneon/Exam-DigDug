@@ -20,7 +20,7 @@ dae::Player::Player(std::string name,int playerID) :Entity(name) ,m_PlayerIndex(
 	SDL_Rect rect{0,0,20,20};
 	auto collider = std::make_shared<ColliderComponent>(rect,PLAYER);
 	m_pGameObject->AddComponent(collider);
-	m_pGameObject->GetComponent<ColliderComponent>()->AddIgnoreGroup(TERRAIN);
+	m_pGameObject->GetComponent<ColliderComponent>()->SetIgnoreFlags(TERRAIN);
 	m_pFiniteStateMachine = std::make_shared<FiniteStateMachine>();
 	m_pFiniteStateMachine->Initialize(std::make_shared<PlayerAliveState>(m_pFiniteStateMachine),m_pGameObject,nullptr);
 }
